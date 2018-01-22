@@ -1,6 +1,7 @@
-# ShoRAH
-# https://github.com/cbg-ethz/shorah/
-# v1.1.2
+# Seq-Gen
+# https://github.com/rambaut/Seq-Gen/
+# http://tree.bio.ed.ac.uk/software/seqgen/
+# v1.3.4
 
 # base image: Ubuntu
 FROM ubuntu:16.04
