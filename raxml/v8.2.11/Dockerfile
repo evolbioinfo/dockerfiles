@@ -23,3 +23,5 @@ RUN apt-get update --fix-missing \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
+
+ENTRYPOINT ["/usr/local/bin/raxmlHPC"]
