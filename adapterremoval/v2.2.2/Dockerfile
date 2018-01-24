@@ -19,6 +19,7 @@ RUN apt-get update --fix-missing \
     && apt-get remove -y wget make g++ zlib1g-dev libbz2-dev \
     && apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /pasteur
 
 ENTRYPOINT ["/usr/local/bin/AdapterRemoval"]

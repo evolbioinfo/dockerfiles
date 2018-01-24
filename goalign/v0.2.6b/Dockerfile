@@ -36,6 +36,7 @@ RUN apt-get update --fix-missing \
     && apt-get remove -y wget git \
     && apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /pasteur
 
 ENTRYPOINT ["/usr/local/bin/goalign"]
