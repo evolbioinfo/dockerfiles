@@ -17,7 +17,7 @@ RUN apt-get update --fix-missing \
     && rm -f shorah-1.1.2.tar.bz2 \
     && cd /usr/local/shorah-1.1.2 \
     && autoreconf -vif \
-    && ./configure \
+    && ./configure PYTHON=/usr/bin/python3 \
     && make && make distcheck \
     && make install \
     && apt-get remove -y wget libgsl0-dev autoconf automake-1.15 pkg-config \
