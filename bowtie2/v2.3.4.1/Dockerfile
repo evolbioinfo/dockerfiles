@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc g++ make libtbb2 libtbb-dev zlib1g zlib1g-dev perl \
+    && apt-get install -y wget gcc g++ make libtbb2 libtbb-dev zlib1g zlib1g-dev perl python\
     && cd /usr/local/ \
     && wget -O bowtie.tar.gz  https://github.com/BenLangmead/bowtie2/archive/v2.3.4.1.tar.gz \
     && tar -xzvf bowtie.tar.gz \
