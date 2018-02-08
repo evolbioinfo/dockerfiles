@@ -1,6 +1,6 @@
-# gotree
-# https://github.com/fredericlemoine/gotree/
-# v0.2.7b
+# goalign
+# https://github.com/fredericlemoine/goalign/
+# v0.2.6c
 
 # base image: Ubuntu
 FROM ubuntu:16.04
@@ -21,15 +21,15 @@ RUN apt-get update --fix-missing \
     && go get -u github.com/golang/dep/cmd/dep \
     && mkdir -p /gopath/src/github.com/fredericlemoine/ \
     && cd /gopath/src/github.com/fredericlemoine/ \
-    && wget -O gotree-0.2.7b.tar.gz https://github.com/fredericlemoine/gotree/archive/v0.2.7b.tar.gz \
-    && tar -xzvf gotree-0.2.7b.tar.gz \
-    && mv gotree-0.2.7b gotree \
-    && rm -rf gotree-0.2.7b.tar.gz \
-    && cd /gopath/src/github.com/fredericlemoine/gotree \
+    && wget -O goalign-0.2.6c.tar.gz https://github.com/fredericlemoine/goalign/archive/v0.2.6c.tar.gz \
+    && tar -xzvf goalign-0.2.6c.tar.gz \
+    && mv goalign-0.2.6c goalign \
+    && rm -rf goalign-0.2.6c.tar.gz \
+    && cd /gopath/src/github.com/fredericlemoine/goalign \
     && dep ensure \
-    && go build -o gotree -ldflags "-X github.com/fredericlemoine/gotree/cmd.Version=v0.2.7b" github.com/fredericlemoine/gotree \
-    && go test github.com/fredericlemoine/gotree/... \
-    && mv gotree /usr/local/bin/ \
+    && go build -o goalign -ldflags "-X github.com/fredericlemoine/goalign/cmd.Version=v0.2.6c" github.com/fredericlemoine/goalign \
+    && go test github.com/fredericlemoine/goalign/... \
+    && mv goalign /usr/local/bin/ \
     && bash ./test.sh \
     && cd /usr/local \
     && rm -rf /gopath /usr/local/go \
@@ -39,4 +39,4 @@ RUN apt-get update --fix-missing \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir /pasteur
 
-ENTRYPOINT ["/usr/local/bin/gotree"]
+ENTRYPOINT ["/usr/local/bin/goalign"]

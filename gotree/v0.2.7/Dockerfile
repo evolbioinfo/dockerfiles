@@ -1,6 +1,6 @@
 # gotree
 # https://github.com/fredericlemoine/gotree/
-# v0.2.7b
+# v0.2.7
 
 # base image: Ubuntu
 FROM ubuntu:16.04
@@ -21,13 +21,13 @@ RUN apt-get update --fix-missing \
     && go get -u github.com/golang/dep/cmd/dep \
     && mkdir -p /gopath/src/github.com/fredericlemoine/ \
     && cd /gopath/src/github.com/fredericlemoine/ \
-    && wget -O gotree-0.2.7b.tar.gz https://github.com/fredericlemoine/gotree/archive/v0.2.7b.tar.gz \
-    && tar -xzvf gotree-0.2.7b.tar.gz \
-    && mv gotree-0.2.7b gotree \
-    && rm -rf gotree-0.2.7b.tar.gz \
+    && wget -O gotree-0.2.7.tar.gz https://github.com/fredericlemoine/gotree/archive/v0.2.7.tar.gz \
+    && tar -xzvf gotree-0.2.7.tar.gz \
+    && mv gotree-0.2.7 gotree \
+    && rm -rf gotree-0.2.7.tar.gz \
     && cd /gopath/src/github.com/fredericlemoine/gotree \
     && dep ensure \
-    && go build -o gotree -ldflags "-X github.com/fredericlemoine/gotree/cmd.Version=v0.2.7b" github.com/fredericlemoine/gotree \
+    && go build -o gotree -ldflags "-X github.com/fredericlemoine/gotree/cmd.Version=v0.2.7" github.com/fredericlemoine/gotree \
     && go test github.com/fredericlemoine/gotree/... \
     && mv gotree /usr/local/bin/ \
     && bash ./test.sh \
