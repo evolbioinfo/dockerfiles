@@ -7,8 +7,6 @@ ENV LANG C.UTF-8
 ADD PASTML_VERSION .
 ADD CYTOPAST_VERSION .
 
-# Copy in the main code
-ADD cytopast_main.py /
 # Install pastml
 RUN pip3 install --no-cache-dir pastml==`cat PASTML_VERSION`
 # Install cytopast
@@ -20,4 +18,4 @@ RUN echo "CYTOPAST version: `cat CYTOPAST_VERSION`"
 WORKDIR /tmp
 
 # The entrypoint runs cytopast with command line arguments
-ENTRYPOINT ["python3", "/cytopast_main.py"]
+ENTRYPOINT ["cytopast"]
