@@ -1,8 +1,12 @@
 # PASTdoc [PASTML Docker]
 
-This docker file reconstructs ancestral states on a phylogenetical tree 
-with [PASTML](https://github.com/saishikawa/PASTML) 
-and visualises them as interactive html maps.
+This docker file wraps [cytopast](https://github.com/evolbioinfo/cytopast) python3 module 
+for annotated phylogenetic tree visualisation.
+
+Given a tree and its node annotations, it can either visualise them as-is, 
+or apply [PASTML](https://github.com/saishikawa/PASTML) to infer ancestral states based on the tip states. 
+
+The states are visualised as different colours of the tree nodes using [Cytoscape.js](http://js.cytoscape.org/)
 
 ### How to run PASTdoc
 As an input, one needs to provide a phylogenetical tree in [newick](https://en.wikipedia.org/wiki/Newick_format) format,
