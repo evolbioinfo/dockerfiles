@@ -11,7 +11,7 @@ MAINTAINER Mathieu Moslonka-Lefebvre <mathieu.moslonka-lefebvre@pasteur.fr>
 RUN apt-get update --fix-missing \
     && apt-get install -y subversion gcc g++ make \ 
     && cd /usr/local/ \
-    && svn checkout --force https://github.com/tothuhien/lsd-0.3beta/trunk/src \
+    && svn checkout --non-interactive --trust-server-cert https://github.com/tothuhien/lsd-0.3beta/trunk/src \
     && cd src \
     && make \
     && mv lsd /usr/local/bin/lsd \
