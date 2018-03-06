@@ -8,8 +8,8 @@ FROM ubuntu:16.04
 # File Author / Maintainer
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
-ENV JPHMMCIRCOSFILES="'/usr/local/jpHMM/src/circos_input_files/'"
-ENV JPHMMPRIORS="'/usr/local/jpHMM/priors/'"
+ENV JPHMMCIRCOSFILES="/usr/local/jpHMM/src/circos_input_files/"
+ENV JPHMMPRIORS="/usr/local/jpHMM/priors/"
 
 RUN apt-get update --fix-missing \
     && apt-get install -y wget make g++ \
