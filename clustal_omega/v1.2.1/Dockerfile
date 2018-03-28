@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc g++ make libargtable2-0 libargtable2-dev file libgomp1 \
+    && apt-get install -y wget g++ make libargtable2-0 libargtable2-dev file libgomp1 \
     && cd /usr/local/ \
     && wget http://www.clustal.org/omega/clustal-omega-1.2.1.tar.gz \
     && tar -xzvf clustal-omega-1.2.1.tar.gz \
@@ -18,7 +18,7 @@ RUN apt-get update --fix-missing \
     && ./configure && make && make install \
     && cd .. \
     && rm -rf /usr/local/clustal-omega-1.2.1 \
-    && apt-get remove -y wget gcc make libargtable2-dev \
+    && apt-get remove -y wget g++ make libargtable2-dev \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
