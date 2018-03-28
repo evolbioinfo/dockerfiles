@@ -25,4 +25,3 @@ RUN apt-get update --fix-missing \
     && mkdir /pasteur
 
 ENTRYPOINT ["muscle"]
-g
