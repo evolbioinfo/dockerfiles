@@ -18,7 +18,6 @@ RUN apt-get update --fix-missing \
     && tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz \
     && rm -f go1.9.2.linux-amd64.tar.gz \
     && mkdir -p /gopath/ \
-    && go get -u github.com/golang/dep/cmd/dep \
     && mkdir -p /gopath/src/github.com/fredericlemoine/ \
     && cd /gopath/src/github.com/fredericlemoine/ \
     && wget -O gotree-0.2.4.tar.gz https://github.com/fredericlemoine/gotree/archive/v0.2.4.tar.gz \
@@ -26,7 +25,6 @@ RUN apt-get update --fix-missing \
     && mv gotree-0.2.4 gotree \
     && rm -rf gotree-0.2.4.tar.gz \
     && cd /gopath/src/github.com/fredericlemoine/gotree \
-    && dep ensure \
     && go build -o gotree -ldflags "-X github.com/fredericlemoine/gotree/cmd.Version=v0.2.4" github.com/fredericlemoine/gotree \
     && go test github.com/fredericlemoine/gotree/... \
     && mv gotree /usr/local/bin/ \
