@@ -15,6 +15,7 @@ RUN apt-get update --fix-missing \
     && unzip PhyML-3.1.zip \
     && rm -rf PhyML-3.1.zip \
     && mv PhyML-3.1/PhyML-3.1_linux64 /usr/local/bin/phyml \
+    && chmod 755 /usr/local/bin/phyml \
     && cd /usr/local \
     && rm -rf /usr/local/PhyML-3.1 \
     && apt-get remove -y wget unzip \
