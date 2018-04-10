@@ -1,0 +1,7 @@
+### this is a features file
+### it describes the different features and genes in the virus genome and the annotation of variants will be performed according to it
+### format : reference name <tab> start position on reference <tab> end position on reference <tab> name of feature [Optional:<tab> comma seperated exon stat sites <tab> exon end sites]
+### the reference name must match a sequence found in the reference file. which means if the reference fasta has a sequence with header >CVB3 the reference name for any corresponding feature will be CVB3
+
+CVB3	1	100	protein1
+CVB3	250	350	protein2	270,320	290,340
