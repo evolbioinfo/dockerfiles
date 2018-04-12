@@ -34,7 +34,7 @@
 SCRIPTS_DIR = '/usr/local/ViVan/'
 
 # The bwa path, should be inside the ViVan scripts directory
-BWA_PATH = '/usr/local/ViVan/bwa/'
+BWA_PATH = '/usr/local/ViVan/bwa/bwa'
 
 #===============================================================================
 import optparse

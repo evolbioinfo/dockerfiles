@@ -30,13 +30,13 @@ RUN apt-get update --fix-missing \
     && cd .. \
     && rm -rf bwa-0.7.8/ bwa.tar.bz2 \
     && pip install biopython scipy numpy  \
-    && wget https://github.com/samtools/samtools/releases/download/1.8/samtools-1.8.tar.bz2 \
-    && tar -xjvf samtools-1.8.tar.bz2 \
-    && cd samtools-1.8 \
-    && ./configure --prefix=/usr/local \
-    && make && make install \
+    && wget -O samtools-0.1.19.tar.bz2 https://sourceforge.net/projects/samtools/files/samtools/0.1.19/samtools-0.1.19.tar.bz2/download \
+    && tar -xjvf samtools-0.1.19.tar.bz2 \
+    && cd samtools-0.1.19 \
+    && make  \
+    && mv samtools /usr/local/bin \
     && cd .. \
-    && rm -rf samtools-1.8 samtools-1.8.tar.bz2 \
+    && rm -rf samtools-* \
     && wget -O ea-utils.zip https://github.com/ExpressionAnalysis/ea-utils/archive/bd148d4654fe26d8e218ef8f634fb6a6df9fede1.zip \
     && unzip ea-utils.zip \
     && cd ea-utils-bd148d4654fe26d8e218ef8f634fb6a6df9fede1/clipper \
