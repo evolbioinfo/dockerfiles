@@ -1,0 +1,31 @@
+### This is a configuration file required by the ViVan completeAnalysis.py script
+### it should contain all the information for the analysis to run
+### please update the different sections according to your analysis
+
+### This is the samples section
+### format : sampleName <tab> groupName <tab> fastq file1 [<tab> fastq file2 if paired-end] 
+### sample name should not start with a digit and should be unique for each sample. different samples can belong to the same group.
+
+#samples_start
+sample1	mutator	/path/to/fastq/sample1.fq
+sample2	mutator	/path/to/fastq/sample2.fq
+sample3	antimutator	/path/to/fastq/sample3.fq
+#samples_end
+
+### This is the reference and features section. 
+### format : groupName <tab> reference file <tab> features file
+### each group requires a reference sequence file and a features file (describing the different genes in the viral genome)
+### please see the example features file before creating one
+
+#referencesNfeatures_start
+mutator	/path/to/reference/mutator.fasta	/path/to/features/mutator-features
+antimutator	/path/to/reference/antimutator.fasta	/path/to/features/antimutator-features
+#referencesNfeatures_end
+
+### This is the filters section where coverage and P-Value thresholds can be set
+### format : filterName (coverage/pval) <tab> value
+
+#filters_start
+coverage	10
+pval	0.05
+#filters_end
