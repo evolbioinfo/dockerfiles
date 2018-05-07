@@ -16,4 +16,4 @@ RUN apt-get update --fix-missing \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir /pasteur
 
-ENTRYPOINT ["/usr/local/bin/load-into-counting.py"]
+ENTRYPOINT ["/usr/local/bin/normalize-by-median.py"]
