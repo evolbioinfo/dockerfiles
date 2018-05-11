@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget libgomp1 gcc cmake make eigen3 libeigen3-dev \
+    && apt-get install -y wget libgomp1 gcc cmake make libeigen3-dev \
     && cd /usr/local/ \
     && wget https://github.com/Cibiv/IQ-TREE/archive/v1.4.2.tar.gz \
     && tar -xzvf v1.4.2.tar.gz \
@@ -18,10 +18,10 @@ RUN apt-get update --fix-missing \
     && cmake -DIQTREE_FLAGS=omp .. \
     && make \
     && mv iqtree-omp /usr/local/bin/iqtree \
-    && ../../ \
+    && cd ../../ \
     && rm -rf v1.4.2.tar.gz \
     && rm -rf IQ-TREE-1.4.2 \
-    && apt-get remove -y wget cmake make gcc libeigen3-dev \
+    && apt-get remove -y wget cmake make gcc \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
