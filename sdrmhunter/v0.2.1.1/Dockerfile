@@ -13,7 +13,7 @@ ADD sdrm_annotator.py .
 
 # create a non-root user named evolbioinfo,
 # give them the password "evolbioinfo" put them in the sudo group
-RUN useradd -d /home/tester -m -s /bin/bash evolbioinfo && echo "evolbioinfo:evolbioinfo" | chpasswd && adduser evolbioinfo sudo
+RUN useradd -d /home/evolbioinfo -m -s /bin/bash evolbioinfo && echo "evolbioinfo:evolbioinfo" | chpasswd && adduser evolbioinfo sudo
 
 # start working in the "evolbioinfo" home directory
 WORKDIR /home/evolbioinfo
