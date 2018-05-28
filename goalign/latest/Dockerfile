@@ -12,7 +12,7 @@ ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget git unzip \
+    && apt-get install -y wget git make \
     && cd /usr/local \
     && wget --no-check-certificate https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz \
@@ -21,19 +21,14 @@ RUN apt-get update --fix-missing \
     && go get -u github.com/golang/dep/cmd/dep \
     && mkdir -p /gopath/src/github.com/fredericlemoine/ \
     && cd /gopath/src/github.com/fredericlemoine/ \
-    && wget -O goalign-master.zip https://github.com/fredericlemoine/goalign/archive/master.zip \
-    && unzip goalign-master.zip \
-    && mv goalign-master goalign \
-    && rm -rf goalign-master.zip \
+    && git clone https://github.com/fredericlemoine/goalign.git \
     && cd /gopath/src/github.com/fredericlemoine/goalign \
-    && dep ensure \
-    && go build -o goalign -ldflags "-X github.com/fredericlemoine/goalign/cmd.Version=v0.2.8" github.com/fredericlemoine/goalign \
-    && go test github.com/fredericlemoine/goalign/... \
+    && make dep && make build \
     && mv goalign /usr/local/bin/ \
-    && bash ./test.sh \
+    && make test \
     && cd /usr/local \
     && rm -rf /gopath /usr/local/go \
-    && apt-get remove -y wget git unzip \
+    && apt-get remove -y wget git make \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
