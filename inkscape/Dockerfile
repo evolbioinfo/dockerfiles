@@ -15,5 +15,3 @@ RUN apt-get update --fix-missing \
     && apt-get install -y inkscape \
     && apt-get install ttf-ubuntu-font-family \
     && mkdir /pasteur
-
-ENTRYPOINT ["/usr/bin/inkscape"]
