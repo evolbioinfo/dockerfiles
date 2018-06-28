@@ -11,7 +11,7 @@ MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 RUN apt-get update --fix-missing \
     && apt-get install -y wget gcc make autoconf automake pkg-config \
     && cd /usr/local/ \
-    && wget -O phyml-v3.3.20180621 https://github.com/stephaneguindon/phyml/archive/9aaed22c9c42fbf44cd212adc222fd11c9241207.tar.gz \
+    && wget -O phyml-v3.3.20180621.tar.gz https://github.com/stephaneguindon/phyml/archive/9aaed22c9c42fbf44cd212adc222fd11c9241207.tar.gz \
     && tar -xzvf phyml-v3.3.20180621.tar.gz \
     && rm -rf phyml-v3.3.20180621.tar.gz \
     && cd phyml-9aaed22c9c42fbf44cd212adc222fd11c9241207 \
