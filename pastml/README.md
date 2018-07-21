@@ -8,8 +8,9 @@ or apply [PASTML](https://github.com/saishikawa/PASTML) to infer ancestral state
 
 The states are visualised as different colours of the tree nodes using [Cytoscape.js](http://js.cytoscape.org/)
 
+
 ### How to run PASTdoc
-As an input, one needs to provide a phylogenetical tree in [newick](https://en.wikipedia.org/wiki/Newick_format) format,
+As an input, one needs to provide a **rooted** phylogenetic tree in [newick](https://en.wikipedia.org/wiki/Newick_format) format,
 and a table containing tip states, 
 in tab-delimited (by default) or csv format (to be specified with *--data_sep ,* option).
 
@@ -33,6 +34,7 @@ Tip_id | ... | Location | ...
 3 | ... | Africa | ...
 ... | ... | ... | ...
 
+
 To reconstruct and visualise the ancestral Location states, 
 one needs to run the following command:
 
@@ -42,7 +44,6 @@ docker run -v ~/Downloads:/data:rw -t evolbioinfo/pastml --tree /data/tree.nwk -
 
 This will produce a file location_map.html in the Downloads folder, 
 that can be viewed with a browser.
-
 
 ###  Help
 
