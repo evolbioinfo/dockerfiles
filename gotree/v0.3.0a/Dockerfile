@@ -1,6 +1,6 @@
 # gotree
 # https://github.com/fredericlemoine/gotree/
-# latest
+# v0.3.0a
 
 # base image: Ubuntu
 FROM ubuntu:16.04
@@ -12,7 +12,7 @@ ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget git make \
+    && apt-get install -y wget git \
     && cd /usr/local \
     && wget --no-check-certificate https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz \
@@ -21,14 +21,19 @@ RUN apt-get update --fix-missing \
     && go get -u github.com/golang/dep/cmd/dep \
     && mkdir -p /gopath/src/github.com/fredericlemoine/ \
     && cd /gopath/src/github.com/fredericlemoine/ \
-    && git clone https://github.com/fredericlemoine/gotree.git \
+    && wget -O gotree-0.3.0a.tar.gz https://github.com/fredericlemoine/gotree/archive/v0.3.0a.tar.gz \
+    && tar -xzvf gotree-0.3.0a.tar.gz \
+    && mv gotree-0.3.0a gotree \
+    && rm -rf gotree-0.3.0a.tar.gz \
     && cd /gopath/src/github.com/fredericlemoine/gotree \
-    && make dep && make build \
+    && dep ensure \
+    && go build -o gotree -ldflags "-X github.com/fredericlemoine/gotree/cmd.Version=v0.3.0a" github.com/fredericlemoine/gotree \
+    && go test github.com/fredericlemoine/gotree/... \
     && mv gotree /usr/local/bin/ \
-    && make test \
+    && bash ./test.sh \
     && cd /usr/local \
     && rm -rf /gopath /usr/local/go \
-    && apt-get remove -y wget git make \
+    && apt-get remove -y wget git \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
