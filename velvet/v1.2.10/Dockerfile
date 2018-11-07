@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc make zlib1g zlib1g-dev \
+    && apt-get install -y bioperl wget gcc make zlib1g zlib1g-dev \
     && cd /usr/local/ \
     && wget https://www.ebi.ac.uk/~zerbino/velvet/velvet_1.2.10.tgz \
     && tar -xzvf velvet_1.2.10.tgz \
