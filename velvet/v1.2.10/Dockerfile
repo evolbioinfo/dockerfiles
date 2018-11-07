@@ -16,7 +16,7 @@ RUN apt-get update --fix-missing \
     && wget https://www.ebi.ac.uk/~zerbino/velvet/velvet_1.2.10.tgz \
     && tar -xzvf velvet_1.2.10.tgz \
     && cd  velvet_1.2.10/ \
-    && make 'MAXKMERLENGTH=127' \
+    && make 'MAXKMERLENGTH=249' \
     && mv velvetg velveth /usr/local/bin \
     && mv contrib/VelvetOptimiser-2.2.4 /usr/local/ \
     && cd .. \
