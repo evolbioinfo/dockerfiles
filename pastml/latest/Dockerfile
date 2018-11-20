@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.6-slim
 
 # Python3 needs an UTF-8 locale, http://bugs.python.org/issue19846
 ENV LANG C.UTF-8
@@ -13,16 +13,10 @@ ADD *_VERSION /usr/local/
 MAINTAINER Anna Zhukova <anna.zhukova@pasteur.fr>
 
 # Install pastml
-RUN cd /usr/local/ \
-    && pip3 install --no-cache-dir pastml==`cat PASTML_VERSION`
+RUN cd /usr/local/ && pip3 install --no-cache-dir pastml==`cat PASTML_VERSION`
 
 # Clean up
-
-# Clean up the development environment to reduce image size
-RUN apt autoremove -y \
-    && apt autoclean -y \
-    && apt clean
-    && mkdir /pasteur
+RUN mkdir /pasteur
 
 # create a non-root user named evolbioinfo,
 # give them the password "evolbioinfo" put them in the sudo group
