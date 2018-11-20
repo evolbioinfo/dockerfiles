@@ -1,12 +1,14 @@
 # PASTdoc [PASTML Docker]
 
-This docker file wraps [cytopast](https://github.com/evolbioinfo/cytopast) python3 module 
-for annotated phylogenetic tree visualisation.
+This docker file wraps [pastml](https://github.com/evolbioinfo/pastml) python3 module 
+for Ancestor Character Reconstruction (ACR) and visualisation
+on rooted phylogenetic trees.
+
 
 Given a tree and its node annotations, it can either visualise them as-is, 
-or apply [PASTML](https://github.com/saishikawa/PASTML) to infer ancestral states based on the tip states. 
+or infer ancestral node states based on the tip states. 
 
-The states are visualised as different colours of the tree nodes using [Cytoscape.js](http://js.cytoscape.org/)
+The states are visualised as different colours on the tree nodes using [Cytoscape.js](http://js.cytoscape.org/)
 
 
 ### How to run PASTdoc
