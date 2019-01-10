@@ -177,6 +177,7 @@ def remove_file_if_you_can(filepath):
 def create_gql_file(gql):
     """
     Creates a SDRM gql file for [sierra](https://hivdb.stanford.edu/DR/webservices/).
+    
     :param filepath: str, filepath to write the gql file to.
     :return: void
     """
