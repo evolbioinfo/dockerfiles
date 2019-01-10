@@ -1,12 +1,14 @@
 #!python3
 
 import logging
+import re
 import subprocess
 
 from functools import reduce
 
 import os
 import pandas as pd
+import numpy as np
 from Bio import SeqIO, Seq
 from Bio.Alphabet import generic_dna
 
@@ -129,6 +131,37 @@ def extract_sdrms(fasta, tab, bunch_size=1000):
     remove_file_if_you_can(gql)
 
 
+def prettify_sdrms(tab):
+    """
+    Prettify mutation file, by replacing True/False by resistant/sensitive,
+    as well as searching for multiple possible letter outcome mutations
+    and replacing the corresponding real ones with unknown state,
+    i.e. M184IV would make M184I and M184V unknown
+
+    :param tab: SDRM file
+    :return: prettified SDRM file
+    """
+    df = pd.read_table(tab, header=0, index_col=0)
+    mutations = [_ for _ in df.columns if _.startswith('RT:') or _.startswith('PR:')]
+    for mutation in mutations:
+        df[mutation] = df[mutation].fillna(False).astype(bool).map(
+            {True: 'resistant', False: 'sensitive', None: 'sensitive'}).astype(str)
+
+    # search for multiple possible letter outcome mutations and replace the corresponding real ones with unknown state,
+    # i.e. M184IV would make M184I and M184V unknown
+    for mutation in mutations:
+        to_letters = re.search(r'[A-Z]+$', mutation)[0]
+        if len(to_letters) == 1:
+            continue
+        start = re.sub(r'[A-Z]+$', '', mutation)
+        for mut in ('{}{}'.format(start, letter) for letter in to_letters):
+            if mut in df.columns:
+                df[mut] = np.where(df[mutation] == 'resistant',
+                                   (np.where(df[mut] == 'resistant', df[mut], None)), df[mut])
+        df.drop(axis=1, labels=[mutation], inplace=True)
+    df.to_csv(tab, sep='\t')
+
+
 def remove_file_if_you_can(filepath):
     try:
         os.remove(filepath)
@@ -177,4 +210,5 @@ if '__main__' == __name__:
     output = params.output if params.output else '{}.drms.tab'.format(params.fasta)
 
     extract_sdrms(params.fasta, output, 1000)
+    prettify_sdrms(output)
 
