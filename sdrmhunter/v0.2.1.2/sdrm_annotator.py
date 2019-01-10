@@ -142,6 +142,10 @@ def prettify_sdrms(tab):
     :return: prettified SDRM file
     """
     df = pd.read_table(tab, header=0, index_col=0)
+
+    df['Sierra subtype'] = df['subtypeText'].fillna('').str.replace('[\s\(\d+\.\d+\%\)]{0,1}', '')
+    df.drop(['subtypeText'], axis=1, inplace=True)
+
     mutations = [_ for _ in df.columns if _.startswith('RT:') or _.startswith('PR:')]
     for mutation in mutations:
         df[mutation] = df[mutation].fillna(False).astype(bool).map(
