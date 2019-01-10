@@ -154,7 +154,7 @@ def prettify_sdrms(tab):
     # search for multiple possible letter outcome mutations and replace the corresponding real ones with unknown state,
     # i.e. M184IV would make M184I and M184V unknown
     for mutation in mutations:
-        to_letters = re.search(r'[A-Z]+$', mutation)[0]
+        to_letters = re.search(r'[A-Z]+$', mutation).group(0)
         if len(to_letters) == 1:
             continue
         start = re.sub(r'[A-Z]+$', '', mutation)
