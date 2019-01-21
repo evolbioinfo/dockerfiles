@@ -155,16 +155,18 @@ def prettify_sdrms(tab):
     # i.e. M184IV would make M184I and M184V unknown
     for mutation in mutations:
         if mutation:
-            to_letters = re.search(r'[A-Z]+$', mutation)
-            if to_letters is not None:
-                to_letters = to_letters.group(0)
-                if len(to_letters) > 1 and to_letters.lower() not in ['insertion', 'deletion']:
-                    start = re.sub(r'[A-Z]+$', '', mutation)
-                    for mut in ('{}{}'.format(start, letter) for letter in to_letters):
-                        if mut in df.columns:
-                            df[mut] = np.where(df[mutation] == 'resistant',
-                                               (np.where(df[mut] == 'resistant', df[mut], None)), df[mut])
-        df.drop(axis=1, labels=[mutation], inplace=True)
+            to_letters = re.search(r'[A-Za-z]+$', mutation)
+            if to_letters is None:
+                continue
+            to_letters = to_letters.group(0)
+            if len(to_letters) == 1 or re.search(r'(insertion)|(deletion)', to_letters.lower()):
+                continue
+            start = re.sub(r'[A-Za-z]+$', '', mutation)
+            for mut in ('{}{}'.format(start, letter) for letter in to_letters):
+                if mut in df.columns:
+                    df[mut] = np.where(df[mutation] == 'resistant',
+                                       (np.where(df[mut] == 'resistant', df[mut], None)), df[mut])
+            df.drop(axis=1, labels=[mutation], inplace=True)
     df.to_csv(tab, sep='\t')
 
 
