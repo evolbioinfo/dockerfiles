@@ -18,6 +18,7 @@ RUN apt-get update --fix-missing \
     && rm -rf sms-1.8.1.zip \
     && cd sms-1.8.1 \
     && make \
+    && chmod +x sms.sh \
     && rm -rf phyml-src/phyml-20120412* \
     && cd /usr/local \
     && rm -rf /var/lib/apt/lists/* \
