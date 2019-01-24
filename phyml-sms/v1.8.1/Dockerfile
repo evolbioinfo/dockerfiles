@@ -18,7 +18,11 @@ RUN apt-get update --fix-missing \
     && rm -rf sms-1.8.1.zip \
     && cd sms-1.8.1 \
     && make \
-    && chmod +x sms.sh \
+    && find . -type f -exec sh -c 'chmod 644 {}' \; \
+    && find . -type d -exec sh -c 'chmod 755 {}' \; \
+    && find . -name "*.sh" -exec sh -c 'chmod 755 {}' \; \
+    && find . -name "*.R" -exec sh -c 'chmod 755 {}' \; \
+    && chmod +x phyml-src/phyml \
     && rm -rf phyml-src/phyml-20120412* \
     && cd /usr/local \
     && rm -rf /var/lib/apt/lists/* \
