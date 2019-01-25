@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc \
+    && apt-get install -y wget gcc parallel \
     && cd /usr/local/ \
     && wget http://www.microbesonline.org/fasttree/FastTree-2.1.10.c \
     && gcc -DNO_SSE -O3 -finline-functions -funroll-loops -Wall -o bin/FastTree FastTree-2.1.10.c -lm \
