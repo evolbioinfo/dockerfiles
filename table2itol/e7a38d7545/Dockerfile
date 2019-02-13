@@ -21,7 +21,7 @@ MAINTAINER Mathieu Moslonka-Lefebvre <mathieu.moslonka-lefebvre@pasteur.fr>
 ENV CRANREPO="'http://cran.univ-paris1.fr/'"
 ENV RLIBPATH="'/usr/local/lib/R/site-library/'"
 
-RUN apt-get update && apt-get install -y procps                       \
+RUN apt-get update && apt-get install -y procps libxml2 libxml2-dev   \
   && R -e "install.packages('optparse',lib=$RLIBPATH,repo=$CRANREPO)"  \
   && R -e "install.packages('plotrix',lib=$RLIBPATH,repo=$CRANREPO)"     \
   && R -e "install.packages('readxl',lib=$RLIBPATH,repo=$CRANREPO)" \
