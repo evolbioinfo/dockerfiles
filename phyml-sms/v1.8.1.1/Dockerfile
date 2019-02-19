@@ -10,9 +10,7 @@ MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 ENV PATH="/usr/local/sms-1.8.1/:${PATH}"
 
-RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc make bc \
-    && cd /usr/local/ \
+RUN cd /usr/local/ \
     && wget http://www.atgc-montpellier.fr/download/sources/sms/sms-1.8.1.zip \
     && unzip sms-1.8.1.zip \
     && rm -rf sms-1.8.1.zip \
