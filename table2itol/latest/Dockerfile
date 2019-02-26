@@ -13,7 +13,7 @@
 # v3.4.3
 
 # base image: r-base:3.4.3
-FROM r-base:3.4.3
+FROM evolbioinfo/r-base:v3.4.3
 
 # File Author / Maintainer
 MAINTAINER Mathieu Moslonka-Lefebvre <mathieu.moslonka-lefebvre@pasteur.fr>
