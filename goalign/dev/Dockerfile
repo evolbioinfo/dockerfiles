@@ -1,5 +1,5 @@
 # goalign
-# https://github.com/fredericlemoine/goalign/
+# https://github.com/evolbioinfo/goalign/
 # dev
 
 # base image: Ubuntu
@@ -19,10 +19,10 @@ RUN apt-get update --fix-missing \
     && rm -f go1.9.2.linux-amd64.tar.gz \
     && mkdir -p /gopath/ \
     && go get -u github.com/golang/dep/cmd/dep \
-    && mkdir -p /gopath/src/github.com/fredericlemoine/ \
-    && cd /gopath/src/github.com/fredericlemoine/ \
-    && git clone https://github.com/fredericlemoine/goalign.git \
-    && cd /gopath/src/github.com/fredericlemoine/goalign \
+    && mkdir -p /gopath/src/github.com/evolbioinfo/ \
+    && cd /gopath/src/github.com/evolbioinfo/ \
+    && git clone https://github.com/evolbioinfo/goalign.git \
+    && cd /gopath/src/github.com/evolbioinfo/goalign \
     && git checkout dev \
     && make dep && make build \
     && mv goalign /usr/local/bin/ \
