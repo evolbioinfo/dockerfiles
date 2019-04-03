@@ -21,6 +21,7 @@ ENV RLIBPATH="'/usr/local/lib/R/site-library/'"
 
 RUN R -e "install.packages('devtools',lib=$RLIBPATH,repo=$CRANREPO)"  \
    && R -e "install.packages('getopt',lib=$RLIBPATH,repo=$CRANREPO)"  \
+   && R -e "install.packages('foreach',lib=$RLIBPATH,repo=$CRANREPO)"  \
   && R -e "library(devtools); install_github( 'emvolz/treedater')"  \
   && apt-get autoremove -y                                            \
   && apt-get clean                                                    \
