@@ -15,7 +15,7 @@ RUN apt-get update                                                              
     && apt-get install -y procps libmagick++-dev libudunits2-dev libgdal-dev libxml2-dev         \
                           libssl-dev libcurl4-gnutls-dev libgl-dev libglu-dev perl               \
                           libspreadsheet-parseexcel-simple-perl libspreadsheet-parsexlsx-perl    \
-                          xlsx2csv catdoc                                                        \
+                          xlsx2csv catdoc csvkit                                                 \
     && R -e "install.packages('glue',lib=$RLIBPATH,repo=$CRANREPO)"                              \
     && R -e "install.packages('gdata',lib=$RLIBPATH,repo=$CRANREPO, dep=TRUE)"                   \
     && R -e "install.packages('phangorn',lib=$RLIBPATH,repo=$CRANREPO, dep=TRUE)"                \
