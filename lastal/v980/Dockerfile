@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y unzip wget make g++ zlib1g zlib1g-dev \
+    && apt-get install -y unzip wget make g++ zlib1g zlib1g-dev python \
     && wget http://last.cbrc.jp/last-980.zip \
     && unzip last-980.zip \
     && cd last-980/ \
