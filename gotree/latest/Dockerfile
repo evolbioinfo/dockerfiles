@@ -19,10 +19,10 @@ RUN apt-get update --fix-missing \
     && rm -f go1.10.3.linux-amd64.tar.gz \
     && mkdir -p /gopath/ \
     && go get -u github.com/golang/dep/cmd/dep \
-    && mkdir -p /gopath/src/github.com/fredericlemoine/ \
-    && cd /gopath/src/github.com/fredericlemoine/ \
-    && git clone https://github.com/fredericlemoine/gotree.git \
-    && cd /gopath/src/github.com/fredericlemoine/gotree \
+    && mkdir -p /gopath/src/github.com/evolbioinfo/ \
+    && cd /gopath/src/github.com/evolbioinfo/ \
+    && git clone https://github.com/evolbioinfo/gotree.git \
+    && cd /gopath/src/github.com/evolbioinfo/gotree \
     && make dep && make build \
     && mv gotree /usr/local/bin/ \
     && make test \
