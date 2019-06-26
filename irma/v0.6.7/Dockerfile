@@ -16,6 +16,8 @@ RUN apt-get update --fix-missing \
     && mv * /usr/local/bin/ \
     && cd ../ \
     && rm -rf flu-amd-201704.zip flu-amd \
+    && cat /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-minion.sh > /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-miniontmp.sh \
+    && echo "TMP=\$TMPDIR" >> /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-miniontmp.sh \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
