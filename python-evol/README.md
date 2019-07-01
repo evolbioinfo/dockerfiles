@@ -9,4 +9,5 @@ Python3 with libraries useful for Phylogenetical analyses:
 * scipy
 * matplotlib
 * hdx-python-country
+* pysam
 
