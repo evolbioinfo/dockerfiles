@@ -13,7 +13,7 @@ ENV KRAKEN_DIR=/usr/local/kraken
 ENV PATH ${KRAKEN_DIR}:$PATH
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget make cmake g++ ncbi-blast+=2.2.31-4 \
+    && apt-get install -y wget make cmake g++ ncbi-blast+=2.2.31-4 rsync\
     && cd /usr/local/ \
     && wget https://github.com/DerrickWood/kraken2/archive/${KRAKEN_VERSION}.tar.gz \
     && tar -xzvf ${KRAKEN_VERSION}.tar.gz \
