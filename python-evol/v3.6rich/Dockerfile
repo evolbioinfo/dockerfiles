@@ -23,8 +23,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 # File Author / Maintainer
 MAINTAINER Anna Zhukova <anna.zhukova@pasteur.fr>
 
-RUN apt-get install tk
-
 # Install packages
 RUN cd /usr/local/ && pip3 install --no-cache-dir ete3==3.1.1 biopython==1.72 pandas==0.23.4 scipy==1.1.0 matplotlib==3.0.2 hdx-python-country==1.5.4 numpy==1.15.4 pysam==0.15.2 seaborn==0.9.0 sierrapy==0.2.1 itolapi==3.0.3
 
