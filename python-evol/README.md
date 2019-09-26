@@ -1,6 +1,6 @@
 # python-evol
 
-Python3 with libraries useful for Phylogenetical analyses:
+Python3 with libraries useful for phylogenetical analyses:
 
 * ete3
 * biopython
@@ -10,4 +10,10 @@ Python3 with libraries useful for Phylogenetical analyses:
 * matplotlib
 * hdx-python-country
 * pysam
+
+In the rich version also:
+
+* seaborn
+* sierrapy
+* itolapi
 
