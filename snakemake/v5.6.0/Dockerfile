@@ -9,6 +9,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 # File Author / Maintainer
 MAINTAINER Anna Zhukova <anna.zhukova@pasteur.fr>
 
+
+RUN apt-get update --fix-missing \
+    && apt-get install -y wget gcc g++ make zip
+
 # Install snakemake
 RUN cd /usr/local/ && pip3 install --no-cache-dir snakemake==5.6.0
 
