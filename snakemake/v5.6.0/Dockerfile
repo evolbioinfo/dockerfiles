@@ -11,7 +11,7 @@ MAINTAINER Anna Zhukova <anna.zhukova@pasteur.fr>
 
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc g++ make zip
+    && apt-get install -y wget gcc g++ make zip singularity graphviz
 
 # Install snakemake
 RUN cd /usr/local/ && pip3 install --no-cache-dir snakemake==5.6.0
