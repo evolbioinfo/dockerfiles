@@ -1,5 +1,5 @@
 # goalign
-# https://github.com/fredericlemoine/goalign/
+# https://github.com/evolbioinfo/goalign/
 # v0.3.1
 
 # base image: Ubuntu
@@ -14,15 +14,15 @@ ENV GOPATH=/gopath
 RUN apt-get update --fix-missing \
     && apt-get install -y wget git make \
     && cd /usr/local \
-    && wget --no-check-certificate https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz \
-    && tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz \
-    && rm -f go1.9.2.linux-amd64.tar.gz \
+    && wget --no-check-certificate https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz \
+    && tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz \
+    && rm -f go1.10.3.linux-amd64.tar.gz \
     && mkdir -p /gopath/ \
     && go get -u github.com/golang/dep/cmd/dep \
-    && mkdir -p /gopath/src/github.com/fredericlemoine/ \
-    && cd /gopath/src/github.com/fredericlemoine/ \
-    && git clone https://github.com/fredericlemoine/goalign.git \
-    && cd /gopath/src/github.com/fredericlemoine/goalign \
+    && mkdir -p /gopath/src/github.com/evolbioinfo/ \
+    && cd /gopath/src/github.com/evolbioinfo/ \
+    && git clone https://github.com/evolbioinfo/goalign.git \
+    && cd /gopath/src/github.com/evolbioinfo/goalign \
     && git checkout v0.3.1 \
     && make dep && make build \
     && mv goalign /usr/local/bin/ \
