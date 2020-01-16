@@ -14,7 +14,7 @@ FROM ubuntu:xenial
 MAINTAINER Anna Zhukova <anna.zhukova@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc make bc unzip r-base libssl-dev libcurl4-openssl-dev libssl-dev\
+    && apt-get install -y wget gcc make bc unzip r-base libssl-dev libcurl4-openssl-dev libssl-dev libxml2-dev\
     && apt-get autoremove
 
 ENV CRANREPO="'http://cran.univ-paris1.fr/'"
