@@ -18,8 +18,8 @@ RUN apt-get update --fix-missing \
     && rm -rf flu-amd-201909.zip flu-amd \
     && cat /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-minion.sh > /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-miniontmp.sh \
     && echo "TMP=\$TMPDIR" >> /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-miniontmp.sh \
-    && cat /usr/local/bin/IRMA_RES/modules/FLU/config/FLU.sh > /usr/local/bin/IRMA_RES/modules/FLU/config/FLUtmp.sh \
-    && echo "TMP=\$TMPDIR" >> /usr/local/bin/IRMA_RES/modules/FLU/config/FLUtmp.sh \
+    && cat /usr/local/bin/IRMA_RES/modules/FLU/config/FLU.sh > /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-tmp.sh \
+    && echo "TMP=\$TMPDIR" >> /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-tmp.sh \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
