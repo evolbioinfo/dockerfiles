@@ -4,7 +4,7 @@ FROM evolbioinfo/python:v3.6.9
 USER root
 
 # Install jphmm_tools
-RUN cd /usr/local/ && pip3 install --no-cache-dir jphmm_tools==0.1
+RUN cd /usr/local/ && pip3 install --no-cache-dir jphmm_tools==0.1.1
 
 # Switch to your new user in the docker image
 USER evolbioinfo
