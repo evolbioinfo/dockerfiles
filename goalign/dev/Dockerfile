@@ -11,6 +11,7 @@ MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
 ENV VERSION=dev
+ENV PREFIXVERSION=""
 ENV GOVERSION=1.13.6
 ENV CGO_ENABLED=0
 
@@ -26,7 +27,7 @@ RUN apt-get update --fix-missing \
     && cd /gopath/src/github.com/evolbioinfo/ \
     && git clone https://github.com/evolbioinfo/goalign.git \
     && cd /gopath/src/github.com/evolbioinfo/goalign \
-    && git checkout v${VERSION} \
+    && git checkout ${PREFIXVERSION}${VERSION} \
     && make dep && make build && make test \
     && bash ./test.sh \
     && mv goalign /usr/local/bin/ \
