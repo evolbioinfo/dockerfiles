@@ -10,6 +10,8 @@ MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 ENV HMMERVERSION="3.3"
 
+ENV PATH="/usr/local/hmmer-3.3/easel/miniapps/:${PATH}"
+
 RUN apt-get update --fix-missing \
     && apt-get install -y wget make gcc \
     && cd /usr/local/ \
