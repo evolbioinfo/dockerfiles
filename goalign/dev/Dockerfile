@@ -1,6 +1,6 @@
 # goalign
 # https://github.com/evolbioinfo/goalign/
-# v0.3.2
+# version dev
 
 # base image: Ubuntu
 FROM ubuntu:16.04
