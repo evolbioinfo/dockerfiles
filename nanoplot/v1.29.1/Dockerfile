@@ -13,8 +13,16 @@ ENV VERSION=1.29.1
 # Switch to your new user in the docker image
 USER root
 
+RUN apt-get update \
+    && apt-get install -y gcc
+
 # Install treetime
-RUN cd /usr/local/ && pip3 install --no-cache-dir NanoPlot==${VERSION}
+RUN cd /usr/local/ && pip3 install --no-cache-dir NanoPlot==${VERSION} psutil
+
+RUN apt-get remove -y gcc \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* 
 
 # Switch to your new user in the docker image
 USER evolbioinfo
