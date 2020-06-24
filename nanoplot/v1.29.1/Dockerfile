@@ -17,7 +17,7 @@ RUN apt-get update \
     && apt-get install -y gcc
 
 # Install treetime
-RUN cd /usr/local/ && pip3 install --no-cache-dir NanoPlot==${VERSION} psutil
+RUN cd /usr/local/ && pip3 install --no-cache-dir NanoPlot==${VERSION} psutil requests
 
 RUN apt-get remove -y gcc \
     && apt-get autoremove -y \
