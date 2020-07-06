@@ -26,7 +26,7 @@ RUN apt-get update --fix-missing \
     && make install \
     && rm -rf /usr/local/bcftools-${VERSION} \
     && rm -rf /usr/local/htslib-${VERSION} \
-    && apt-get remove -y wget gcc make libbz2-dev zlib1g-dev liblzma-dev libcurl4-openssl-dev libssl-dev libncurses-dev bzip2 \
+    && apt-get remove -y wget gcc make libbz2-dev zlib1g-dev liblzma-dev libncurses-dev bzip2 \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
