@@ -15,6 +15,7 @@ RUN apt-get update --fix-missing \
     && cd /usr/local/ \
     && wget http://www.microbesonline.org/fasttree/FastTree-${VERSION}.c \
     && gcc -DNO_SSE -O3 -finline-functions -funroll-loops -Wall -o bin/FastTree FastTree-${VERSION}.c -lm \
+    && gcc -DNO_SSE -O3 -finline-functions -funroll-loops -Wall -o bin/FastTree-double -DUSE_DOUBLE FastTree-${VERSION}.c -lm \
     && rm FastTree-${VERSION}.c \
     && apt-get remove -y wget gcc \
     && apt-get autoremove -y \
