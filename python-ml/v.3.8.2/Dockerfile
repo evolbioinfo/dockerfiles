@@ -10,9 +10,9 @@ USER root
 
 # Install pacakges
 RUN cd /usr/local && pip3 install --no-cache-dir \
-      pandas=1.1.1 \
-      scikit-learn=0.23.2 \
-      numpy=1.19.1
+      pandas==1.1.1 \
+      scikit-learn==0.23.2 \
+      numpy==1.19.1
 
 # Switch to new user
 USER evolbioinfo
