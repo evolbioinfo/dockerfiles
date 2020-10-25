@@ -8,11 +8,11 @@ MAINTAINER Frederic Lemoine
 
 RUN mkdir /pasteur
 
+COPY user-settings.mkfg /root/.ncbi/
+
 RUN apt-get update --fix-missing \
     && apt-get install -q -y wget \
     && wget -q https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.10.8/sratoolkit.2.10.8-ubuntu64.tar.gz -O- | tar xz -C /opt/ \
-    && mkdir /opt/sratoolkit \
-    && ln -s /opt/sratoolkit.2.10.8-ubuntu64/bin/* /opt/sratoolkit/ \
     && groupadd -g 1001 srauser \
     && useradd -d /home/srauser -u 1001 -g 1001 -m -s /bin/bash srauser
 
@@ -33,6 +33,6 @@ RUN apt-get remove -q -y wget \
     && rm -rf /var/lib/apt/lists/*
 
 ENV HOME /root/
-ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/home/srauser/.aspera/connect/bin/:/opt/sratoolkit
+ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/home/srauser/.aspera/connect/bin/:/opt/sratoolkit.2.10.8-ubuntu64/bin/
 ENV ASCPKEY /home/srauser/.aspera/connect/etc/asperaweb_id_dsa.openssh
 
