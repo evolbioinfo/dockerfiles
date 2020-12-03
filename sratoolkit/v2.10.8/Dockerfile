@@ -11,7 +11,7 @@ RUN mkdir /pasteur
 COPY user-settings.mkfg /root/.ncbi/
 
 RUN apt-get update --fix-missing \
-    && apt-get install -q -y wget \
+    && apt-get install -q -y wget pigz \
     && wget -q https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.10.8/sratoolkit.2.10.8-ubuntu64.tar.gz -O- | tar xz -C /opt/ \
     && groupadd -g 1001 srauser \
     && useradd -d /home/srauser -u 1001 -g 1001 -m -s /bin/bash srauser
