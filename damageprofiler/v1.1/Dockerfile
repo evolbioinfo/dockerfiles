@@ -13,7 +13,7 @@ COPY DamageProfiler.sh /usr/local/bin/DamageProfiler
 ENV JAVA_OPTS="-Xmx2g"
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget openjdk-14-jre \
+    && apt-get install -y wget openjdk-14-jre zless\
     && cd /usr/local/ \
     && wget https://github.com/Integrative-Transcriptomics/DamageProfiler/releases/download/v1.1/DamageProfiler-1.1-java11.jar \
     && chmod +x /usr/local/bin/DamageProfiler \
