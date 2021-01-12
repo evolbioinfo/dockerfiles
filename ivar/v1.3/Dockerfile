@@ -13,7 +13,7 @@ ENV VERSION=1.3
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc make libbz2-dev zlib1g zlib1g-dev liblzma5 liblzma-dev libncurses5 libncurses5-dev bzip2 autoreconf \
+    && apt-get install -y wget gcc g++ make libbz2-dev zlib1g zlib1g-dev liblzma5 liblzma-dev libncurses5 libncurses5-dev bzip2 autoconf \
     && cd /usr/local/ \
     && wget -O samtools.tar.bz2 https://github.com/samtools/samtools/releases/download/${SAMTOOLSVERSION}/samtools-${SAMTOOLSVERSION}.tar.bz2 \
     && tar -xjvf samtools.tar.bz2 \
@@ -34,7 +34,7 @@ RUN apt-get update --fix-missing \
     && ./autogen.sh && ./configure && make && make install \
     && cd /usr/local/ \
     && rm -rf ivar-${VERSION} \
-    && apt-get remove -y wget gcc make libbz2-dev zlib1g-dev liblzma-dev libncurses-dev bzip2 \
+    && apt-get remove -y wget gcc g++ make libbz2-dev zlib1g-dev liblzma-dev libncurses-dev bzip2 autoconf \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
