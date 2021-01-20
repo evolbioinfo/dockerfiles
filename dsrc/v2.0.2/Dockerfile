@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris"
 
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget g++ make libboost-all-dev \
+    && apt-get install -y wget g++ make libboost-all-dev pigz \
     && cd /usr/local/ \
     && wget https://github.com/refresh-bio/DSRC/archive/v${VERSION}.tar.gz \
     && tar -xzvf v${VERSION}.tar.gz \
