@@ -11,13 +11,14 @@ LABEL maintainer="frederic.lemoine@pasteur.fr"
 ENV VERSION=1.11
 
 ENV PATH $PATH:/usr/local/IGV_Linux_2.8.13
+ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris"
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y unzip xvfb wget libfontconfig1 libxrender1 libxtst6 libxi6 \
+    && apt-get install -y unzip default-jdk xvfb wget xorg \
     && cd /usr/local/ \
-    && wget https://data.broadinstitute.org/igv/projects/downloads/2.8/IGV_Linux_2.8.13_WithJava.zip \
-    && unzip IGV_Linux_2.8.13_WithJava.zip \
-    && cd IGV_Linux_2.8.13 \
+    && wget https://data.broadinstitute.org/igv/projects/downloads/2.8/IGV_2.8.13.zip \
+    && unzip IGV_2.8.13.zip \
+    && cd IGV_2.8.13 \
     && mv igv.sh igv \
     && apt-get remove -y unzip \
     && apt-get autoremove -y \
