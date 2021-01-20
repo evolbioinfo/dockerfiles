@@ -10,7 +10,7 @@ LABEL maintainer="frederic.lemoine@pasteur.fr"
 
 ENV VERSION=1.11
 
-ENV PATH $PATH:/usr/local/IGV_Linux_2.8.13
+ENV PATH $PATH:/usr/local/IGV_2.8.13
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris"
 
 RUN apt-get update --fix-missing \
