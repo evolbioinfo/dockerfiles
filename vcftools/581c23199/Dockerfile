@@ -10,6 +10,7 @@ FROM ubuntu:20.04
 MAINTAINER Anna Zhukova <anna.zhukova@pasteur.fr>
 
 ENV VERSION 581c231991cb4db017b92eabc573e17128541ab5
+ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris"
 
 RUN apt-get update --fix-missing \
     && apt-get install -y git wget make gcc autoconf g++ pkg-config zlib1g-dev \
