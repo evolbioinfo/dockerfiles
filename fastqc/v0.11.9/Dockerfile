@@ -8,6 +8,8 @@ FROM ubuntu:20.04
 # File Author / Maintainer
 LABEL maintainer=frederic.lemoine@pasteur.fr
 
+ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris"
+
 RUN apt-get update --fix-missing \
     && apt-get install -y wget openjdk-8-jre perl unzip \
     && cd /usr/local/ \
