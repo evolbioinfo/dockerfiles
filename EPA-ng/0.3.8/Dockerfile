@@ -18,7 +18,7 @@ RUN apt-get update --fix-missing \
     && cd epa-ng-0.3.8 \
     && make \
     && rm -rf /usr/local/epa-ng-0.3.8 \
-    && apt-get remove -y wget g++ make autotools-dev libtool flex bison cmake automake autoconf \
+    && apt-get remove -y wget g++ make autotools-dev libtool flex bison cmake automake autoconf zlib1g-dev \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
