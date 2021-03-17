@@ -6,7 +6,7 @@
 FROM ubuntu:16.04
 
 # File Author / Maintainer
-MAINTAINER Adrien Le Meur <Adrien.le-meur@pasteur.fr>
+LABEL maintainer=adrien.le-meur@pasteur.fr
 
 RUN apt-get update --fix-missing \
     && apt-get install -y wget g++ make autotools-dev libtool flex bison cmake automake autoconf zlib1g-dev libgomp1 \
