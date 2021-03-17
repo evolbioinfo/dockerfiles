@@ -3,10 +3,12 @@
 # v2.5
 
 # base image: Ubuntu
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 # File Author / Maintainer
 LABEL maintainer=adrien.le-meur@pasteur.fr
+
+ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris"
 
 RUN apt-get update --fix-missing \
 	&& apt-get install -y wget g++ git libboost-all-dev\
