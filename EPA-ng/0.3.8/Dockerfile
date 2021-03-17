@@ -24,4 +24,4 @@ RUN apt-get update --fix-missing \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir /pasteur
 
-ENTRYPOINT ["/usr/local/bin/"]
+ENTRYPOINT ["/usr/local/bin/epa-ng"]
