@@ -17,7 +17,7 @@ RUN apt-get update --fix-missing \
 	&& mkdir /usr/local/bin/RAPPAS \
 	&& mv /usr/local/RAPPAS/dist/RAPPAS.jar /usr/local/bin/RAPPAS \
 	&& rm -rf /usr/local/RAPPAS \
-	&& printf "#!/bin/bash \n JAVA_OPTS=\"${JAVA_OPTS:='-Xmx2g'}\" \n java $JAVA_OPTS -jar /usr/local/bin/RAPPAS/RAPPAS.jar \${1+\"\$@\"}" > /usr/local/bin/RAPPAS/RAPPAS.sh \
+	&& printf "#!/bin/bash \n JAVA_OPTS=\"\${JAVA_OPTS:='-Xmx2g'}\" \n java $JAVA_OPTS -jar /usr/local/bin/RAPPAS/RAPPAS.jar \${1+\"\$@\"}" > /usr/local/bin/RAPPAS/RAPPAS.sh \
 	&& chmod +x /usr/local/bin/RAPPAS/RAPPAS.sh \
 	&& apt-get remove -y ant git \
 	&& apt-get autoremove -y \
