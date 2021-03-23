@@ -8,7 +8,7 @@ FROM ubuntu:20.04
 # File Author / Maintainer
 LABEL maintainer=adrien.le-meur@pasteur.fr
 
-COPY RAPPAS.sh /usr/local/bin/
+COPY RAPPAS.sh /usr/local/bin/RAPPAS
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris"
 
@@ -22,11 +22,11 @@ RUN apt-get update --fix-missing \
 	&& ant -f build-cli.xml \
 	&& mv /usr/local/RAPPAS/dist/RAPPAS.jar /usr/local/bin/ \
 	&& rm -rf /usr/local/RAPPAS \
-	&& chmod +x /usr/local/bin/RAPPAS.sh \
+	&& chmod +x /usr/local/bin/RAPPAS \
 	&& apt-get remove -y ant git \
 	&& apt-get autoremove -y \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir /pasteur
 
-ENTRYPOINT ["/usr/local/bin/RAPPAS.sh"]
+ENTRYPOINT ["/usr/local/bin/RAPPAS"]
