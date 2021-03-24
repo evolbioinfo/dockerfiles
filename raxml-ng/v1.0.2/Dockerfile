@@ -3,17 +3,19 @@
 # v1.0.2
 
 # base image: Ubuntu
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 # File Author / Maintainer
-MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
+LABEL maintainer=frederic.lemoine@pasteur.fr
 
+ENV RAXMLNGVERSION=1.0.2
+ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris"
 RUN apt-get update --fix-missing \
     && apt-get install -y git flex bison libgmp3-dev cmake make g++ \
     && cd /usr/local/ \
     && git clone --recursive https://github.com/amkozlov/raxml-ng \
     && cd raxml-ng \
-    && git checkout 1.0.2 \
+    && git checkout ${RAXMLNGVERSION} \
     && mkdir build && cd build \
     && cmake .. \
     && make \
