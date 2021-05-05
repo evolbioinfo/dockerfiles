@@ -10,12 +10,12 @@ RUN apt-get update --fix-missing \
     && apt-get install -y wget gcc g++ make zip \ 
     && cd /usr/local/ \
     && wget https://github.com/tothuhien/lsd2/archive/v1.9.9.zip \
-    && unzip lsd2-1.9.9.zip \
+    && unzip v1.9.9.zip \
     && cd lsd2-1.9.9/src/ \
     && make \
     && mv lsd2 /usr/local/bin/lsd2 \
     && cd /usr/local \
-    && rm -rf lsd2-v1.9.9.zip \
+    && rm -rf v1.9.9.zip \
     && rm -rf lsd2-1.9.9/ \
     && apt-get remove -y wget gcc g++ make zip \
     && apt-get autoremove -y \
