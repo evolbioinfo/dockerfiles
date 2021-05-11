@@ -12,7 +12,7 @@ ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
 ENV VERSION=dev
 ENV PREFIXVERSION=""
-ENV GOVERSION=1.13.6
+ENV GOVERSION=1.16.4
 ENV CGO_ENABLED=0
 
 RUN apt-get update --fix-missing \
