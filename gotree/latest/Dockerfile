@@ -1,6 +1,6 @@
 # gotree
 # https://github.com/evolbioinfo/gotree/
-# v0.4.0
+# v0.4.1
 
 # base image: Ubuntu
 FROM ubuntu:16.04
@@ -10,7 +10,7 @@ LABEL maintainer="frederic.lemoine@pasteur.fr"
 
 ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
-ENV VERSION=0.4.0
+ENV VERSION=0.4.1
 ENV GOVERSION=1.13.6
 ENV CGO_ENABLED=0
 
