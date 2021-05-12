@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget \
+    && apt-get install -y wget curl \
     && wget -O /usr/local/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 \
     && chmod +x /usr/local/bin/jq \
     && mkdir /pasteur \
