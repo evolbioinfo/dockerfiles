@@ -11,6 +11,9 @@ MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 ENV KRAKEN_VERSION v2.0.8-beta
 ENV KRAKEN_DIR=/usr/local/kraken
 ENV PATH ${KRAKEN_DIR}:$PATH
+ENV LC_ALL="en_US.UTF-8"
+ENV LANG="en_US.UTF-8"
+ENV LANGUAGE="en_US.UTF-8"
 
 RUN apt-get update --fix-missing \
     && apt-get install -y wget make cmake g++ ncbi-blast+=2.2.31-4 rsync\
