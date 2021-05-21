@@ -34,6 +34,7 @@ RUN R -e "install.packages('ape',lib=$RLIBPATH,repo=$CRANREPO)"      \
   && R -e "install.packages('plyr',lib=$RLIBPATH,repo=$CRANREPO)"     \
   && R -e "install.packages('reshape2',lib=$RLIBPATH,repo=$CRANREPO)" \
   && R -e "install.packages('dplyr',lib=$RLIBPATH,repo=$CRANREPO)"    \
+  && R -e "install.packages('TreeDist',lib=$RLIBPATH,repo=$CRANREPO)" \
   && R -e "install.packages('tidyr',lib=$RLIBPATH,repo=$CRANREPO)"    \
   && R -e "install.packages('lubridate',lib=$RLIBPATH,repo=$CRANREPO)"\
   && R -e "library(devtools); withr::with_libpaths(new = $RLIBPATH, install_github(\"olli0601/big.phylo\",INSTALL_opts=\"--no-staged-install\"))" \
