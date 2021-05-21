@@ -10,7 +10,7 @@
 # - Phylogram
 # - Admixtools
 # https://cran.r-project.org/
-# v4.0.2
+# v4.1.0
 
 # base image: r-base:4.1.0
 FROM r-base:4.1.0
@@ -23,11 +23,10 @@ ENV RLIBPATH="'/usr/local/lib/R/site-library/'"
 
 RUN apt-get update && apt-get install -y procps libssl-dev            \
               libcurl4-gnutls-dev curl git libopenmpi-dev             \
-	      openmpi-bin openmpi-doc libxml2-dev apt-transport-https
-
-RUN R -e "install.packages('devtools',lib=$RLIBPATH,repo=$CRANREPO)"
-RUN R -e "library(devtools); withr::with_libpaths(new = $RLIBPATH, install_github(\"uqrmaie1/admixtools\",INSTALL_opts=\"--no-staged-install\"))"
-RUN R -e "install.packages('ape',lib=$RLIBPATH,repo=$CRANREPO)"      \
+	      openmpi-bin openmpi-doc libxml2-dev apt-transport-https \
+  && R -e "install.packages('devtools',lib=$RLIBPATH,repo=$CRANREPO)" \
+  && R -e "library(devtools); withr::with_libpaths(new = $RLIBPATH, install_github(\"uqrmaie1/admixtools\",INSTALL_opts=\"--no-staged-install\"))" \
+  && R -e "install.packages('ape',lib=$RLIBPATH,repo=$CRANREPO)"      \
   && R -e "install.packages('treedater',lib=$RLIBPATH,repo=$CRANREPO)"\
   && R -e "install.packages('phylogram',lib=$RLIBPATH,repo=$CRANREPO)"\
   && R -e "install.packages('ggplot2',lib=$RLIBPATH,repo=$CRANREPO)"  \
