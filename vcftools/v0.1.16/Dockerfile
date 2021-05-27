@@ -10,7 +10,7 @@ FROM ubuntu:16.04
 MAINTAINER Anna Zhukova <anna.zhukova@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget make gcc autoconf g++ pkg-config zlib1g-dev perl data-dumper \
+    && apt-get install -y wget make gcc autoconf g++ pkg-config zlib1g-dev perl \
     && cd /usr/local/ \
     && wget -O vcftools-0.1.16.tar.gz https://github.com/vcftools/vcftools/archive/v0.1.16.tar.gz \
     && tar xvzf vcftools-0.1.16.tar.gz \
