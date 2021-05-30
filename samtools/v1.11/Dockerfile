@@ -23,6 +23,24 @@ RUN apt-get update --fix-missing \
     && make install \
     && cd /usr/local \
     && rm -rf /usr/local/samtools-${VERSION} \
+    && wget https://github.com/samtools/htslib/releases/download/${VERSION}/htslib-${VERSION}.tar.bz2 \ 
+    && tar -xjvf htslib-${VERSION}.tar.bz2 \
+    && rm -rf htslib-${VERSION}.tar.bz2 \
+    && cd htslib-${VERSION} \
+    && ./configure \
+    && make \
+    && make install \
+    && cd /usr/local \
+    && rm -rf /usr/local/htslib-${VERSION} \
+    && wget https://github.com/samtools/bcftools/releases/download/${VERSION}/bcftools-${VERSION}.tar.bz2 \ 
+    && tar -xjvf bcftools-${VERSION}.tar.bz2 \
+    && rm -rf bcftools-${VERSION}.tar.bz2 \
+    && cd bcftools-${VERSION} \
+    && ./configure \
+    && make \
+    && make install \
+    && cd /usr/local \
+    && rm -rf /usr/local/bcftools-${VERSION} \
     && apt-get remove -y wget gcc make libbz2-dev zlib1g-dev liblzma-dev libncurses-dev bzip2 \
     && apt-get autoremove -y \
     && apt-get clean \
