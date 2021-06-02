@@ -13,17 +13,17 @@ ENV RLIBPATH="'/usr/local/lib/R/site-library/'"
 ENV VERSION="v0.1"
 ENV HTSLIBVERSION="1.12"
 
-RUN apt-get update && apt-get install -y git libbz2-dev zlib1g zlib1g-dev liblzma5 liblzma-dev libncurses5 libncurses5-dev python3
-
-RUN R -e "install.packages('optparse',lib=$RLIBPATH,repo=$CRANREPO)" \
+COPY pathPhynder.sh /usr/local/bin/pathPhynder
+RUN apt-get update && apt-get install -y git libbz2-dev zlib1g zlib1g-dev liblzma5 liblzma-dev \
+    	    	      	      	         libncurses5 libncurses5-dev python3 libcurl4-gnutls-dev procps \
+	&& R -e "install.packages('maps',lib=$RLIBPATH,repo=$CRANREPO)" \
 	&& R -e "install.packages('phytools',lib=$RLIBPATH,repo=$CRANREPO)" \
+	&& R -e "install.packages('optparse',lib=$RLIBPATH,repo=$CRANREPO)" \
 	&& R -e "install.packages('scales',lib=$RLIBPATH,repo=$CRANREPO)" \
 	&& cd /usr/local/ \
 	&& git clone https://github.com/ruidlpm/pathPhynder.git \
 	&& cd pathPhynder \
 	&& git checkout $VERSION \
-	&& echo 'alias pathPhynder="Rscript /usr/local/pathPhynder/pathPhynder.R"' >> ~/.bashrc \
-	&& apt-get install -y libcurl4-gnutls-dev \
 	&& cd /usr/local/ \
 	&& git clone https://github.com/samtools/htslib.git \
 	&& cd htslib \
@@ -39,6 +39,7 @@ RUN R -e "install.packages('optparse',lib=$RLIBPATH,repo=$CRANREPO)" \
 	&& mv phynder /usr/local/bin/ \
 	&& cd .. \
 	&& rm -rf phynder \
+	&& chmod +x /usr/local/bin/pathPhynder \
 	&& apt-get remove -y git \
 	&& apt-get autoremove -y \
 	&& apt-get clean \
