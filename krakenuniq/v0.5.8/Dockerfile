@@ -12,7 +12,7 @@ ENV KRAKENUNIQ_VERSION=v0.5.8
 ENV KRAKENUNIQ_PATH=/usr/local/bin/
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget make g++ git zlib1g zlib1g-dev libgomp1 \
+    && apt-get install -y wget make g++ git zlib1g zlib1g-dev libgomp1 perl libwww-perl \
     && git clone https://github.com/fbreitwieser/krakenuniq \
     && cd krakenuniq \
     && git checkout ${KRAKENUNIQ_VERSION} \
