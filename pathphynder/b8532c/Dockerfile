@@ -15,6 +15,7 @@ ENV PHYNDERVERSION="48b184f76c67985ef019ce199e1a1a7dafdc51a5"
 ENV HTSLIBVERSION="1.12"
 
 COPY pathPhynder.sh /usr/local/bin/pathPhynder
+COPY pathPhynder.patch /usr/local/
 RUN apt-get update && apt-get install -y git libbz2-dev zlib1g zlib1g-dev liblzma5 liblzma-dev \
     	    	      	      	         libncurses5 libncurses5-dev python3 libcurl4-gnutls-dev procps \
 	&& R -e "install.packages('maps',lib=$RLIBPATH,repo=$CRANREPO)" \
@@ -25,6 +26,7 @@ RUN apt-get update && apt-get install -y git libbz2-dev zlib1g zlib1g-dev liblzm
 	&& git clone https://github.com/ruidlpm/pathPhynder.git \
 	&& cd pathPhynder \
 	&& git checkout $VERSION \
+	&& patch /usr/local/pathPhynder/pathPhynder.R /usr/local/pathPhynder.patch \
 	&& cd /usr/local/ \
 	&& git clone https://github.com/samtools/htslib.git \
 	&& cd htslib \
