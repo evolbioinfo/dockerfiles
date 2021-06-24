@@ -16,7 +16,7 @@ ENV GOVERSION=1.13.6
 ENV CGO_ENABLED=0
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget git make xz \
+    && apt-get install -y wget git make xz-utils \
     && cd /usr/local \
     && wget --no-check-certificate https://storage.googleapis.com/golang/go${GOVERSION}.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go${GOVERSION}.linux-amd64.tar.gz \
