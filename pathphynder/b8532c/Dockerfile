@@ -18,7 +18,7 @@ ENV SAMTOOLSVERSION="1.12"
 COPY pathPhynder.sh /usr/local/bin/pathPhynder
 RUN apt-get update && apt-get install -y git libbz2-dev zlib1g zlib1g-dev liblzma5 liblzma-dev \
     	    	      	      	         libncurses5 libncurses5-dev python3 libcurl4-gnutls-dev procps \
-					 gcc make libbz2-dev bzip2 \
+					 gcc wget make libbz2-dev bzip2 \
 	&& R -e "install.packages('maps',lib=$RLIBPATH,repo=$CRANREPO)" \
 	&& R -e "install.packages('phytools',lib=$RLIBPATH,repo=$CRANREPO)" \
 	&& R -e "install.packages('optparse',lib=$RLIBPATH,repo=$CRANREPO)" \
@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install -y git libbz2-dev zlib1g zlib1g-dev liblzm
 	&& git submodule update --init --recursive \
 	&& make lib-static htslib_static.mk \
         && cd /usr/local/ \
-        && wget -O samtools.tar.bz2 https://github.com/samtools/samtools/releases/download/${VERSION}/samtools-${SAMTOOLSVERSION}.tar.bz2 \
+        && wget -O samtools.tar.bz2 https://github.com/samtools/samtools/releases/download/${SAMTOOLSVERSION}/samtools-${SAMTOOLSVERSION}.tar.bz2 \
         && tar -xjvf samtools.tar.bz2 \
         && rm -rf samtools.tar.bz2 \
         && cd samtools-${SAMTOOLSVERSION} \
