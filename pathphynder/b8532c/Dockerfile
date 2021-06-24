@@ -13,11 +13,12 @@ ENV RLIBPATH="'/usr/local/lib/R/site-library/'"
 ENV VERSION="b8532c07b7292812ae4ddc6246c68eb8e2534b7f"
 ENV PHYNDERVERSION="48b184f76c67985ef019ce199e1a1a7dafdc51a5"
 ENV HTSLIBVERSION="1.12"
+ENV SAMTOOLSVERSION="1.12"
 
 COPY pathPhynder.sh /usr/local/bin/pathPhynder
-COPY pathPhynder.patch /usr/local/
 RUN apt-get update && apt-get install -y git libbz2-dev zlib1g zlib1g-dev liblzma5 liblzma-dev \
     	    	      	      	         libncurses5 libncurses5-dev python3 libcurl4-gnutls-dev procps \
+					 gcc make libbz2-dev bzip2 \
 	&& R -e "install.packages('maps',lib=$RLIBPATH,repo=$CRANREPO)" \
 	&& R -e "install.packages('phytools',lib=$RLIBPATH,repo=$CRANREPO)" \
 	&& R -e "install.packages('optparse',lib=$RLIBPATH,repo=$CRANREPO)" \
@@ -26,13 +27,23 @@ RUN apt-get update && apt-get install -y git libbz2-dev zlib1g zlib1g-dev liblzm
 	&& git clone https://github.com/ruidlpm/pathPhynder.git \
 	&& cd pathPhynder \
 	&& git checkout $VERSION \
-	&& patch /usr/local/pathPhynder/pathPhynder.R /usr/local/pathPhynder.patch \
+	&& echo 'alias pathPhynder="Rscript /usr/local/pathPhynder/pathPhynder.R"' >> /etc/profile \
 	&& cd /usr/local/ \
 	&& git clone https://github.com/samtools/htslib.git \
 	&& cd htslib \
 	&& git checkout $HTSLIBVERSION \
 	&& git submodule update --init --recursive \
 	&& make lib-static htslib_static.mk \
+        && cd /usr/local/ \
+        && wget -O samtools.tar.bz2 https://github.com/samtools/samtools/releases/download/${VERSION}/samtools-${SAMTOOLSVERSION}.tar.bz2 \
+        && tar -xjvf samtools.tar.bz2 \
+        && rm -rf samtools.tar.bz2 \
+        && cd samtools-${SAMTOOLSVERSION} \
+        && ./configure \
+        && make \
+        && make install \
+        && cd /usr/local \
+        && rm -rf /usr/local/samtools-${SAMTOOLSVERSION} \
 	&& cd /usr/local/ \
         && git clone https://github.com/richarddurbin/phynder.git \
 	&& cd phynder \
