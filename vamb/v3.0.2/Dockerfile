@@ -7,7 +7,7 @@
 # - typing_extensions=3.7.4.3
 # - Pillow=8.1.0
 
-FROM ubuntu:20.04
+FROM nvidia/cuda:10.2-base-ubuntu18.04
 
 ENV PATH=/miniconda/bin:${PATH}
 
