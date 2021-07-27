@@ -1,0 +1,12 @@
+--- /usr/local/pathPhynder/pathPhynder.R	2021-06-16 08:55:11.000000000 +0000
++++ /usr/local/pathPhynder/pathPhynder2.R	2021-06-16 10:07:22.339485178 +0000
+@@ -7,8 +7,7 @@
+ 
+ current_version<-'1'
+ 
+-tmpstr<-system('bash -l',input=c("shopt -s expand_aliases","type pathPhynder"), intern=T)
+-packpwd<-paste0(gsub('pathPhynder.R','',gsub('\'','',gsub('.*.Rscript ','',tmpstr))),'R')
++packpwd<-"/usr/local/pathPhynder/R/"
+ 
+ option_list <- list(
+     
