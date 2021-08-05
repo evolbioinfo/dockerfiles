@@ -6,7 +6,7 @@
 # - matplotlib=3.3.1
 # - seaborn=0.10.1
 # - pyarrow=4.0.0
-
+# - datasketch=1.5.3
 
 FROM evolbioinfo/python:v3.8.2
 
@@ -21,7 +21,8 @@ RUN cd /usr/local && pip3 install --no-cache-dir \
       biopython==1.78 \
       matplotlib==3.3.1 \
       seaborn==0.10.1 \
-	  pyarrow==4.0.0
+	  pyarrow==4.0.0 \
+	  datasketch==1.5.3
 
 # Switch to new user
 USER evolbioinfo
