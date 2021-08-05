@@ -25,7 +25,7 @@ USER root
 
 # Make sure commonly needed tools exist
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget gcc g++ make zip
+    && apt-get install -y wget gcc g++ make zip libnlopt-cxx-dev
 
 
 # Install packages
