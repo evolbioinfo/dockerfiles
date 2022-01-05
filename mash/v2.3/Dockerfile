@@ -9,7 +9,7 @@ FROM ubuntu:20.04
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget capnproto autoconf libgslcblas0 libgsl-dev g++ zlib1g zlib1g-dev libcapnp-0.7.0 libcapnp-dev make \
+    && apt-get install -y wget capnproto autoconf libgsl23 libgsl-dev g++ zlib1g zlib1g-dev libcapnp-0.7.0 libcapnp-dev make \
     && ln -s /usr/lib/x86_64-linux-gnu/libcapnp.a /usr/lib/libcapnp.a \
     && ln -s /usr/lib/x86_64-linux-gnu/libkj.a /usr/lib/libkj.a \
     && cd /usr/local/ \
