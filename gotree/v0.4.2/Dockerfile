@@ -1,17 +1,17 @@
 # gotree
 # https://github.com/evolbioinfo/gotree/
-# dev branch
+# version v0.4.2
 
 # base image: Ubuntu
 FROM ubuntu:20.04
 
 # File Author / Maintainer
-LABEL maintainer=frederic.lemoine@pasteur.fr
+LABEL maintainer="frederic.lemoine@pasteur.fr"
 
 ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
-ENV VERSION=dev
-ENV PREFIXVERSION=""
+ENV VERSION="0.4.2"
+ENV PREFIXVERSION="v"
 ENV GOVERSION=1.16.4
 ENV CGO_ENABLED=0
 
@@ -35,5 +35,5 @@ RUN apt-get update --fix-missing \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir /pasteur
-    
+
 ENTRYPOINT ["/usr/local/bin/gotree"]
