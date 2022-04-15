@@ -33,7 +33,7 @@ RUN apt-get update && apt-get install -y apt-utils && apt-get install -y procps 
   && unzip fa4b43c16c8bc437598c0d299fba96bc78596917.zip \
   && cd table2itol-fa4b43c16c8bc437598c0d299fba96bc78596917 \
   && mv table2itol.R /usr/local/bin/table2itol.R \
-  && ln -s /bin/Rscript /usr/local/bin/Rscript \
+  && ln -s /usr/bin/Rscript /usr/local/bin/Rscript \
   && cd /usr/local/ \
   && rm -rf table2itol-fa4b43c16c8bc437598c0d299fba96bc78596917 \
   && rm -rf fa4b43c16c8bc437598c0d299fba96bc78596917.zip \
