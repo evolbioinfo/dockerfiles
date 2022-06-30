@@ -3,7 +3,7 @@
 # version dev
 
 # base image: Ubuntu
-FROM ubuntu:16.04
+FROM ubuntu:22.04
 
 # File Author / Maintainer
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
@@ -12,7 +12,7 @@ ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
 ENV VERSION=dev
 ENV PREFIXVERSION=""
-ENV GOVERSION=1.16.4
+ENV GOVERSION=1.18.3
 ENV CGO_ENABLED=0
 
 RUN apt-get update --fix-missing \
