@@ -1,22 +1,22 @@
 # goalign
 # https://github.com/evolbioinfo/goalign/
-# version dev
+# version v0.3.6a
 
 # base image: Ubuntu
 FROM ubuntu:22.04
 
 # File Author / Maintainer
-MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
+LABEL maintainer="frederic.lemoine@pasteur.fr"
 
 ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
-ENV VERSION=dev
-ENV PREFIXVERSION=""
+ENV VERSION="0.3.6a"
+ENV PREFIXVERSION="v"
 ENV GOVERSION=1.18.3
 ENV CGO_ENABLED=0
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget git make \
+    && apt-get install -y wget git make xz-utils \
     && cd /usr/local \
     && wget --no-check-certificate https://storage.googleapis.com/golang/go${GOVERSION}.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go${GOVERSION}.linux-amd64.tar.gz \
