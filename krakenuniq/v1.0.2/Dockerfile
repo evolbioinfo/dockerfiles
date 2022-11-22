@@ -1,19 +1,19 @@
 # KrakenUniq
 # https://github.com/fbreitwieser/krakenuniq
-# v0.5.8
+# v1.0.2
 
 # base image: Ubuntu
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # File Author / Maintainer
-LABEL maintainer=frederic.lemoine@pasteur.fr
+LABEL maintainer=julien.fumey@pasteur.fr
 
 ENV KRAKENUNIQ_VERSION=v1.0.2
 ENV JELLYFISH_VERSION=1.1.11
 ENV KRAKENUNIQ_PATH=/usr/local/bin/
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget make g++ gcc git zlib1g zlib1g-dev libgomp1 perl libwww-perl python-dev libbz2-dev \
+    && apt-get install -y wget make g++ gcc git zlib1g zlib1g-dev libgomp1 perl libwww-perl libbz2-dev \
     && cd /usr/local/ \
     && wget http://www.cbcb.umd.edu/software/jellyfish/jellyfish-${JELLYFISH_VERSION}.tar.gz \
     && tar xf jellyfish-${JELLYFISH_VERSION}.tar.gz \
