@@ -13,7 +13,7 @@ ENV JELLYFISH_VERSION=1.1.11
 ENV KRAKENUNIQ_PATH=/usr/local/bin/
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget make g++ gcc git zlib1g zlib1g-dev libgomp1 perl libwww-perl \
+    && apt-get install -y wget make g++ gcc git zlib1g zlib1g-dev libgomp1 perl libwww-perl python-dev libbz2-dev \
     && cd /usr/local/ \
     && wget http://www.cbcb.umd.edu/software/jellyfish/jellyfish-${JELLYFISH_VERSION}.tar.gz \
     && tar xf jellyfish-${JELLYFISH_VERSION}.tar.gz \
