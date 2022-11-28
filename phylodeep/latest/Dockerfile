@@ -1,10 +1,10 @@
-FROM evolbioinfo/python:v3.6.9
+FROM evolbioinfo/python:v3.8.2
 
 # Switch to your new user in the docker image
 USER root
 
 # Install phylodeep
-RUN cd /usr/local/ && pip3 install --no-cache-dir phylodeep==0.3
+RUN cd /usr/local/ && pip3 install --no-cache-dir phylodeep==0.3.1
 
 # Switch to your new user in the docker image
 USER evolbioinfo
@@ -12,5 +12,5 @@ USER evolbioinfo
 # start working in the "evolbioinfo" home directory
 WORKDIR /home/evolbioinfo
 
-# The entrypoint runs command line with command line arguments
+# The entrypoint runs command line with command line argument
 ENTRYPOINT ["/bin/bash"]
