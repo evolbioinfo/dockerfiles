@@ -17,9 +17,10 @@ RUN apt-get update --fix-missing \
     && cd catch \
     && git checkout $VERSION \
     && conda install -y mamba  -c conda-forge \
+    && mamba install pip \
     && mamba install -y numpy==1.23.5 scipy==1.9.3 \
-    && pip install -e . \
-    && cd .. && rm -rf catch
+    && pip3 install . 
+#    && cd .. && rm -rf catch
 
 WORKDIR /tmp/
 
