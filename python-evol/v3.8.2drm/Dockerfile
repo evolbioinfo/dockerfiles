@@ -21,6 +21,7 @@ USER root
 RUN pip3 install --no-cache-dir sierrapy==0.4.1
 RUN pip3 install --no-cache-dir wikipedia==1.4.0
 RUN pip3 install --no-cache-dir surpyval==0.10.10
+RUN pip3 install --no-cache-dir pastml==1.9.40
 
 # Switch to your new user in the docker image
 USER evolbioinfo
