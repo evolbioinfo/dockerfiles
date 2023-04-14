@@ -21,7 +21,7 @@ RUN apt-get update --fix-missing \
     && cat /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-minion.sh > /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-miniontmp.sh \
     && echo "TMP=\$TMPDIR" >> /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-miniontmp.sh \
     && cat /usr/local/bin/IRMA_RES/modules/FLU/config/FLU.sh > /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-tmp.sh \
-    && echo "TMP=\$TMPDIR" >> /usr/local/bin/IRMA_RES/modules/FLU/config/FLU-tmp.sh \
+    && sed -i "$ a TMP=\$TMPDIR"  /usr/local/bin/IRMA_RES/modules/*/config/*.sh\
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
