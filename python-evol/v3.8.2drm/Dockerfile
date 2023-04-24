@@ -11,17 +11,19 @@
 # - wikipedia==1.4.0
 # and xz utils
 
-FROM evolbioinfo/python-evol:v3.8.2b
+FROM evolbioinfo/python:v3.8.2
 
 # Switch to your new user in the docker image
 USER root
 
 # Install xz-utils
+RUN apt-get update && apt-get install -y xz-utils
 
+RUN pip3 install --no-cache-dir pastml==1.9.40
 RUN pip3 install --no-cache-dir sierrapy==0.4.1
 RUN pip3 install --no-cache-dir wikipedia==1.4.0
+RUN pip3 install --no-cache-dir numba==0.56.4
 RUN pip3 install --no-cache-dir surpyval==0.10.10
-RUN pip3 install --no-cache-dir pastml==1.9.40
 
 # Switch to your new user in the docker image
 USER evolbioinfo
