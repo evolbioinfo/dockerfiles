@@ -1,0 +1,12 @@
+diff --git a/src/fasta_formatter/fasta_formatter.cpp b/src/fasta_formatter/fasta_formatter.cpp
+index bc5f35c..c20262d 100644
+--- a/src/fasta_formatter/fasta_formatter.cpp
++++ b/src/fasta_formatter/fasta_formatter.cpp
+@@ -103,6 +103,7 @@ void parse_command_line(int argc, char* argv[])
+ 		switch(opt) {
+ 		case 'h':
+ 			usage();
++			break;
+ 		
+ 		case 'i':
+ 			input_filename = optarg;
