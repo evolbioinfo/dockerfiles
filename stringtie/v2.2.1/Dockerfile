@@ -12,7 +12,7 @@ ENV VERSION=2.2.1
 
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget \
+    && apt-get install -y wget python2 \
     && wget  http://ccb.jhu.edu/software/stringtie/dl/stringtie-2.2.1.Linux_x86_64.tar.gz \
     && tar -xzvf stringtie-2.2.1.Linux_x86_64.tar.gz \
     && mv stringtie-2.2.1.Linux_x86_64/* /usr/local/bin/ \
