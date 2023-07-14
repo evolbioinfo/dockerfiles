@@ -30,7 +30,6 @@ RUN apt-get update --fix-missing \
     && cd seqkit \
     && go mod init \
     && go mod tidy  \
-    && cd  /gopath/src/github.com/shenwei356/seqkit/seqkit \
     && sed -i 's/.*github.com\/shenwei356\/util v0.*//' go.mod \
     && go get github.com/shenwei356/util/byteutil@v0.4.0 \
     && go get github.com/shenwei356/util@v0.4.0  \
