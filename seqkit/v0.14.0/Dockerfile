@@ -35,7 +35,7 @@ RUN apt-get update --fix-missing \
     && go get github.com/shenwei356/util@v0.4.0  \
     && go build . \
     && mv seqkit /usr/local/bin \
-    && cd / && rm -rf gopath \
+    && cd / && rm -rf gopath /usr/local/go \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
