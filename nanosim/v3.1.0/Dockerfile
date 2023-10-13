@@ -10,6 +10,8 @@ RUN apt-get --allow-releaseinfo-change update \
 
 RUN apt-get install libarchive13 && mamba install -c bioconda -c conda-forge nanosim=3.1.0 numpy=1.19.5
 
+RUN apt-get install -y procps
+
 WORKDIR /tmp/
 
 ENTRYPOINT ["read_analysis.py"]
