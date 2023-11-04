@@ -18,13 +18,16 @@ RUN apk update \
     && pip install --upgrade cryptography \
     && pip install pyOpenSSL \
     && conda update conda \
+    && conda update --all \
     && conda install mamba -c conda-forge
 
+COPY pangolin.patch /
 
 RUN cd / \
     && git clone https://github.com/cov-lineages/pangolin.git \
     && cd pangolin \
     && git checkout $VERSION \
+    && git apply /pangolin.patch \
     && cd .. \
     && sed -i 's/name: pangolin/name: base/' /pangolin/environment.yml \
     && sed -i s=git+https://github.com/cov-lineages/pangolin-data.git=git+https://github.com/cov-lineages/pangolin-data.git@$DATAVERSION= /pangolin/environment.yml \
