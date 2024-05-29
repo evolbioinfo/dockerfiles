@@ -7,7 +7,7 @@ USER root
 RUN apt-get update -y && apt-get install -y bc
 
 # Install treesimulator
-RUN cd /usr/local/ && pip3 install --no-cache-dir treesimulator==0.1.12
+RUN cd /usr/local/ && pip3 install --no-cache-dir treesimulator==0.1.14
 
 # Switch to your new user in the docker image
 USER evolbioinfo
