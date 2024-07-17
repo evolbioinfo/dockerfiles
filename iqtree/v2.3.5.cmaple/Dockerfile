@@ -1,12 +1,12 @@
 # IQ-TREE
 # http://www.iqtree.org/
-# 2.2.5
+# 2.3.5 cmaple
 
 # base image: Ubuntu
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # File Author / Maintainer
-LABEL maintainer="frederic.lemoine@pasteur.fr"
+LABEL maintainer="julien.fumey@pasteur.fr"
 
 ENV VERSION="2.3.5.cmaple"
 
