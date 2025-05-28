@@ -3,7 +3,7 @@
 # version dev
 
 # base image: Ubuntu
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # File Author / Maintainer
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
