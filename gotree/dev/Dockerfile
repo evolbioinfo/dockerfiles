@@ -3,7 +3,7 @@
 # dev branch
 
 # base image: Ubuntu
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 # File Author / Maintainer
 LABEL maintainer=frederic.lemoine@pasteur.fr
@@ -12,7 +12,7 @@ ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
 ENV GOPATH=/gopath
 ENV VERSION=dev
 ENV PREFIXVERSION=""
-ENV GOVERSION=1.19
+ENV GOVERSION=1.21.6
 ENV CGO_ENABLED=0
 
 RUN apt-get update --fix-missing \
