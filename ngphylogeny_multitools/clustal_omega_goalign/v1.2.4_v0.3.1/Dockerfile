@@ -25,7 +25,7 @@ RUN apt-get update --fix-missing \
 
 RUN cd /usr/local \
     && wget --no-check-certificate https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz \
-    && tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz \
+    && tar --strip-components=1 -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz \
     && rm -f go1.10.3.linux-amd64.tar.gz \
     && mkdir -p /gopath/ \
     && go get -u github.com/golang/dep/cmd/dep \
