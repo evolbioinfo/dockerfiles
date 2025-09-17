@@ -26,22 +26,10 @@ RUN apt-get update --fix-missing \
     && cd .. \
     && rm -rf /usr/local/clustal-omega-1.2.4
 
-RUN cd /usr/local \
-    && wget --no-check-certificate https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz \
-    && tar --strip-components=1 -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz \
-    && rm -f go1.10.3.linux-amd64.tar.gz \
-    && mkdir -p /gopath/ \
-    && go get -u github.com/golang/dep/cmd/dep \
-    && mkdir -p /gopath/src/github.com/evolbioinfo/ \
-    && cd /gopath/src/github.com/evolbioinfo/ \
-    && git clone https://github.com/evolbioinfo/goalign.git \
-    && cd /gopath/src/github.com/evolbioinfo/goalign \
-    && git checkout v0.3.1 \
-    && make dep && make build \
-    && mv goalign /usr/local/bin/ \
-    && make test \
-    && cd /usr/local \
-    && rm -rf /gopath /usr/local/go \
+RUN cd /usr/local/bin/ \
+    && wget https://github.com/evolbioinfo/goalign/releases/download/v0.3.1/goalign_amd64_linux \
+    && mv goalign_amd64_linux goalign \
+    && chmod +x goalign \
     && apt-get remove -y wget git g++ make libargtable2-dev \
     && apt-get autoremove -y \
     && apt-get clean \
