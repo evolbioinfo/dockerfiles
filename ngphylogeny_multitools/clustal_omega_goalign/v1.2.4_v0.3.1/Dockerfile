@@ -12,6 +12,9 @@ FROM ubuntu:16.04
 # File Author / Maintainer
 MAINTAINER Frederic Lemoine <frederic.lemoine@pasteur.fr>
 
+ENV PATH=/usr/local/go/bin:/gopath/bin/:$PATH
+ENV GOPATH=/gopath
+
 RUN apt-get update --fix-missing \
     && apt-get install -y wget git g++ make libargtable2-0 libargtable2-dev file libgomp1 \
     && cd /usr/local/ \
