@@ -4,7 +4,7 @@
 # + RAxML-NG v1.2.2
 
 # base image: Python
-FROM python:3.6-slim
+FROM python:3.13-slim
 
 # File Author / Maintainer
 # From the original Dockerfile of Anna Zhukova PastML
@@ -24,7 +24,7 @@ RUN cd /usr/local/ && pip3 install --no-cache-dir ebg==0.13.3
 # Install RAxML-NG v1.2.2
 ENV RAXMLNGVERSION=1.2.2
 RUN apt-get update --fix-missing \
-    && apt-get install -y git flex bison libgmp3-dev cmake make g++ \
+    && apt-get install -y git flex bison libgmp3-dev cmake make g++ libgomp1 \
     && cd /usr/local/ \
     && git clone --recursive https://github.com/amkozlov/raxml-ng \
     && cd raxml-ng \
@@ -38,6 +38,8 @@ RUN apt-get update --fix-missing \
     && apt-get remove -y git flex bison libgmp3-dev make cmake g++ \
     && apt-get autoremove -y \
     && apt-get clean
+
+RUN cd /usr/local/ && pip3 install --no-cache-dir legacy-cgi
 
 # Clean up
 RUN mkdir /pasteur
