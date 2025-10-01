@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+RAXMLNG=/usr/local/bin/raxml-ng
+MAD=/usr/local/bin/mad
+BOOSTER=/usr/local/bin/booster
+
+PYTHONPATH=/usr/local/bootstrap_repo python3 /usr/local/bootstrap_repo/user_code/predict_branch_supports.py --raxml_ng_path $RAXMLNG --mad_path $MAD --booster_path $BOOSTER $@
