@@ -24,7 +24,7 @@ RUN cd /usr/local/ && pip3 install --no-cache-dir ebg==0.13.3
 # Install RAxML-NG v1.2.2
 ENV RAXMLNGVERSION=1.2.2
 RUN apt-get update --fix-missing \
-    && apt-get install -y git flex bison libgmp3-dev cmake make g++ libgomp1 \
+    && apt-get install -y git flex bison libgmp3-dev cmake make g++ libgomp1 procps \
     && cd /usr/local/ \
     && git clone --recursive https://github.com/amkozlov/raxml-ng \
     && cd raxml-ng \
