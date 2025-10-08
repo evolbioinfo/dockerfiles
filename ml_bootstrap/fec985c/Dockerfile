@@ -5,14 +5,14 @@
 # + raxml-ng v1.2.2
 
 # base image: Ubuntu
-FROM python:3.13
+FROM python:3.7
 
 # File Author / Maintainer
 LABEL maintainer="frederic.lemoine@pasteur.fr"
 
 RUN apt-get install -y git 
 
-RUN pip install numpy pandas ete3 matplotlib networkx biopython scikit-learn
+RUN pip install numpy pandas ete3 matplotlib networkx biopython scikit-learn==0.24.2 lightgbm
 
 # Install RAxML-NG v1.2.2
 ENV RAXMLNGVERSION=1.2.2
@@ -46,13 +46,13 @@ RUN wget -O /usr/local/bin/booster https://github.com/evolbioinfo/booster/releas
 ENV PYTHONPATH=/usr/local/bootstrap_repo
 
 COPY predict_branch_supports /usr/local/bin/
+COPY models/full_* /usr/local/bin/
 RUN apt-get install -y git \
     && cd /usr/local \
     && git clone https://github.com/noaeker/bootstrap_repo.git \
     && cd bootstrap_repo \
     && git checkout fec985c320b7689bd4d52b067343032889a5977c \
     && sed -i  's/RAXML_NG_EXE.*/RAXML_NG_EXE = \"\/usr\/local\/bin\/raxml-ng\"/g' side_code/config.py \
-    && sed -i 's/all_splits.append/all_splits._append/g' simulation_edit/feature_extraction.py \
     && sed -i "s/pattern = '/pattern = r'/g" programs/raxml.py \
     && sed -i "s/re.sub('/re.sub(r'/g" programs/raxml.py \    
     && sed -i "s/pattern = '/pattern = r'/g" side_code/basic_trees_manipulation.py \
@@ -60,6 +60,6 @@ RUN apt-get install -y git \
     && chmod + /usr/local/bin/predict_branch_supports \
     && apt-get remove -y git
 
-RUN pip install dendropy legacy_cgi
+RUN pip install dendropy
 
 ENTRYPOINT ["/usr/local/bin/predict_branch_supports"]
