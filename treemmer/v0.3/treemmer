@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 /usr/local/bin/Treemmer_v0.3.py $@
