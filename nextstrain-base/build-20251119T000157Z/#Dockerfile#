@@ -1,0 +1,5 @@
+# Nextstrain base with procps
+
+FROM nextstrain/base:build-~xxapt-get update && apt-get install -y procps
+
+ENTRYPOINT ["augur"]
