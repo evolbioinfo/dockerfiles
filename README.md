@@ -1,3 +1,372 @@
 # Dockerfiles
 
-List of Dockerfiles used to build some docker images. See : [DockerHub page](https://hub.docker.com/r/evolbioinfo/).
+This repository contains Dockerfiles used to build Docker images for bioinformatics tools, with a focus on evolutionary biology and phylogenetics. All images are published on [DockerHub](https://hub.docker.com/r/evolbioinfo/) under the `evolbioinfo` organization.
+
+## Table of Contents
+
+- [Usage](#usage)
+  - [Pulling an image](#pulling-an-image)
+  - [Running a container](#running-a-container)
+  - [Mounting local data](#mounting-local-data)
+- [Available Images](#available-images)
+  - [Phylogenetics](#phylogenetics)
+  - [Sequence Alignment](#sequence-alignment)
+  - [Sequence Mapping](#sequence-mapping)
+  - [Genomic Tools](#genomic-tools)
+  - [Variant Calling](#variant-calling)
+  - [Quality Control](#quality-control)
+  - [Read Trimming](#read-trimming)
+  - [Assembly](#assembly)
+  - [Molecular Evolution](#molecular-evolution)
+  - [Population Genetics](#population-genetics)
+  - [Gene Expression](#gene-expression)
+  - [Taxonomy & Metagenomics](#taxonomy--metagenomics)
+  - [Viral & Pandemic Analysis](#viral--pandemic-analysis)
+  - [Ancient DNA](#ancient-dna)
+  - [Sequence Analysis](#sequence-analysis)
+  - [Haplotyping](#haplotyping)
+  - [Simulation](#simulation)
+  - [Read Correction](#read-correction)
+  - [Visualization](#visualization)
+  - [Workflow Management](#workflow-management)
+  - [Base Images](#base-images)
+  - [Utilities](#utilities)
+- [Building Images Locally](#building-images-locally)
+- [Contributing](#contributing)
+
+## Usage
+
+### Pulling an image
+
+Each image is hosted on DockerHub under `evolbioinfo/<tool-name>:<version>`. To pull an image:
+
+```bash
+docker pull evolbioinfo/<tool-name>:<version>
+```
+
+For example, to pull the RAxML-NG image:
+
+```bash
+docker pull evolbioinfo/raxml-ng:v1.2.2
+```
+
+### Running a container
+
+Most images define an `ENTRYPOINT` pointing directly to the tool executable. You can run a tool as follows:
+
+```bash
+docker run evolbioinfo/<tool-name>:<version> [tool options]
+```
+
+For example, to display the RAxML-NG help:
+
+```bash
+docker run evolbioinfo/raxml-ng:v1.2.2 --help
+```
+
+Or to run FastTree:
+
+```bash
+docker run evolbioinfo/fasttree:v2.1.9 -help
+```
+
+### Mounting local data
+
+To use your local files inside the container, mount your working directory using the `-v` flag:
+
+```bash
+docker run -v /path/to/your/data:/data evolbioinfo/<tool-name>:<version> [tool options]
+```
+
+For example, to run RAxML-NG on a local alignment file:
+
+```bash
+docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fasta --model GTR+G --prefix /data/output
+```
+
+## Available Images
+
+### Phylogenetics
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [epa-ng](epa-ng/) | v0.3.8 | Evolutionary placement algorithm for short reads into reference trees |
+| [fastme](fastme/) | v2.1.6.4 | Fast and accurate distance-based phylogenetic tree construction |
+| [fasttree](fasttree/) | v2.1.9 | Approximate maximum-likelihood phylogenetic trees for large alignments |
+| [goalign](goalign/) | v0.3.8 | Multiple sequence alignment analysis toolkit |
+| [gotree](gotree/) | v0.5.1 | Phylogenetic tree manipulation toolkit |
+| [guppy](guppy/) | v3.1.5 | Tools for working with pplacer phylogenetic placement files |
+| [iqtree](iqtree/) | v3.0.0 | Fast and accurate maximum-likelihood phylogenetic tree inference |
+| [lsd](lsd/) | v0.3beta | Least-squares dating of phylogenetic trees |
+| [lsd2](lsd2/) | v2.4.1 | Least-squares dating of phylogenetic trees (version 2) |
+| [maple](maple/) | v0.6.11 | Maximum likelihood phylogenetic estimation with reduced memory |
+| [ml_bootstrap](ml_bootstrap/) | fec985c | Maximum-likelihood phylogenetic bootstrapping |
+| [mrbayes](mrbayes/) | v3.2.7 | Bayesian inference of phylogenetic trees |
+| [newick_utilities](newick_utilities/) | v1.6 | Utilities for manipulating Newick format trees |
+| [phylodeep](phylodeep/) | v0.3.1 | Deep learning for phylodynamic parameter estimation |
+| [phyml](phyml/) | v3.3.20220408 | Maximum-likelihood phylogenetic tree estimation |
+| [phyml-sms](phyml-sms/) | v1.8.1.1 | PhyML with Smart Model Selection |
+| [ptp](ptp/) | v4bb2daf | Species delimitation from phylogenetic trees |
+| [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
+| [raxml](raxml/) | v8.2.8 | Randomized accelerated maximum likelihood phylogenetic inference |
+| [raxml-ng](raxml-ng/) | v1.2.2 | RAxML next-generation for large-scale phylogenetic analyses |
+| [seq-gen](seq-gen/) | v1.3.4 | Simulation of molecular sequence data along phylogenetic trees |
+| [table2itol](table2itol/) | latest | Converts annotation tables to iTOL dataset files |
+| [tqdist](tqdist/) | v1.0.2 | Computing quartet and triplet distances between trees |
+| [treedater](treedater/) | 89a0df0 | Fast relaxed-clock Bayesian phylogenetic dating |
+| [treemmer](treemmer/) | v0.3 | Reduce tree size while preserving phylogenetic diversity |
+| [treesimulator](treesimulator/) | v0.1.9 | Simulating rooted phylogenetic trees under various models |
+| [treestructure](treestructure/) | a831a66 | Testing for phylogenetic tree structure |
+| [treetime](treetime/) | v0.8.5 | Maximum-likelihood phylogenetic time-trees inference |
+| [treewas](treewas/) | v1.0 | Genome-wide association studies on phylogenetic trees |
+
+### Sequence Alignment
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [bmge](bmge/) | v1.12 | Block Mapping and Gathering with Entropy for alignment trimming |
+| [clustal_omega](clustal_omega/) | v1.2.4 | Fast and scalable multiple sequence alignment |
+| [gblocks](gblocks/) | v0.91b | Alignment trimming by selecting conserved blocks |
+| [mafft](mafft/) | v7.525 | Multiple sequence alignment using fast Fourier transform |
+| [muscle](muscle/) | v3.8.31 | Multiple sequence alignment using log-expectation scoring |
+| [papara](papara/) | v2.5 | Phylogeny-aware short-read alignment |
+| [tcoffee](tcoffee/) | Version_11.00.18778a8 | Multiple sequence alignment using T-Coffee |
+| [trimal](trimal/) | v1.4.1 | Automated alignment trimming for phylogenomics |
+
+### Sequence Mapping
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [bbmap](bbmap/) | v39.01 | Short and long read aligner and assembler |
+| [bowtie](bowtie/) | v1.3.1 | Ultrafast, memory-efficient short read aligner |
+| [bowtie2](bowtie2/) | v2.5.1 | Fast and sensitive alignment of short DNA reads |
+| [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
+| [hisat2](hisat2/) | v2.0.5 | Splice-aware aligner for RNA-seq reads |
+| [lastal](lastal/) | v980 | Local alignment of biological sequences |
+| [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
+| [minimap2](minimap2/) | v2.26 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
+| [star](star/) | v2.7.6a | Spliced Transcripts Alignment to a Reference (RNA-seq) |
+
+### Genomic Tools
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [alfred](alfred/) | v0.2.6 | BAM alignment statistics and feature counting |
+| [bam-readcount](bam-readcount/) | v1.0.1 | Per-position read counts from BAM files |
+| [bamUtil](bamUtil/) | v1.0.15 | Programs for working on SAM/BAM files |
+| [bcftools](bcftools/) | v1.16 | Utilities for variant calling and manipulating VCF/BCF files |
+| [bedtools](bedtools/) | v2.31.1 | Genome arithmetic and interval manipulation |
+| [picard](picard/) | v2.27.0 | Command-line tools for manipulating high-throughput sequencing data |
+| [samtools](samtools/) | v1.9 | Reading, writing, and manipulating SAM/BAM/CRAM files |
+| [seqkit](seqkit/) | v2.4.0 | Ultrafast toolkit for FASTA/Q file manipulation |
+| [seqtk](seqtk/) | v1.3 | Toolkit for processing sequences in FASTA/Q formats |
+| [vcftools](vcftools/) | v0.1.16 | Tools for working with VCF files |
+
+### Variant Calling
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [bcftools](bcftools/) | v1.16 | VCF/BCF variant manipulation and calling |
+| [freebayes](freebayes/) | v1.3.9 | Bayesian genetic variant detector |
+| [ivar](ivar/) | v1.3.1 | Tools for viral amplicon-based sequencing |
+
+### Quality Control
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [catch](catch/) | v1.5.1 | Compact aggregated taxonomy for characterizing hybridization |
+| [fastqc](fastqc/) | v0.11.9 | Quality control analysis of high-throughput sequencing data |
+| [minionqc](minionqc/) | v1.4.1 | Quality control for Oxford Nanopore sequencing data |
+| [multiqc](multiqc/) | v1.9 | Aggregate bioinformatics results across samples into a report |
+| [nanoplot](nanoplot/) | v1.29.1 | Plotting tools for long-read sequencing data |
+| [rna-seqc](rna-seqc/) | v1.1.9 | Quality control metrics for RNA-seq data |
+
+### Read Trimming
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [adapterremoval](adapterremoval/) | v2.3.3 | Trimming of adapters and low-quality bases from NGS reads |
+| [alien_trimmer](alien_trimmer/) | v2.1 | Adapter trimming for sequencing reads |
+| [fastxtoolkit](fastxtoolkit/) | v0.0.14 | FASTX toolkit for preprocessing FASTQ/FASTA files |
+| [trimgalore](trimgalore/) | v0.6.7 | Wrapper for Cutadapt and FastQC for adapter trimming |
+
+### Assembly
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [canu](canu/) | v2.0 | Long-read assembler for high-noise reads (e.g., PacBio, Nanopore) |
+| [savage](savage/) | v0.4.1 | Sequence assembly for viral genomes |
+| [spades](spades/) | v3.15.4 | Genome assembly toolkit for single-cell and standard data |
+| [velvet](velvet/) | v1.2.10 | De novo genomic assembler |
+
+### Molecular Evolution
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [bayestraits](bayestraits/) | v5.0.0 | Bayesian analysis of trait evolution on phylogenies |
+| [fastcodeml](fastcodeml/) | v1.1.0 | Accelerated codeml for detecting positive selection |
+| [hyphy](hyphy/) | v2.5.73 | Hypothesis testing using phylogenies |
+| [mapdamage](mapdamage/) | v2.2.1 | Identifying and quantifying DNA damage in ancient DNA |
+| [paml](paml/) | v4.8a | Phylogenetic analysis by maximum likelihood (codon models) |
+| [pathphynder](pathphynder/) | v0.1 | Phylogenetic assignment of pathogen sequences |
+| [pcoc](pcoc/) | v898c138 | Probabilistic convergent codon evolution analysis |
+
+### Population Genetics
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [admixture](admixture/) | v1.3.0 | Maximum-likelihood estimation of individual ancestries |
+| [finestructure](finestructure/) | v4.1.1 | Population structure inference using haplotypes |
+| [gofasta](gofasta/) | v1.2.1 | Command-line utilities for working with genomic alignments |
+| [pastml](pastml/) | v1.9.43 | Ancestral state reconstruction and phylogeographic inference |
+
+### Gene Expression
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [deseq](deseq/) | v1.39.0 | Differential expression analysis from RNA-seq count data |
+| [stringtie](stringtie/) | v2.2.1 | Transcript assembly and quantification for RNA-seq |
+| [subread](subread/) | v2.0.3 | Subread/featureCounts read summarization for RNA-seq |
+
+### Taxonomy & Metagenomics
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [checkm](checkm/) | v1.2.1 | Quality assessment of genome bins from metagenomes |
+| [fastani](fastani/) | v1.33 | Fast and accurate whole-genome ANI estimation |
+| [khmer](khmer/) | v2.1.2 | In-memory k-mer counting and filtering toolkit |
+| [kraken](kraken/) | v2.1.3 | Taxonomic classification of metagenomic sequences |
+| [krakenuniq](krakenuniq/) | v1.0.4 | Unique k-mer based taxonomic classification |
+| [vamb](vamb/) | v3.0.2 | Variational autoencoders for metagenomic binning |
+
+### Viral & Pandemic Analysis
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [artic-ncov2019](artic-ncov2019/) | e814ed4 | ARTIC network bioinformatics tools for SARS-CoV-2 |
+| [civet](civet/) | v2.1.2 | Cluster investigation and virus epidemiology tool |
+| [irma](irma/) | v1.0.3 | Iterative refinement meta-assembler for viral genomics |
+| [nextstrain-base](nextstrain-base/) | build-20251119T000157Z | Nextstrain base environment for viral phylodynamics |
+| [pangolin](pangolin/) | v4.3.1 | Phylogenetic assignment of named global outbreak LINeages |
+| [polecat](polecat/) | b4a36f3 | Summarising and classifying SARS-CoV-2 lineages |
+
+### Ancient DNA
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [damageprofiler](damageprofiler/) | v1.1 | Profiling damage patterns in ancient DNA reads |
+| [schmutzi](schmutzi/) | v1.5.6 | Estimation of ancient DNA contamination |
+
+### Sequence Analysis
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [ebg](ebg/) | v0.13.3 | Evolutionary bioinformatics with graph-based methods |
+| [gubbins](gubbins/) | v3.4 | Rapid detection of recombination in bacterial genomes |
+| [hmmer](hmmer/) | v3.3 | Profile HMMs for protein sequence analysis |
+| [jphmm](jphmm/) | v03.2015 | Jumping profile hidden Markov model for HIV subtyping |
+| [jphmm_tools](jphmm_tools/) | v0.1.4 | Tools for working with jpHMM output |
+| [noisy](noisy/) | v1.5.12 | Identifying non-phylogenetic signal in aligned sequences |
+| [sdrmhunter](sdrmhunter/) | v0.2.1.6 | HIV surveillance drug resistance mutation identification |
+| [strainline](strainline/) | commit-8af032906e | Full-length de novo viral haplotype reconstruction |
+
+### Haplotyping
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [haploconduct](haploconduct/) | v0.2.1 | Haplotype reconstruction from high-coverage sequencing |
+| [haplogrep](haplogrep/) | v2.4.0 | Mitochondrial haplogroup classification |
+| [predicthaplo](predicthaplo/) | v1.0 | Predicting HIV haplotypes from next-generation sequencing |
+| [shorah](shorah/) | v1.99.2 | Reconstruction of the genomic diversity of a virus population |
+
+### Simulation
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [indelible](indelible/) | v1.03 | Flexible evolutionary sequence simulator |
+| [nanosim](nanosim/) | v3.1.0 | Nanopore sequence read simulator |
+
+### Read Correction
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [khmer](khmer/) | v2.1.2 | k-mer based read filtering and error correction |
+| [musket](musket/) | v1.1 | k-spectrum based short read error correction |
+
+### Visualization
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [igv](igv/) | v2.9.0 | Integrative Genomics Viewer for alignment and variant data |
+| [inkscape](inkscape/) | latest | Vector graphics editor |
+| [vivan](vivan/) | v0.43 | Virus variation analyzer |
+
+### Workflow Management
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [ngphylogeny_multitools](ngphylogeny_multitools/) | seqtype_detect | Multi-tool image for phylogenetic workflows |
+| [snakemake](snakemake/) | v5.6.0 | Workflow management system for reproducible bioinformatics |
+
+### Base Images
+
+These images serve as base environments for building other images or running custom analyses:
+
+| Image | Latest Version | Description |
+|-------|---------------|-------------|
+| [perl](perl/) | v5.32.1 | Perl with BioPerl modules |
+| [python](python/) | v3.8.2 | Python base image |
+| [python-dl](python-dl/) | v3.13 | Python with deep learning packages (TensorFlow, PyTorch) |
+| [python-evol](python-evol/) | v3.8.2 | Python with evolutionary biology packages |
+| [python-ml](python-ml/) | v3.8.2 | Python with machine learning packages |
+| [r-base](r-base/) | v4.0.2 | R statistical computing base image |
+| [r-evol](r-evol/) | v4.2.2 | R with evolutionary biology packages |
+| [r-extended](r-extended/) | v4.3.3 | R with extended bioinformatics packages |
+| [r-gisaid](r-gisaid/) | v4.1.2 | R environment for GISAID data analysis |
+| [r-sra](r-sra/) | v3.6.1 | R environment for SRA data analysis |
+| [ubuntu](ubuntu/) | v24.04 | Ubuntu base image |
+
+### Utilities
+
+| Tool | Latest Version | Description |
+|------|---------------|-------------|
+| [cd-git](cd-git/) | v4.8.1 | CD-HIT sequence clustering with Git |
+| [dsrc](dsrc/) | v2.0.2 | DNA sequence compression tool |
+| [fastqutils](fastqutils/) | v0.1.6 | Utilities for manipulating FASTQ files |
+| [jq](jq/) | v1.6 | Lightweight and flexible command-line JSON processor |
+| [label](label/) | v0.6.4 | Sequence labeling and annotation tool |
+| [reseq](reseq/) | 053b8d1 | Realistic simulation of Illumina sequencing data |
+| [s3utils](s3utils/) | v0.6.1 | Utilities for interacting with Amazon S3 |
+| [snag](snag/) | master | SNP analysis and genotyping tool |
+| [sphinx](sphinx/) | v1.8.5 | Python documentation generator |
+| [sra-tools](sra-tools/) | v3.0.1 | NCBI SRA toolkit for downloading and processing sequencing data |
+| [sratoolkit](sratoolkit/) | v3.0.1 | Alternate NCBI SRA toolkit image |
+| [wget](wget/) | v1.17.1 | Network utility to retrieve files from the Web |
+
+## Building Images Locally
+
+To build a Docker image from this repository, navigate to the tool's version directory and run `docker build`:
+
+```bash
+cd <tool-name>/<version>/
+docker build -t evolbioinfo/<tool-name>:<version> .
+```
+
+For example, to build the RAxML-NG image:
+
+```bash
+cd raxml-ng/v1.2.2/
+docker build -t evolbioinfo/raxml-ng:v1.2.2 .
+```
+
+## Contributing
+
+Contributions of new Dockerfiles or updates to existing ones are welcome. Please follow the conventions used in this repository:
+
+- Place each tool's Dockerfile in a subdirectory named `<tool-name>/<version>/`.
+- Use a `LABEL maintainer=` instruction to identify the image author.
+- Use `ENV VERSION=<version>` to specify the tool version.
+- Clean up build dependencies and package manager caches at the end of the `RUN` step.
+- Define an `ENTRYPOINT` pointing to the tool's main executable where appropriate.
+- Create a `/pasteur` directory at the end of the build (this is the shared mount point convention used in these images).
+
