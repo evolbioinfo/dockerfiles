@@ -92,6 +92,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
+| [ebg](ebg/) | v0.13.3 | [Educated Bootstrap Guesser](https://github.com/wiegertj/EBG/wiki) |
 | [epa-ng](epa-ng/) | v0.3.8 | Evolutionary placement algorithm for short reads into reference trees |
 | [fastme](fastme/) | v2.1.6.4 | Fast and accurate distance-based phylogenetic tree construction |
 | [fasttree](fasttree/) | v2.1.9 | Approximate maximum-likelihood phylogenetic trees for large alignments |
@@ -105,6 +106,7 @@ The versions listed represent the latest containerized builds in this repository
 | [ml_bootstrap](ml_bootstrap/) | fec985c | Machine learning based support (see [this article](https://academic.oup.com/bioinformatics/article/40/Supplement_1/i208/7700891)) |
 | [mrbayes](mrbayes/) | v3.2.7 | Bayesian inference of phylogenetic trees |
 | [newick_utilities](newick_utilities/) | v1.6 | Utilities for manipulating Newick format trees |
+| [ngphylogeny_multitools](ngphylogeny_multitools/) | seqtype_detect | Multi-tool image for phylogenetic workflows |
 | [phylodeep](phylodeep/) | v0.3.1 | Deep learning for phylodynamic parameter estimation |
 | [phyml](phyml/) | v3.3.20220408 | Maximum-likelihood phylogenetic tree estimation |
 | [phyml-sms](phyml-sms/) | v1.8.1.1 | PhyML with Smart Model Selection |
@@ -112,7 +114,6 @@ The versions listed represent the latest containerized builds in this repository
 | [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
 | [raxml](raxml/) | v8.2.8 | Randomized accelerated maximum likelihood phylogenetic inference |
 | [raxml-ng](raxml-ng/) | v1.2.2 | RAxML next-generation |
-| [seq-gen](seq-gen/) | v1.3.4 | Simulation of molecular sequence data along phylogenetic trees |
 | [table2itol](table2itol/) | latest | Converts annotation tables to iTOL dataset files |
 | [tqdist](tqdist/) | v1.0.2 | Computing quartet and triplet distances between trees |
 | [treedater](treedater/) | 89a0df0 | Scalable relaxed clock phylogenetic dating |
@@ -129,9 +130,10 @@ The versions listed represent the latest containerized builds in this repository
 | [bmge](bmge/) | v1.12 | Block Mapping and Gathering with Entropy for alignment trimming |
 | [clustal_omega](clustal_omega/) | v1.2.4 | Fast and scalable multiple sequence alignment |
 | [gblocks](gblocks/) | v0.91b | Alignment trimming by selecting conserved blocks |
+| [lastal](lastal/) | v980 | Local alignment of biological sequences |
 | [mafft](mafft/) | v7.525 | Multiple sequence alignment using fast Fourier transform |
 | [muscle](muscle/) | v3.8.31 | Multiple sequence alignment |
-| [papara](papara/) | v2.5 | Phylogeny-aware short-read alignment |
+| [noisy](noisy/) | v1.5.12 | Identify homoplastic characters in multiple sequence alignments |
 | [tcoffee](tcoffee/) | Version_11.00.18778a8 | Multiple sequence alignment using T-Coffee |
 | [trimal](trimal/) | v1.4.1 | Automated removal of spurious sequences or poorly aligned regions |
 
@@ -144,9 +146,9 @@ The versions listed represent the latest containerized builds in this repository
 | [bowtie2](bowtie2/) | v2.5.1 | Mapping DNA sequences against a large reference genome |
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
 | [hisat2](hisat2/) | v2.0.5 | Alignment program for mapping next-generation sequencing reads to a population of human genomes |
-| [lastal](lastal/) | v980 | Local alignment of biological sequences |
 | [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
 | [minimap2](minimap2/) | v2.26 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
+| [papara](papara/) | v2.5 | Phylogeny-aware short-read alignment |
 | [star](star/) | v2.7.6a | Spliced Transcripts Alignment to a Reference (RNA-seq) |
 
 ### Genomic Tools
@@ -156,12 +158,17 @@ The versions listed represent the latest containerized builds in this repository
 | [alfred](alfred/) | v0.2.6 | BAM alignment statistics, feature counting and feature annotation |
 | [bam-readcount](bam-readcount/) | v1.0.1 | Per-position read counts from BAM files |
 | [bamUtil](bamUtil/) | v1.0.15 | Programs for working on SAM/BAM files |
-| [bcftools](bcftools/) | v1.16 | Utilities for variant calling and manipulating VCF/BCF files |
 | [bedtools](bedtools/) | v2.31.1 | Genome arithmetic and interval manipulation |
+| [dsrc](dsrc/) | v2.0.2 | DNA sequence compression tool |
+| [fastqutils](fastqutils/) | v0.1.6 | Utilities for manipulating FASTQ files |
+| [fastxtoolkit](fastxtoolkit/) | v0.0.14 | FASTX toolkit for preprocessing FASTQ/FASTA files |
+| [gofasta](gofasta/) | v1.2.1 | Command-line utilities for working with genomic alignments |
 | [picard](picard/) | v2.27.0 | Command-line tools for manipulating high-throughput sequencing data |
 | [samtools](samtools/) | v1.9 | Reading, writing, and manipulating SAM/BAM/CRAM files |
 | [seqkit](seqkit/) | v2.4.0 | Ultrafast toolkit for FASTA/Q file manipulation |
 | [seqtk](seqtk/) | v1.3 | Toolkit for processing sequences in FASTA/Q formats |
+| [sra-tools](sra-tools/) | v3.0.1 | NCBI SRA toolkit for downloading and processing sequencing data |
+| [sratoolkit](sratoolkit/) | v3.0.1 | Alternate NCBI SRA toolkit image |
 | [vcftools](vcftools/) | v0.1.16 | Tools for working with VCF files |
 
 ### Variant Calling
@@ -189,7 +196,6 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [adapterremoval](adapterremoval/) | v2.3.3 | Trimming of adapters and low-quality bases from NGS reads |
 | [alien_trimmer](alien_trimmer/) | v2.1 | Adapter trimming for sequencing reads |
-| [fastxtoolkit](fastxtoolkit/) | v0.0.14 | FASTX toolkit for preprocessing FASTQ/FASTA files |
 | [trimgalore](trimgalore/) | v0.6.7 | Wrapper for Cutadapt and FastQC for adapter trimming |
 
 ### Assembly
@@ -208,10 +214,10 @@ The versions listed represent the latest containerized builds in this repository
 | [bayestraits](bayestraits/) | v5.0.0 | Bayesian analysis of trait evolution on phylogenies |
 | [fastcodeml](fastcodeml/) | v1.1.0 | Accelerated codeml for detecting positive selection |
 | [hyphy](hyphy/) | v2.5.73 | Hypothesis testing using phylogenies |
-| [mapdamage](mapdamage/) | v2.2.1 | Identifying and quantifying DNA damage in ancient DNA |
 | [paml](paml/) | v4.8a | Phylogenetic analysis by maximum likelihood |
-| [pathphynder](pathphynder/) | v0.1 | Ancient DNA placement into reference phylogenies |
 | [pcoc](pcoc/) | v898c138 | Detection of Convergent Amino-Acid Evolution |
+| [pastml](pastml/) | v1.9.43 | Ancestral state reconstruction and phylogeographic inference |
+
 
 ### Population Genetics
 
@@ -219,8 +225,6 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [admixture](admixture/) | v1.3.0 | Maximum-likelihood estimation of individual ancestries |
 | [finestructure](finestructure/) | v4.1.1 | Population structure inference using haplotypes |
-| [gofasta](gofasta/) | v1.2.1 | Command-line utilities for working with genomic alignments |
-| [pastml](pastml/) | v1.9.43 | Ancestral state reconstruction and phylogeographic inference |
 
 ### Gene Expression
 
@@ -236,7 +240,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [checkm](checkm/) | v1.2.1 | Quality assessment of genome bins from metagenomes |
 | [fastani](fastani/) | v1.33 | Fast and accurate whole-genome ANI estimation |
-| [khmer](khmer/) | v2.1.2 | In-memory k-mer counting and filtering toolkit |
+| [khmer](khmer/) | v2.1.2 | Probabilistic k-mer counting data structure |
 | [kraken](kraken/) | v2.1.3 | Taxonomic classification of metagenomic sequences |
 | [krakenuniq](krakenuniq/) | v1.0.4 | Metagenomics classification using unique k-mer counts |
 | [vamb](vamb/) | v3.0.2 | Variational autoencoders for metagenomic binning |
@@ -248,29 +252,31 @@ The versions listed represent the latest containerized builds in this repository
 | [artic-ncov2019](artic-ncov2019/) | e814ed4 | ARTIC network bioinformatics tools for SARS-CoV-2 |
 | [civet](civet/) | v2.1.2 | Cluster investigation and virus epidemiology tool |
 | [irma](irma/) | v1.0.3 | Iterative refinement meta-assembler for viral genomics |
+| [label](label/) | v0.6.4 | Sequence labeling and annotation tool |
 | [nextstrain-base](nextstrain-base/) | build-20251119T000157Z | Nextstrain base environment for viral phylodynamics |
 | [pangolin](pangolin/) | v4.3.1 | Phylogenetic assignment of named global outbreak LINeages |
 | [polecat](polecat/) | b4a36f3 | Phylogenetic Overview & Local Epidemiological Cluster Analysis Tool |
+| [vivan](vivan/) | v0.43 | Virus variation analyzer |
 
 ### Ancient DNA
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
 | [damageprofiler](damageprofiler/) | v1.1 | Profiling damage patterns in ancient DNA reads |
+| [mapdamage](mapdamage/) | v2.2.1 | Identifying and quantifying DNA damage in ancient DNA |
+| [pathphynder](pathphynder/) | v0.1 | Ancient DNA placement into reference phylogenies |
 | [schmutzi](schmutzi/) | v1.5.6 | Estimation of ancient DNA contamination |
 
 ### Sequence Analysis
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [ebg](ebg/) | v0.13.3 | [Educated Bootstrap Guesser](https://github.com/wiegertj/EBG/wiki) |
+| [cd-hit](cd-hit/) | v4.8.1 | Sequence clustering|
 | [gubbins](gubbins/) | v3.4 | Rapid detection of recombination in bacterial genomes |
 | [hmmer](hmmer/) | v3.3 | Biosequence analysis using profile hidden Markov models |
 | [jphmm](jphmm/) | v03.2015 | Jumping profile hidden Markov model for HIV subtyping |
 | [jphmm_tools](jphmm_tools/) | v0.1.4 | Tools for working with jpHMM output |
-| [noisy](noisy/) | v1.5.12 | Identify homoplastic characters in multiple sequence alignments |
 | [sdrmhunter](sdrmhunter/) | v0.2.1.6 | HIV surveillance drug resistance mutation identification |
-| [strainline](strainline/) | commit-8af032906e | Full-length de novo viral haplotype reconstruction |
 
 ### Haplotyping
 
@@ -280,6 +286,7 @@ The versions listed represent the latest containerized builds in this repository
 | [haplogrep](haplogrep/) | v2.4.0 | Mitochondrial haplogroup classification |
 | [predicthaplo](predicthaplo/) | v1.0 | Predicting HIV haplotypes from next-generation sequencing |
 | [shorah](shorah/) | v1.99.2 | Short Reads Assembly into Haplotypes |
+| [strainline](strainline/) | commit-8af032906e | Full-length de novo viral haplotype reconstruction |
 
 ### Simulation
 
@@ -287,6 +294,9 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [indelible](indelible/) | v1.03 | Flexible evolutionary sequence simulator |
 | [nanosim](nanosim/) | v3.1.0 | Nanopore sequence read simulator |
+| [seq-gen](seq-gen/) | v1.3.4 | Simulation of molecular sequence data along phylogenetic trees |
+| [snag](snag/) | master | Sequence simulation along a tree |
+| [reseq](reseq/) | 053b8d1 | Realistic simulation of Illumina sequencing data |
 
 ### Read Correction
 
@@ -301,13 +311,11 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [igv](igv/) | v2.9.0 | Integrative Genomics Viewer for alignment and variant data |
 | [inkscape](inkscape/) | latest | Vector graphics editor |
-| [vivan](vivan/) | v0.43 | Virus variation analyzer |
 
 ### Workflow Management
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [ngphylogeny_multitools](ngphylogeny_multitools/) | seqtype_detect | Multi-tool image for phylogenetic workflows |
 | [snakemake](snakemake/) | v5.6.0 | Workflow management system for reproducible bioinformatics |
 
 ### Base Images
@@ -332,17 +340,9 @@ These images serve as base environments for building other images or running cus
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [cd-git](cd-git/) | v4.8.1 | CD-HIT sequence clustering with Git |
-| [dsrc](dsrc/) | v2.0.2 | DNA sequence compression tool |
-| [fastqutils](fastqutils/) | v0.1.6 | Utilities for manipulating FASTQ files |
 | [jq](jq/) | v1.6 | Lightweight and flexible command-line JSON processor |
-| [label](label/) | v0.6.4 | Sequence labeling and annotation tool |
-| [reseq](reseq/) | 053b8d1 | Realistic simulation of Illumina sequencing data |
 | [s3utils](s3utils/) | v0.6.1 | Utilities for interacting with Amazon S3 |
-| [snag](snag/) | master | Sequence simulation along a tree |
 | [sphinx](sphinx/) | v1.8.5 | Python documentation generator |
-| [sra-tools](sra-tools/) | v3.0.1 | NCBI SRA toolkit for downloading and processing sequencing data |
-| [sratoolkit](sratoolkit/) | v3.0.1 | Alternate NCBI SRA toolkit image |
 | [wget](wget/) | v1.17.1 | Network utility to retrieve files from the Web |
 
 ## Building Images Locally
