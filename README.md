@@ -86,6 +86,8 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 
 ## Available Images
 
+The versions listed represent the latest containerized builds in this repository, not necessarily the most recent versions of the underlying tools.
+
 ### Phylogenetics
 
 | Tool | Latest Version | Description |
@@ -100,7 +102,7 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 | [lsd](lsd/) | v0.3beta | Least-squares dating of phylogenetic trees |
 | [lsd2](lsd2/) | v2.4.1 | Least-squares dating of phylogenetic trees (version 2) |
 | [maple](maple/) | v0.6.11 | Maximum likelihood phylogenetic estimation with reduced memory |
-| [ml_bootstrap](ml_bootstrap/) | fec985c | Maximum-likelihood phylogenetic bootstrapping |
+| [ml_bootstrap](ml_bootstrap/) | fec985c | Machine learning based support (see [this article](https://academic.oup.com/bioinformatics/article/40/Supplement_1/i208/7700891)) |
 | [mrbayes](mrbayes/) | v3.2.7 | Bayesian inference of phylogenetic trees |
 | [newick_utilities](newick_utilities/) | v1.6 | Utilities for manipulating Newick format trees |
 | [phylodeep](phylodeep/) | v0.3.1 | Deep learning for phylodynamic parameter estimation |
@@ -109,14 +111,14 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 | [ptp](ptp/) | v4bb2daf | Species delimitation from phylogenetic trees |
 | [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
 | [raxml](raxml/) | v8.2.8 | Randomized accelerated maximum likelihood phylogenetic inference |
-| [raxml-ng](raxml-ng/) | v1.2.2 | RAxML next-generation for large-scale phylogenetic analyses |
+| [raxml-ng](raxml-ng/) | v1.2.2 | RAxML next-generation |
 | [seq-gen](seq-gen/) | v1.3.4 | Simulation of molecular sequence data along phylogenetic trees |
 | [table2itol](table2itol/) | latest | Converts annotation tables to iTOL dataset files |
 | [tqdist](tqdist/) | v1.0.2 | Computing quartet and triplet distances between trees |
-| [treedater](treedater/) | 89a0df0 | Fast relaxed-clock Bayesian phylogenetic dating |
+| [treedater](treedater/) | 89a0df0 | Scalable relaxed clock phylogenetic dating |
 | [treemmer](treemmer/) | v0.3 | Reduce tree size while preserving phylogenetic diversity |
 | [treesimulator](treesimulator/) | v0.1.9 | Simulating rooted phylogenetic trees under various models |
-| [treestructure](treestructure/) | a831a66 | Testing for phylogenetic tree structure |
+| [treestructure](treestructure/) | a831a66 | [Identification of hidden population structure in time-scaled phylogenies](https://academic.oup.com/sysbio/article/69/5/884/5734655) |
 | [treetime](treetime/) | v0.8.5 | Maximum-likelihood phylogenetic time-trees inference |
 | [treewas](treewas/) | v1.0 | Genome-wide association studies on phylogenetic trees |
 
@@ -128,20 +130,20 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 | [clustal_omega](clustal_omega/) | v1.2.4 | Fast and scalable multiple sequence alignment |
 | [gblocks](gblocks/) | v0.91b | Alignment trimming by selecting conserved blocks |
 | [mafft](mafft/) | v7.525 | Multiple sequence alignment using fast Fourier transform |
-| [muscle](muscle/) | v3.8.31 | Multiple sequence alignment using log-expectation scoring |
+| [muscle](muscle/) | v3.8.31 | Multiple sequence alignment |
 | [papara](papara/) | v2.5 | Phylogeny-aware short-read alignment |
 | [tcoffee](tcoffee/) | Version_11.00.18778a8 | Multiple sequence alignment using T-Coffee |
-| [trimal](trimal/) | v1.4.1 | Automated alignment trimming for phylogenomics |
+| [trimal](trimal/) | v1.4.1 | Automated removal of spurious sequences or poorly aligned regions |
 
 ### Sequence Mapping
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [bbmap](bbmap/) | v39.01 | Short and long read aligner and assembler |
-| [bowtie](bowtie/) | v1.3.1 | Ultrafast, memory-efficient short read aligner |
-| [bowtie2](bowtie2/) | v2.5.1 | Fast and sensitive alignment of short DNA reads |
+| [bbmap](bbmap/) | v39.01 | Short read aligner for DNA and RNA-seq data |
+| [bowtie](bowtie/) | v1.3.1 | Aligning sequencing reads to references |
+| [bowtie2](bowtie2/) | v2.5.1 | Mapping DNA sequences against a large reference genome |
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
-| [hisat2](hisat2/) | v2.0.5 | Splice-aware aligner for RNA-seq reads |
+| [hisat2](hisat2/) | v2.0.5 | Alignment program for mapping next-generation sequencing reads to a population of human genomes |
 | [lastal](lastal/) | v980 | Local alignment of biological sequences |
 | [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
 | [minimap2](minimap2/) | v2.26 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
@@ -151,7 +153,7 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [alfred](alfred/) | v0.2.6 | BAM alignment statistics and feature counting |
+| [alfred](alfred/) | v0.2.6 | BAM alignment statistics, feature counting and feature annotation |
 | [bam-readcount](bam-readcount/) | v1.0.1 | Per-position read counts from BAM files |
 | [bamUtil](bamUtil/) | v1.0.15 | Programs for working on SAM/BAM files |
 | [bcftools](bcftools/) | v1.16 | Utilities for variant calling and manipulating VCF/BCF files |
@@ -174,7 +176,7 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [catch](catch/) | v1.5.1 | Compact aggregated taxonomy for characterizing hybridization |
+| [catch](catch/) | v1.5.1 | Compact Aggregation of Targets for Comprehensive Hybridization |
 | [fastqc](fastqc/) | v0.11.9 | Quality control analysis of high-throughput sequencing data |
 | [minionqc](minionqc/) | v1.4.1 | Quality control for Oxford Nanopore sequencing data |
 | [multiqc](multiqc/) | v1.9 | Aggregate bioinformatics results across samples into a report |
@@ -194,9 +196,9 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [canu](canu/) | v2.0 | Long-read assembler for high-noise reads (e.g., PacBio, Nanopore) |
+| [canu](canu/) | v2.0 | Long-read assembler |
 | [savage](savage/) | v0.4.1 | Sequence assembly for viral genomes |
-| [spades](spades/) | v3.15.4 | Genome assembly toolkit for single-cell and standard data |
+| [spades](spades/) | v3.15.4 | Assembly and analysis of sequencing data |
 | [velvet](velvet/) | v1.2.10 | De novo genomic assembler |
 
 ### Molecular Evolution
@@ -207,9 +209,9 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 | [fastcodeml](fastcodeml/) | v1.1.0 | Accelerated codeml for detecting positive selection |
 | [hyphy](hyphy/) | v2.5.73 | Hypothesis testing using phylogenies |
 | [mapdamage](mapdamage/) | v2.2.1 | Identifying and quantifying DNA damage in ancient DNA |
-| [paml](paml/) | v4.8a | Phylogenetic analysis by maximum likelihood (codon models) |
-| [pathphynder](pathphynder/) | v0.1 | Phylogenetic assignment of pathogen sequences |
-| [pcoc](pcoc/) | v898c138 | Probabilistic convergent codon evolution analysis |
+| [paml](paml/) | v4.8a | Phylogenetic analysis by maximum likelihood |
+| [pathphynder](pathphynder/) | v0.1 | Ancient DNA placement into reference phylogenies |
+| [pcoc](pcoc/) | v898c138 | Detection of Convergent Amino-Acid Evolution |
 
 ### Population Genetics
 
@@ -236,7 +238,7 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 | [fastani](fastani/) | v1.33 | Fast and accurate whole-genome ANI estimation |
 | [khmer](khmer/) | v2.1.2 | In-memory k-mer counting and filtering toolkit |
 | [kraken](kraken/) | v2.1.3 | Taxonomic classification of metagenomic sequences |
-| [krakenuniq](krakenuniq/) | v1.0.4 | Unique k-mer based taxonomic classification |
+| [krakenuniq](krakenuniq/) | v1.0.4 | Metagenomics classification using unique k-mer counts |
 | [vamb](vamb/) | v3.0.2 | Variational autoencoders for metagenomic binning |
 
 ### Viral & Pandemic Analysis
@@ -248,7 +250,7 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 | [irma](irma/) | v1.0.3 | Iterative refinement meta-assembler for viral genomics |
 | [nextstrain-base](nextstrain-base/) | build-20251119T000157Z | Nextstrain base environment for viral phylodynamics |
 | [pangolin](pangolin/) | v4.3.1 | Phylogenetic assignment of named global outbreak LINeages |
-| [polecat](polecat/) | b4a36f3 | Summarising and classifying SARS-CoV-2 lineages |
+| [polecat](polecat/) | b4a36f3 | Phylogenetic Overview & Local Epidemiological Cluster Analysis Tool |
 
 ### Ancient DNA
 
@@ -261,12 +263,12 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [ebg](ebg/) | v0.13.3 | Evolutionary bioinformatics with graph-based methods |
+| [ebg](ebg/) | v0.13.3 | [Educated Bootstrap Guesser](https://github.com/wiegertj/EBG/wiki) |
 | [gubbins](gubbins/) | v3.4 | Rapid detection of recombination in bacterial genomes |
-| [hmmer](hmmer/) | v3.3 | Profile HMMs for protein sequence analysis |
+| [hmmer](hmmer/) | v3.3 | Biosequence analysis using profile hidden Markov models |
 | [jphmm](jphmm/) | v03.2015 | Jumping profile hidden Markov model for HIV subtyping |
 | [jphmm_tools](jphmm_tools/) | v0.1.4 | Tools for working with jpHMM output |
-| [noisy](noisy/) | v1.5.12 | Identifying non-phylogenetic signal in aligned sequences |
+| [noisy](noisy/) | v1.5.12 | Identify homoplastic characters in multiple sequence alignments |
 | [sdrmhunter](sdrmhunter/) | v0.2.1.6 | HIV surveillance drug resistance mutation identification |
 | [strainline](strainline/) | commit-8af032906e | Full-length de novo viral haplotype reconstruction |
 
@@ -274,10 +276,10 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [haploconduct](haploconduct/) | v0.2.1 | Haplotype reconstruction from high-coverage sequencing |
+| [haploconduct](haploconduct/) | v0.2.1 | Haplotype-aware genome assembly toolkit |
 | [haplogrep](haplogrep/) | v2.4.0 | Mitochondrial haplogroup classification |
 | [predicthaplo](predicthaplo/) | v1.0 | Predicting HIV haplotypes from next-generation sequencing |
-| [shorah](shorah/) | v1.99.2 | Reconstruction of the genomic diversity of a virus population |
+| [shorah](shorah/) | v1.99.2 | Short Reads Assembly into Haplotypes |
 
 ### Simulation
 
@@ -290,7 +292,7 @@ docker run -v $(pwd):/data evolbioinfo/raxml-ng:v1.2.2 --msa /data/alignment.fas
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [khmer](khmer/) | v2.1.2 | k-mer based read filtering and error correction |
+| [khmer](khmer/) | v2.1.2 | Probabilistic k-mer counting data structure |
 | [musket](musket/) | v1.1 | k-spectrum based short read error correction |
 
 ### Visualization
@@ -337,7 +339,7 @@ These images serve as base environments for building other images or running cus
 | [label](label/) | v0.6.4 | Sequence labeling and annotation tool |
 | [reseq](reseq/) | 053b8d1 | Realistic simulation of Illumina sequencing data |
 | [s3utils](s3utils/) | v0.6.1 | Utilities for interacting with Amazon S3 |
-| [snag](snag/) | master | SNP analysis and genotyping tool |
+| [snag](snag/) | master | Sequence simulation along a tree |
 | [sphinx](sphinx/) | v1.8.5 | Python documentation generator |
 | [sra-tools](sra-tools/) | v3.0.1 | NCBI SRA toolkit for downloading and processing sequencing data |
 | [sratoolkit](sratoolkit/) | v3.0.1 | Alternate NCBI SRA toolkit image |
