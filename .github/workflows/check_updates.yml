@@ -1,0 +1,70 @@
+name: Check for Tool Updates
+
+on:
+  schedule:
+    # Run every Monday at 08:00 UTC
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-updates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install packaging
+
+      - name: Run update checker
+        id: check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python .github/scripts/check_updates.py > /tmp/update_report.md 2>&1 || true
+          cat /tmp/update_report.md
+
+      - name: Find existing update issue
+        id: find_issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER=$(gh issue list \
+            --label "update-check" \
+            --state open \
+            --json number \
+            --jq '.[0].number // empty')
+          echo "issue_number=${ISSUE_NUMBER}" >> "$GITHUB_OUTPUT"
+
+      - name: Create or update issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BODY="$(cat /tmp/update_report.md)"
+          BODY="${BODY}
+
+          ---
+          *Last checked: $(date -u '+%Y-%m-%d %H:%M UTC')*"
+
+          ISSUE_NUMBER="${{ steps.find_issue.outputs.issue_number }}"
+
+          if [ -n "$ISSUE_NUMBER" ]; then
+            gh issue edit "$ISSUE_NUMBER" --body "$BODY"
+            echo "Updated existing issue #${ISSUE_NUMBER}"
+          else
+            gh issue create \
+              --title "Tools that could be updated" \
+              --body "$BODY" \
+              --label "update-check"
+            echo "Created new issue"
+          fi

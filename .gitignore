@@ -2,6 +2,7 @@
 .*
 !.gitignore
 .biotools_cache/
+!.github
 __pycache__/
 *.pyc
 
