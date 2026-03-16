@@ -92,14 +92,15 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
+| [Bio++](biopp/) | v3.0.0 |  The Bio++ Libraries for phylogenetic and sequence analysis |
 | [ebg](ebg/) | v0.13.3 | [Educated Bootstrap Guesser](https://github.com/wiegertj/EBG/wiki) |
 | [epa-ng](epa-ng/) | v0.3.8 | Evolutionary placement algorithm for short reads into reference trees |
 | [fastme](fastme/) | v2.1.6.4 | Fast and accurate distance-based phylogenetic tree construction |
 | [fasttree](fasttree/) | v2.1.9 | Approximate maximum-likelihood phylogenetic trees for large alignments |
-| [goalign](goalign/) | v0.3.8 | Multiple sequence alignment analysis toolkit |
+| [goalign](goalign/) | v0.4.0 | Multiple sequence alignment analysis toolkit |
 | [gotree](gotree/) | v0.5.1 | Phylogenetic tree manipulation toolkit |
 | [guppy](guppy/) | v3.1.5 | Tools for working with pplacer phylogenetic placement files |
-| [iqtree](iqtree/) | v3.0.0 | Fast and accurate maximum-likelihood phylogenetic tree inference |
+| [iqtree](iqtree/) | v3.1.0 | Fast and accurate maximum-likelihood phylogenetic tree inference |
 | [lsd](lsd/) | v0.3beta | Least-squares dating of phylogenetic trees |
 | [lsd2](lsd2/) | v2.4.1 | Least-squares dating of phylogenetic trees (version 2) |
 | [maple](maple/) | v0.6.11 | Maximum likelihood phylogenetic estimation with reduced memory |
@@ -131,7 +132,7 @@ The versions listed represent the latest containerized builds in this repository
 | [clustal_omega](clustal_omega/) | v1.2.4 | Fast and scalable multiple sequence alignment |
 | [gblocks](gblocks/) | v0.91b | Alignment trimming by selecting conserved blocks |
 | [lastal](lastal/) | v980 | Local alignment of biological sequences |
-| [mafft](mafft/) | v7.525 | Multiple sequence alignment using fast Fourier transform |
+| [mafft](mafft/) | v7.526 | Multiple sequence alignment using fast Fourier transform |
 | [muscle](muscle/) | v3.8.31 | Multiple sequence alignment |
 | [noisy](noisy/) | v1.5.12 | Identify homoplastic characters in multiple sequence alignments |
 | [tcoffee](tcoffee/) | Version_11.00.18778a8 | Multiple sequence alignment using T-Coffee |
@@ -143,7 +144,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [bbmap](bbmap/) | v39.01 | Short read aligner for DNA and RNA-seq data |
 | [bowtie](bowtie/) | v1.3.1 | Aligning sequencing reads to references |
-| [bowtie2](bowtie2/) | v2.5.1 | Mapping DNA sequences against a large reference genome |
+| [bowtie2](bowtie2/) | v2.5.5 | Mapping DNA sequences against a large reference genome |
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
 | [hisat2](hisat2/) | v2.0.5 | Alignment program for mapping next-generation sequencing reads to a population of human genomes |
 | [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
@@ -155,14 +156,14 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [alfred](alfred/) | v0.2.6 | BAM alignment statistics, feature counting and feature annotation |
+| [alfred](alfred/) | v0.5.3 | BAM alignment statistics, feature counting and feature annotation |
 | [bam-readcount](bam-readcount/) | v1.0.1 | Per-position read counts from BAM files |
 | [bamUtil](bamUtil/) | v1.0.15 | Programs for working on SAM/BAM files |
 | [bedtools](bedtools/) | v2.31.1 | Genome arithmetic and interval manipulation |
 | [dsrc](dsrc/) | v2.0.2 | DNA sequence compression tool |
-| [fastqutils](fastqutils/) | v0.1.6 | Utilities for manipulating FASTQ files |
+| [fastqutils](fastqutils/) | v0.1.7 | Utilities for manipulating FASTQ files |
 | [fastxtoolkit](fastxtoolkit/) | v0.0.14 | FASTX toolkit for preprocessing FASTQ/FASTA files |
-| [gofasta](gofasta/) | v1.2.1 | Command-line utilities for working with genomic alignments |
+| [gofasta](gofasta/) | v1.2.3 | Command-line utilities for working with genomic alignments |
 | [picard](picard/) | v2.27.0 | Command-line tools for manipulating high-throughput sequencing data |
 | [samtools](samtools/) | v1.9 | Reading, writing, and manipulating SAM/BAM/CRAM files |
 | [seqkit](seqkit/) | v2.4.0 | Ultrafast toolkit for FASTA/Q file manipulation |
@@ -175,16 +176,16 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [bcftools](bcftools/) | v1.16 | VCF/BCF variant manipulation and calling |
-| [freebayes](freebayes/) | v1.3.9 | Bayesian genetic variant detector |
+| [bcftools](bcftools/) | v1.23 | VCF/BCF variant manipulation and calling |
+| [freebayes](freebayes/) | v1.3.10 | Bayesian genetic variant detector |
 | [ivar](ivar/) | v1.3.1 | Tools for viral amplicon-based sequencing |
 
 ### Quality Control
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [catch](catch/) | v1.5.1 | Compact Aggregation of Targets for Comprehensive Hybridization |
-| [fastqc](fastqc/) | v0.11.9 | Quality control analysis of high-throughput sequencing data |
+| [catch](catch/) | v1.5.2 | Compact Aggregation of Targets for Comprehensive Hybridization |
+| [fastqc](fastqc/) | v0.12.1 | Quality control analysis of high-throughput sequencing data |
 | [minionqc](minionqc/) | v1.4.1 | Quality control for Oxford Nanopore sequencing data |
 | [multiqc](multiqc/) | v1.9 | Aggregate bioinformatics results across samples into a report |
 | [nanoplot](nanoplot/) | v1.29.1 | Plotting tools for long-read sequencing data |
@@ -202,7 +203,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [canu](canu/) | v2.0 | Long-read assembler |
+| [canu](canu/) | v2.3 | Long-read assembler |
 | [savage](savage/) | v0.4.1 | Sequence assembly for viral genomes |
 | [spades](spades/) | v3.15.4 | Assembly and analysis of sequencing data |
 | [velvet](velvet/) | v1.2.10 | De novo genomic assembler |
@@ -223,7 +224,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [admixture](admixture/) | v1.3.0 | Maximum-likelihood estimation of individual ancestries |
+| [admixture](admixture/) | v1.3.1 | Maximum-likelihood estimation of individual ancestries |
 | [finestructure](finestructure/) | v4.1.1 | Population structure inference using haplotypes |
 
 ### Gene Expression
@@ -238,8 +239,8 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [checkm](checkm/) | v1.2.1 | Quality assessment of genome bins from metagenomes |
-| [fastani](fastani/) | v1.33 | Fast and accurate whole-genome ANI estimation |
+| [checkm](checkm/) | v1.2.5 | Quality assessment of genome bins from metagenomes |
+| [fastani](fastani/) | v1.34 | Fast and accurate whole-genome ANI estimation |
 | [khmer](khmer/) | v2.1.2 | Probabilistic k-mer counting data structure |
 | [kraken](kraken/) | v2.1.3 | Taxonomic classification of metagenomic sequences |
 | [krakenuniq](krakenuniq/) | v1.0.4 | Metagenomics classification using unique k-mer counts |
@@ -341,6 +342,7 @@ These images serve as base environments for building other images or running cus
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
 | [jq](jq/) | v1.6 | Lightweight and flexible command-line JSON processor |
+| [s3cmd](s3cmd/) | v2.4.0 | Command Line S3 Client and Backup for Linux and Mac |
 | [s3utils](s3utils/) | v0.6.1 | Utilities for interacting with Amazon S3 |
 | [sphinx](sphinx/) | v1.8.5 | Python documentation generator |
 | [wget](wget/) | v1.17.1 | Network utility to retrieve files from the Web |
