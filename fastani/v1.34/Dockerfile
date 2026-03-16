@@ -14,6 +14,7 @@ RUN apt-get update --fix-missing \
     && git clone https://github.com/ParBLiSS/FastANI \
     && cd FastANI \
     && git checkout v1.34 \
+    && sed -i "s/1\.33/1\.34/g" src/map/include/parseCmdArgs.hpp \
     && ./bootstrap.sh \
     && ./configure \
     && make \
