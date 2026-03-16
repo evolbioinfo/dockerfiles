@@ -2,4 +2,6 @@
 .*
 !.gitignore
 .biotools_cache/
+__pycache__/
+*.pyc
 
