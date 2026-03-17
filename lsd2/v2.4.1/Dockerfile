@@ -1,6 +1,8 @@
 # LSD2
 # https://github.com/tothuhien/lsd2
-# v2.4.1- https://github.com/tothuhien/lsd2/releases/tag/v2.4.1
+# v2.4.1- https://github.com/tothuhien/lsd2/releases/tag/v.2.4.1
+# v.2.4.1
+
 
 FROM ubuntu:22.04
 
