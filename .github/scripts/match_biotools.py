@@ -159,6 +159,16 @@ def _name_variants(name: str) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
+# Text helpers
+# ---------------------------------------------------------------------------
+
+
+def _clean_description(text: str) -> str:
+    """Replace newline characters with a single space and strip leading/trailing whitespace."""
+    return " ".join(text.splitlines()).strip()
+
+
+# ---------------------------------------------------------------------------
 # Matching logic
 # ---------------------------------------------------------------------------
 
@@ -182,17 +192,17 @@ def _pick_best(results: dict, candidates: list[str]) -> tuple[str, str, str, str
     # Priority 1 – biotoolsID exact match
     for t in tool_list:
         if t.get("biotoolsID", "").lower() in candidates_lower:
-            return t["biotoolsID"], t.get("name", ""), t.get("description", ""), "exact_id"
+            return t["biotoolsID"], t.get("name", ""), _clean_description(t.get("description", "")), "exact_id"
 
     # Priority 2 – tool name exact match
     for t in tool_list:
         if t.get("name", "").lower() in candidates_lower:
-            return t["biotoolsID"], t.get("name", ""), t.get("description", ""), "exact_name"
+            return t["biotoolsID"], t.get("name", ""), _clean_description(t.get("description", "")), "exact_name"
 
     # Priority 3 – single result (likely match)
     if results.get("count") == 1:
         t = tool_list[0]
-        return t["biotoolsID"], t.get("name", ""), t.get("description", ""), "single_result"
+        return t["biotoolsID"], t.get("name", ""), _clean_description(t.get("description", "")), "single_result"
 
     return None
 
@@ -234,7 +244,7 @@ def find_match(
                 **result_template,
                 "biotools_id": data["biotoolsID"],
                 "biotools_name": data.get("name", ""),
-                "description": data.get("description", ""),
+                "description": _clean_description(data.get("description", "")),
                 "match_type": "direct",
             }
             cache[tool_dir] = result
