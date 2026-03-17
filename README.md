@@ -242,7 +242,7 @@ The versions listed represent the latest containerized builds in this repository
 | [checkm](checkm/) | v1.2.5 | Quality assessment of genome bins from metagenomes |
 | [fastani](fastani/) | v1.34 | Fast and accurate whole-genome ANI estimation |
 | [khmer](khmer/) | v2.1.2 | Probabilistic k-mer counting data structure |
-| [kraken](kraken/) | v2.1.3 | Taxonomic classification of metagenomic sequences |
+| [kraken](kraken/) | v2.17.1 | Taxonomic classification of metagenomic sequences |
 | [krakenuniq](krakenuniq/) | v1.0.4 | Metagenomics classification using unique k-mer counts |
 | [vamb](vamb/) | v3.0.2 | Variational autoencoders for metagenomic binning |
 
