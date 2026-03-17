@@ -101,9 +101,9 @@ The versions listed represent the latest containerized builds in this repository
 | [gotree](gotree/) | v0.5.1 | Phylogenetic tree manipulation toolkit |
 | [guppy](guppy/) | v3.1.5 | Tools for working with pplacer phylogenetic placement files |
 | [iqtree](iqtree/) | v3.1.0 | Fast and accurate maximum-likelihood phylogenetic tree inference |
-| [lsd](lsd/) | v0.3beta | Least-squares dating of phylogenetic trees |
+| [lsd](lsd/) | v0.3.3 | Least-squares dating of phylogenetic trees |
 | [lsd2](lsd2/) | v2.4.1 | Least-squares dating of phylogenetic trees (version 2) |
-| [maple](maple/) | v0.6.11 | Maximum likelihood phylogenetic estimation with reduced memory |
+| [maple](maple/) | v0.7.5 | Maximum likelihood phylogenetic estimation with reduced memory |
 | [ml_bootstrap](ml_bootstrap/) | fec985c | Machine learning based support (see [this article](https://academic.oup.com/bioinformatics/article/40/Supplement_1/i208/7700891)) |
 | [mrbayes](mrbayes/) | v3.2.7 | Bayesian inference of phylogenetic trees |
 | [newick_utilities](newick_utilities/) | v1.6 | Utilities for manipulating Newick format trees |
@@ -148,7 +148,7 @@ The versions listed represent the latest containerized builds in this repository
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
 | [hisat2](hisat2/) | v2.2.2 | Alignment program for mapping next-generation sequencing reads to a population of human genomes |
 | [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
-| [minimap2](minimap2/) | v2.26 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
+| [minimap2](minimap2/) | v2.30 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
 | [papara](papara/) | v2.5 | Phylogeny-aware short-read alignment |
 | [star](star/) | v2.7.6a | Spliced Transcripts Alignment to a Reference (RNA-seq) |
 
@@ -264,7 +264,7 @@ The versions listed represent the latest containerized builds in this repository
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
 | [damageprofiler](damageprofiler/) | v1.1 | Profiling damage patterns in ancient DNA reads |
-| [mapdamage](mapdamage/) | v2.2.1 | Identifying and quantifying DNA damage in ancient DNA |
+| [mapdamage](mapdamage/) | v2.2.3 | Identifying and quantifying DNA damage in ancient DNA |
 | [pathphynder](pathphynder/) | v0.1 | Ancient DNA placement into reference phylogenies |
 | [schmutzi](schmutzi/) | v1.5.6 | Estimation of ancient DNA contamination |
 
