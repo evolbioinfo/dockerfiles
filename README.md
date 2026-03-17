@@ -2,6 +2,8 @@
 
 This repository contains Dockerfiles used to build Docker images for bioinformatics tools, with a focus on evolutionary biology and phylogenetics. All images are published on [DockerHub](https://hub.docker.com/r/evolbioinfo/) under the `evolbioinfo` organization.
 
+A tentative of matching between the containerized tools and bio.tools is described in [BIOTOOLS.md](BIOTOOLS.md).
+
 ## Table of Contents
 
 - [Usage](#usage)
