@@ -1,0 +1,912 @@
+{
+  "adapterremoval": {
+    "tool": "adapterremoval",
+    "biotools_id": "adapterremoval",
+    "biotools_name": "AdapterRemoval",
+    "description": "AdapterRemoval searches for and removes adapter sequences from High-Throughput Sequencing (HTS) data and (optionally) trims low quality bases from the 3' end of reads following adapter removal. AdapterRemoval can analyze both single end and paired end data, and can be used to merge overlapping paired-ended reads into (longer) consensus sequences. Additionally, AdapterRemoval can construct a consensus adapter sequence for paired-ended reads, if which this information is not available.",
+    "match_type": "direct"
+  },
+  "admixture": {
+    "tool": "admixture",
+    "biotools_id": "admixture",
+    "biotools_name": "Admixture",
+    "description": "Maximum likelihood estimation of individual ancestries from multilocus SNP genotype datasets. It uses the same statistical model as STRUCTURE but calculates estimates using a fast numerical optimization algorithm.",
+    "match_type": "direct"
+  },
+  "alfred": {
+    "tool": "alfred",
+    "biotools_id": "alfred",
+    "biotools_name": "Alfred",
+    "description": "BAM Statistics, Feature Counting and Annotation",
+    "match_type": "direct"
+  },
+  "alien_trimmer": {
+    "tool": "alien_trimmer",
+    "biotools_id": "alientrimmer",
+    "biotools_name": "AlienTrimmer",
+    "description": "Trimming and clipping FASTQ-formatted read files.",
+    "match_type": "direct"
+  },
+  "artic-ncov2019": {
+    "tool": "artic-ncov2019",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "bam-readcount": {
+    "tool": "bam-readcount",
+    "biotools_id": "bam-readcount",
+    "biotools_name": "bam-readcount",
+    "description": "The purpose of this program is to generate metrics at single nucleotide positions. There are number of metrics generated which can be useful for filtering out false positive calls. Help is currently available on the commandline if you do not supply the program any arguments.",
+    "match_type": "direct"
+  },
+  "bamUtil": {
+    "tool": "bamUtil",
+    "biotools_id": "bamutil",
+    "biotools_name": "Bamutil",
+    "description": "Bamutil provides a serie of programs to work on SAM/BAM files.",
+    "match_type": "direct"
+  },
+  "bayestraits": {
+    "tool": "bayestraits",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "bbmap": {
+    "tool": "bbmap",
+    "biotools_id": "bbmap",
+    "biotools_name": "BBMap",
+    "description": "BBMap is a fast splice-aware aligner for RNA and DNA.  It is faster than almost all short-read aligners, yet retains unrivaled sensitivity and specificity, particularly for reads with many errors and indels.",
+    "match_type": "direct"
+  },
+  "bcftools": {
+    "tool": "bcftools",
+    "biotools_id": "bcftools",
+    "biotools_name": "BCFtools",
+    "description": "BCFtools is a set of utilities that manipulate variant calls in the Variant Call Format (VCF) and its binary counterpart BCF. All commands work transparently with both VCFs and BCFs, both uncompressed and BGZF-compressed.",
+    "match_type": "direct"
+  },
+  "bedtools": {
+    "tool": "bedtools",
+    "biotools_id": "bedtools",
+    "biotools_name": "BEDTools",
+    "description": "BEDTools is an extensive suite of utilities for comparing genomic features in BED format.",
+    "match_type": "direct"
+  },
+  "biopp": {
+    "tool": "biopp",
+    "biotools_id": "biopp",
+    "biotools_name": "Bio++",
+    "description": "Bio++ is a set of C++ libraries for Bioinformatics, including sequence analysis, phylogenetics, molecular evolution and population genetics. Bio++ is Object Oriented and is designed to be both easy to use and computer efficient. Bio++ intends to help programmers to write computer expensive programs, by providing them a set of re-usable tools.",
+    "match_type": "direct"
+  },
+  "bmge": {
+    "tool": "bmge",
+    "biotools_id": "bmge",
+    "biotools_name": "BMGE",
+    "description": "Block Mapping and Gathering using Entropy.",
+    "match_type": "direct"
+  },
+  "bowtie": {
+    "tool": "bowtie",
+    "biotools_id": "bowtie",
+    "biotools_name": "Bowtie",
+    "description": "Bowtie is an ultrafast, memory-efficient short read aligner.",
+    "match_type": "direct"
+  },
+  "bowtie2": {
+    "tool": "bowtie2",
+    "biotools_id": "bowtie2",
+    "biotools_name": "Bowtie 2",
+    "description": "Bowtie 2 is an ultrafast and memory-efficient tool for aligning sequencing reads to long reference sequences. It is particularly good at aligning reads of about 50 up to 100s or 1,000s of characters, and particularly good at aligning to relatively long (e.g. mammalian) genomes. Bowtie 2 indexes the genome with an FM Index to keep its memory footprint small: for the human genome, its memory footprint is typically around 3.2 GB. Bowtie 2 supports gapped, local, and paired-end alignment modes.",
+    "match_type": "direct"
+  },
+  "bwa": {
+    "tool": "bwa",
+    "biotools_id": "bwa",
+    "biotools_name": "BWA",
+    "description": "Fast, accurate, memory-efficient aligner for short and long sequencing reads",
+    "match_type": "direct"
+  },
+  "canu": {
+    "tool": "canu",
+    "biotools_id": "canu",
+    "biotools_name": "CANU",
+    "description": "De-novo assembly tool for long read chemistry like Nanopore data and PacBio data.",
+    "match_type": "direct"
+  },
+  "catch": {
+    "tool": "catch",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "cd-hit": {
+    "tool": "cd-hit",
+    "biotools_id": "cd-hit",
+    "biotools_name": "cd-hit",
+    "description": "Cluster a nucleotide dataset into representative sequences.",
+    "match_type": "direct"
+  },
+  "checkm": {
+    "tool": "checkm",
+    "biotools_id": "checkm",
+    "biotools_name": "CheckM",
+    "description": "CheckM provides a set of tools for assessing the quality of genomes recovered from isolates, single cells, or metagenomes.",
+    "match_type": "direct"
+  },
+  "civet": {
+    "tool": "civet",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "clustal_omega": {
+    "tool": "clustal_omega",
+    "biotools_id": "clustalo",
+    "biotools_name": "Clustal Omega",
+    "description": "Multiple sequence alignment software. The name is occassionally spelled as ClustalOmega, Clustal \u03a9, Clustal\u03a9, Clustal O, ClustalO.",
+    "match_type": "single_result"
+  },
+  "damageprofiler": {
+    "tool": "damageprofiler",
+    "biotools_id": "damageprofiler",
+    "biotools_name": "DamageProfiler",
+    "description": "DamageProfiler calculates damage profiles of mapped reads and provides a graphical as well as text based representation.",
+    "match_type": "direct"
+  },
+  "deseq": {
+    "tool": "deseq",
+    "biotools_id": "deseq",
+    "biotools_name": "DESeq",
+    "description": "Estimate variance-mean dependence in count data from high-throughput sequencing assays and test for differential expression based on a model using the negative binomial distribution.",
+    "match_type": "direct"
+  },
+  "dsrc": {
+    "tool": "dsrc",
+    "biotools_id": "dsrc",
+    "biotools_name": "DSRC",
+    "description": "Compression algorithm for genomic data in FASTQ format",
+    "match_type": "direct"
+  },
+  "ebg": {
+    "tool": "ebg",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "epa-ng": {
+    "tool": "epa-ng",
+    "biotools_id": "EPA-ng",
+    "biotools_name": "EPA-ng",
+    "description": "Complete reimplementation of the evolutionary placement algorithm (EPA) that is substantially faster, offers a distributed memory parallelization, and integrates concepts from both, RAxML-EPA and PPLACER.",
+    "match_type": "direct"
+  },
+  "fastani": {
+    "tool": "fastani",
+    "biotools_id": "fastani",
+    "biotools_name": "FastANI",
+    "description": "FastANI is developed for fast alignment-free computation of whole-genome Average Nucleotide Identity (ANI). ANI is defined as mean nucleotide identity of orthologous gene pairs shared between two microbial genomes. FastANI supports pairwise comparison of both complete and draft genome assemblies.",
+    "match_type": "direct"
+  },
+  "fastcodeml": {
+    "tool": "fastcodeml",
+    "biotools_id": "fastcodeml",
+    "biotools_name": "FastCodeML",
+    "description": "FastCodeML is a collection of optimization strategies for fast detection of positive selection on phylogenetic trees.",
+    "match_type": "direct"
+  },
+  "fastme": {
+    "tool": "fastme",
+    "biotools_id": "fastme",
+    "biotools_name": "FastME",
+    "description": "Distance algorithms to infer phylogenies. It's based on balanced minimum evolution, which is the very principle of NJ. It includes Nearest Neighbor Interchange (NNI) and also Subtree Pruning and Regrafting (SPR), while remaining as fast as NJ and providing a number of facilities: distance estimation for DNA and proteins with various models and options, bootstrapping, and parallel computations.",
+    "match_type": "direct"
+  },
+  "fastqc": {
+    "tool": "fastqc",
+    "biotools_id": "fastqc",
+    "biotools_name": "FastQC",
+    "description": "This tool aims to provide a QC report which can spot problems or biases which originate either in the sequencer or in the starting library material. It can be run in one of two modes. It can either run as a stand alone interactive application for the immediate analysis of small numbers of FastQ files, or it can be run in a non-interactive mode where it would be suitable for integrating into a larger analysis pipeline for the systematic processing of large numbers of files.",
+    "match_type": "direct"
+  },
+  "fastqutils": {
+    "tool": "fastqutils",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "fasttree": {
+    "tool": "fasttree",
+    "biotools_id": "fasttree",
+    "biotools_name": "FastTree",
+    "description": "Infers approximately-maximum-likelihood phylogenetic trees from alignments of nucleotide or protein sequences.",
+    "match_type": "direct"
+  },
+  "fastxtoolkit": {
+    "tool": "fastxtoolkit",
+    "biotools_id": "fastx-toolkit",
+    "biotools_name": "FASTX-Toolkit",
+    "description": "Collection of command line tools for Short-Reads FASTA/FASTQ files preprocessing.",
+    "match_type": "single_result"
+  },
+  "finestructure": {
+    "tool": "finestructure",
+    "biotools_id": "finestructure",
+    "biotools_name": "fineSTRUCTURE",
+    "description": "fineSTRUCTURE is an algorithm for identifying population structure using dense sequencing data. By using the output of ChromoPainter as a (nearly) sufficient summary statistic, it is able to perform model-based Bayesian clustering on large datasets, including full resequencing data, and can handle up to 1000s of individuals. Full assignment uncertainty is given.",
+    "match_type": "direct"
+  },
+  "freebayes": {
+    "tool": "freebayes",
+    "biotools_id": "freebayes",
+    "biotools_name": "FreeBayes",
+    "description": "Bayesian genetic variant detector designed to find small polymorphisms, specifically SNPs, indels, multi-nucleotide polymorphisms, and complex events (composite insertion and substitution events) smaller than the length of a short-read sequencing alignment.",
+    "match_type": "direct"
+  },
+  "gblocks": {
+    "tool": "gblocks",
+    "biotools_id": "gblocks",
+    "biotools_name": "gblocks",
+    "description": "Cleaning aligned sequences.",
+    "match_type": "direct"
+  },
+  "goalign": {
+    "tool": "goalign",
+    "biotools_id": "goalign",
+    "biotools_name": "goalign",
+    "description": "A set of command line tools to manipulate multiple alignments.",
+    "match_type": "direct"
+  },
+  "gofasta": {
+    "tool": "gofasta",
+    "biotools_id": "gofasta",
+    "biotools_name": "gofasta",
+    "description": "gofasta is a command-line utility developed to handle SARS-CoV-2 alignments, but should be useful more generally for handling consensus genomes of any microbial pathogen. It is used on datasets of millions of sequences, including by the United Kingdom's daily SARS-CoV-2 genome processing pipelines, Pangolin and Civet.",
+    "match_type": "direct"
+  },
+  "gotree": {
+    "tool": "gotree",
+    "biotools_id": "gotree",
+    "biotools_name": "Gotree",
+    "description": "Gotree is a set of command line tools to manipulate phylogenetic trees.",
+    "match_type": "direct"
+  },
+  "gubbins": {
+    "tool": "gubbins",
+    "biotools_id": "gubbins",
+    "biotools_name": "Gubbins",
+    "description": "Gubbins is a tool for rapid phylogenetic analysis of large samples of recombinant bacterial whole genome sequences.",
+    "match_type": "direct"
+  },
+  "guppy": {
+    "tool": "guppy",
+    "biotools_id": "guppy",
+    "biotools_name": "GUPPY",
+    "description": "Program to visualize sequence annotation data of the genetic sequence data with graphical layout. This highly interactive program allows scrolling and zooming from the genomic landscape to discrete nucleic acid sequences. Its main function is quick rendering of data on a standalone personal computer to save the layout as a parsonal file. With optional link to the internet resources, and printing support, this program tries to make more greater use of computational media in research actitiviy.",
+    "match_type": "direct"
+  },
+  "haploconduct": {
+    "tool": "haploconduct",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "haplogrep": {
+    "tool": "haplogrep",
+    "biotools_id": "haplogrep",
+    "biotools_name": "HaploGrep",
+    "description": "Web application for finding the corresponding haplogroup to given mtDNA profiles based on Phylotree (mtDNA classification tree).",
+    "match_type": "direct"
+  },
+  "hisat2": {
+    "tool": "hisat2",
+    "biotools_id": "hisat2",
+    "biotools_name": "HISAT2",
+    "description": "Alignment program for mapping next-generation sequencing reads (both DNA and RNA) to a population of human genomes (as well as to a single reference genome).",
+    "match_type": "direct"
+  },
+  "hmmer": {
+    "tool": "hmmer",
+    "biotools_id": "hmmer3",
+    "biotools_name": "HMMER3",
+    "description": "This tool is used for searching sequence databases for homologs of protein sequences, and for making protein sequence alignments. It implements methods using probabilistic models called profile hidden Markov models. The new HMMER3 project, HMMER is now as fast as BLAST for protein search.",
+    "match_type": "manual"
+  },
+  "hyphy": {
+    "tool": "hyphy",
+    "biotools_id": "HyPhy",
+    "biotools_name": "HyPhy",
+    "description": "Software package for the analysis of genetic sequences using techniques in phylogenetics, molecular evolution, and machine learning.",
+    "match_type": "direct"
+  },
+  "igv": {
+    "tool": "igv",
+    "biotools_id": "igv",
+    "biotools_name": "IGV",
+    "description": "High-performance visualization tool for interactive exploration of large, integrated datasets. It supports a wide variety of data types and format, including short-read alignments in the SAM/BAM format. Data can be viewed from local files or over the web via http.",
+    "match_type": "direct"
+  },
+  "indelible": {
+    "tool": "indelible",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "inkscape": {
+    "tool": "inkscape",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": ".",
+    "match_type": "not_found, manual"
+  },
+  "iqtree": {
+    "tool": "iqtree",
+    "biotools_id": "iqtree",
+    "biotools_name": "iqtree",
+    "description": "A fast and effective stochastic algorithm to infer phylogenetic trees by maximum likelihood. IQ-TREE compares favorably to RAxML and PhyML in terms of likelihoods with similar computing time",
+    "match_type": "direct"
+  },
+  "irma": {
+    "tool": "irma",
+    "biotools_id": "irma-virus",
+    "biotools_name": "IRMA",
+    "description": "Iterative Refinement Meta-Assembler for robust assembly, variant calling, and phasing of highly variable RNA virus sequencing data",
+    "match_type": "manual"
+  },
+  "ivar": {
+    "tool": "ivar",
+    "biotools_id": "andersen-lab_ivar",
+    "biotools_name": "iVar",
+    "description": "iVar is a computational package that contains functions broadly useful for viral amplicon-based sequencing.",
+    "match_type": "manual"
+  },
+  "jphmm": {
+    "tool": "jphmm",
+    "biotools_id": "jphmm",
+    "biotools_name": "jpHMM",
+    "description": "Jumping Profile Hidden Markov Model (jpHMM) takes a HIV-1 or HBV genome sequence and uses a pre-calculated multiple alignment of the major HIV-1 or HBV subtypes to predict the phylogenetic breakpoints and HIV/HBV subtype of the submitted sequence.",
+    "match_type": "direct"
+  },
+  "jphmm_tools": {
+    "tool": "jphmm_tools",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "khmer": {
+    "tool": "khmer",
+    "biotools_id": "khmer",
+    "biotools_name": "khmer",
+    "description": "khmer is a set of command-line tools for working with DNA shotgun sequencing data from genomes, transcriptomes, metagenomes, and single cells. khmer can make de novo assemblies faster, and sometimes better. khmer can also identify (and fix) problems with shotgun data.",
+    "match_type": "direct"
+  },
+  "kraken": {
+    "tool": "kraken",
+    "biotools_id": "kraken",
+    "biotools_name": "Kraken",
+    "description": "System for assigning taxonomic labels to short DNA sequences, usually obtained through metagenomic studies. Previous attempts by other bioinformatics software to accomplish this task have often used sequence alignment or machine learning techniques that were quite slow, leading to the development of less sensitive but much faster abundance estimation programs. It aims to achieve high sensitivity and high speed by utilizing exact alignments of k-mers and a novel classification algorithm.",
+    "match_type": "direct"
+  },
+  "krakenuniq": {
+    "tool": "krakenuniq",
+    "biotools_id": "KrakenUniq",
+    "biotools_name": "KrakenUniq",
+    "description": "Identification and quantitation of clinically relevant microbes in patient samples.",
+    "match_type": "direct"
+  },
+  "label": {
+    "tool": "label",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "lastal": {
+    "tool": "lastal",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "lsd": {
+    "tool": "lsd",
+    "biotools_id": "lsdate",
+    "biotools_name": "LSD",
+    "description": "Fast dating using least-squares criteria and algorithms",
+    "match_type": "manual"
+  },
+  "lsd2": {
+    "tool": "lsd2",
+    "biotools_id": "lsdate",
+    "biotools_name": "LSD",
+    "description": "Fast dating using least-squares criteria and algorithms",
+    "match_type": "manual"
+  },
+  "mafft": {
+    "tool": "mafft",
+    "biotools_id": "MAFFT",
+    "biotools_name": "MAFFT",
+    "description": "MAFFT (Multiple Alignment using Fast Fourier Transform) is a high speed multiple sequence alignment program.",
+    "match_type": "direct"
+  },
+  "mapdamage": {
+    "tool": "mapdamage",
+    "biotools_id": "mapdamage",
+    "biotools_name": "MapDamage",
+    "description": "Identify and quantify DNA damage patterns in ancient DNA.",
+    "match_type": "direct"
+  },
+  "maple": {
+    "tool": "maple",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "mash": {
+    "tool": "mash",
+    "biotools_id": "mash",
+    "biotools_name": "Mash",
+    "description": "Fast genome and metagenome distance estimation using MinHash.",
+    "match_type": "direct"
+  },
+  "minimap2": {
+    "tool": "minimap2",
+    "biotools_id": "minimap2",
+    "biotools_name": "Minimap2",
+    "description": "Pairwise aligner for genomic and spliced nucleotide sequences",
+    "match_type": "direct"
+  },
+  "minionqc": {
+    "tool": "minionqc",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "manual"
+  },
+  "ml_bootstrap": {
+    "tool": "ml_bootstrap",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "mrbayes": {
+    "tool": "mrbayes",
+    "biotools_id": "mrbayes",
+    "biotools_name": "MrBayes",
+    "description": "Program for Bayesian inference and model choice across a wide range of phylogenetic and evolutionary models. It uses Markov chain Monte Carlo (MCMC) methods to estimate the posterior distribution of model parameters.",
+    "match_type": "direct"
+  },
+  "multiqc": {
+    "tool": "multiqc",
+    "biotools_id": "multiqc",
+    "biotools_name": "MultiQC",
+    "description": "MultiQC aggregates results from multiple bioinformatics analyses across many samples into a single report. It searches a given directory for analysis logs and compiles a HTML report. It's a general use tool, perfect for summarising the output from numerous bioinformatics tools.",
+    "match_type": "direct"
+  },
+  "muscle": {
+    "tool": "muscle",
+    "biotools_id": "muscle",
+    "biotools_name": "MUSCLE",
+    "description": "This tool performs multiple sequence alignments of nucleotide or amino acid sequences.",
+    "match_type": "direct"
+  },
+  "musket": {
+    "tool": "musket",
+    "biotools_id": "musket",
+    "biotools_name": "Musket",
+    "description": "It is an efficient multistage k-mer based corrector for Illumina short read data. This corrector employs the k-mer spectrum approach and introduces three correction techniques in a multistage workflow. It is multi-threaded using a master-slave model and demonstrates superior parallel scalability compared to all other evaluated correctors as well as a highly competitive overall execution time.",
+    "match_type": "direct"
+  },
+  "nanoplot": {
+    "tool": "nanoplot",
+    "biotools_id": "nanoplot",
+    "biotools_name": "NanoPlot",
+    "description": "NanoPlot is a tool with various visualizations of sequencing data in bam, cram, fastq, fasta or platform-specific TSV summaries, mainly intended for long-read sequencing from Oxford Nanopore Technologies and Pacific Biosciences",
+    "match_type": "direct"
+  },
+  "nanosim": {
+    "tool": "nanosim",
+    "biotools_id": "nanosim",
+    "biotools_name": "NanoSim",
+    "description": "Nanopore sequence read simulator based on statistical characterization.",
+    "match_type": "direct"
+  },
+  "newick_utilities": {
+    "tool": "newick_utilities",
+    "biotools_id": "newick_utilities",
+    "biotools_name": "Newick Utilities",
+    "description": "The Newick Utilities are a set of command-line tools for processing phylogenetic trees. They can process arbitrarily large amounts of data and do not require user interaction, which makes them suitable for automating phylogeny processing tasks.",
+    "match_type": "direct"
+  },
+  "nextstrain-base": {
+    "tool": "nextstrain-base",
+    "biotools_id": "nextstrain",
+    "biotools_name": "Nextstrain",
+    "description": "Nextstrain is an open-source tool for real-time interactive visualization of virus sequencing datasets. It allows for phylogeographic analysis and tracking of pathogen evolution, as exemplified by its protocol for analyzing circulating vaccine-derived poliovirus (cVDPV) outbreaks.",
+    "match_type": "manual"
+  },
+  "ngphylogeny_multitools": {
+    "tool": "ngphylogeny_multitools",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "noisy": {
+    "tool": "noisy",
+    "biotools_id": "noisy",
+    "biotools_name": "noisy",
+    "description": "Cleaning aligned sequences.",
+    "match_type": "direct"
+  },
+  "paml": {
+    "tool": "paml",
+    "biotools_id": "paml",
+    "biotools_name": "PAML",
+    "description": "Package of programs for phylogenetic analyses of DNA or protein sequences using maximum likelihood.",
+    "match_type": "direct"
+  },
+  "pangolin": {
+    "tool": "pangolin",
+    "biotools_id": "pangolin_cov-lineages",
+    "biotools_name": "pangolin",
+    "description": "pangolin_cov-lineages",
+    "match_type": "manual"
+  },
+  "papara": {
+    "tool": "papara",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+      "match_type": "not_found, manual"
+  },
+  "pastml": {
+    "tool": "pastml",
+    "biotools_id": "PastML",
+    "biotools_name": "PastML",
+    "description": "Fast inference and visualization of ancestral scenarios. PastML infers ancestral characters on a rooted phylogenetic tree with annotated tips, using maximum likelihood or parsimony. The result is then visualised as a zoomable html map.",
+    "match_type": "direct"
+  },
+  "pathphynder": {
+    "tool": "pathphynder",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "pcoc": {
+    "tool": "pcoc",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "phylodeep": {
+    "tool": "phylodeep",
+    "biotools_id": "phylodeep",
+    "biotools_name": "PhyloDeep",
+    "description": "Deep learning from phylogenies to uncover the epidemiological dynamics of outbreaks.",
+    "match_type": "direct"
+  },
+  "phyml": {
+    "tool": "phyml",
+    "biotools_id": "phyml",
+    "biotools_name": "PhyML",
+    "description": "Phylogenetic estimation software using Maximum Likelihood",
+    "match_type": "direct"
+  },
+  "phyml-sms": {
+    "tool": "phyml-sms",
+    "biotools_id": "PhyMLSMS",
+    "biotools_name": "SMS",
+    "description": "Phylogenetic model selection using likelihood-based criteria. SMS stends for Smart Model Selection.",
+    "match_type": "direct"
+  },
+  "picard": {
+    "tool": "picard",
+    "biotools_id": "picard_tools",
+    "biotools_name": "Picard",
+    "description": "A set of command line tools for manipulating high-throughput sequencing (HTS) data in formats such as SAM/BAM/CRAM and VCF. Available as a standalone program or within the GATK4 program.",
+    "match_type": "exact_name"
+  },
+  "polecat": {
+    "tool": "polecat",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+      "match_type": "not_found, manual"
+  },
+  "predicthaplo": {
+    "tool": "predicthaplo",
+    "biotools_id": "predicthaplo",
+    "biotools_name": "PredictHaplo",
+    "description": "This software aims at reconstructing haplotypes from next-generation sequencing data.",
+    "match_type": "direct"
+  },
+  "ptp": {
+    "tool": "ptp",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "rappas": {
+    "tool": "rappas",
+    "biotools_id": "RAPPAS",
+    "biotools_name": "RAPPAS",
+    "description": "RAPPAS stands for Rapid Alignment-free Phylogenetic Placement via Ancestral Sequences. It uses an alignment-free approach for phylogenetic placement, thus removing the hurdle of query sequence alignment.",
+    "match_type": "direct"
+  },
+  "raxml": {
+    "tool": "raxml",
+    "biotools_id": "raxml",
+    "biotools_name": "RAxML",
+    "description": "A tool for Phylogenetic Analysis and Post-Analysis of Large Phylogenies.",
+    "match_type": "direct"
+  },
+  "raxml-ng": {
+    "tool": "raxml-ng",
+    "biotools_id": "RAxML-NG",
+    "biotools_name": "RAxML-NG",
+    "description": "Phylogenetic tree inference tool which uses maximum-likelihood (ML) optimality criterion.",
+    "match_type": "direct"
+  },
+  "reseq": {
+    "tool": "reseq",
+    "biotools_id": "reseq",
+    "biotools_name": "ReSeq",
+    "description": "ReSeq simulates realistic Illumina high-throughput sequencing data.  More realistic simulator for genomic DNA sequences from Illumina machines that achieves a similar k-mer spectrum as the original sequences.  Snakemake file to reproduce figures and tables in the ReSeq paper.  This included the pipeline used to compare ReSeq, pIRS, NEAT and ART on 8 datasets, a bwa bowtie2 comparison with simulated data using ReSeq and various small things.  Apply errors and qualities directly to sequences.  Even though sequencing biases and errors have been deeply researched to adequately account for them, comparison studies, e.g. for error correction, assembly or variant calling, face the problem that synthetic datasets resemble the real output of high-throughput sequencers only in very limited ways, resulting in optimistic estimated performance of programs run on simulated data compared to real data.",
+    "match_type": "direct"
+  },
+  "rna-seqc": {
+    "tool": "rna-seqc",
+    "biotools_id": "rna-seqc",
+    "biotools_name": "RNA-SeQC",
+    "description": "Computes a series of quality control metrics for RNA-seq data.",
+    "match_type": "direct"
+  },
+  "s3cmd": {
+    "tool": "s3cmd",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "samtools": {
+    "tool": "samtools",
+    "biotools_id": "samtools",
+    "biotools_name": "SAMtools",
+    "description": "SAMtools and BCFtools are widely used programs for processing and analysing high-throughput sequencing data. They include tools for file format conversion and manipulation, sorting, querying, statistics, variant calling, and effect analysis amongst other methods.",
+    "match_type": "direct"
+  },
+  "savage": {
+    "tool": "savage",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "schmutzi": {
+    "tool": "schmutzi",
+    "biotools_id": "schmutzi",
+    "biotools_name": "schmutzi",
+    "description": "Joint estimation of contamination for ancient DNA and endogenous mitochondrial genome inference",
+    "match_type": "direct"
+  },
+  "sdrmhunter": {
+    "tool": "sdrmhunter",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+      "match_type": "not_found, manual"
+  },
+  "seq-gen": {
+    "tool": "seq-gen",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "seqkit": {
+    "tool": "seqkit",
+    "biotools_id": "seqkit",
+    "biotools_name": "seqkit",
+    "description": "FASTA and FASTQ are basic and ubiquitous formats for storing nucleotide and protein sequences. Common manipulations of FASTA/Q file include converting, searching, filtering, deduplication, splitting, shuffling, and sampling. Existing tools only implement some of these manipulations, and not particularly efficiently, and some are only available for certain operating systems. Furthermore, the complicated installation process of required packages and running environments can render these programs less user friendly. SeqKit demonstrates competitive performance in execution time and memory usage compared to similar tools. The efficiency and usability of SeqKit enable researchers to rapidly accomplish common FASTA/Q file manipulations.",
+    "match_type": "direct"
+  },
+  "seqtk": {
+    "tool": "seqtk",
+    "biotools_id": "seqtk",
+    "biotools_name": "seqtk",
+    "description": "A tool for processing sequences in the FASTA or FASTQ format. It parses both FASTA and FASTQ files which can also be optionally compressed by gzip.",
+    "match_type": "direct"
+  },
+  "shorah": {
+    "tool": "shorah",
+    "biotools_id": "shorah",
+    "biotools_name": "ShoRAH",
+    "description": "Inference of a population from a set of short reads. The package contains programs that support mapping of reads to a reference genome, correcting sequencing errors by locally clustering reads in small windows of the alignment, reconstructing a minimal set of global haplotypes that explain the reads, and estimating the frequencies of the inferred haplotypes.",
+    "match_type": "direct"
+  },
+  "snag": {
+    "tool": "snag",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "snakemake": {
+    "tool": "snakemake",
+    "biotools_id": "snakemake",
+    "biotools_name": "Snakemake",
+    "description": "Workflow engine and language. It aims to reduce the complexity of creating workflows by providing a fast and comfortable execution environment, together with a clean and modern domain specific specification language (DSL) in python style.",
+    "match_type": "direct"
+  },
+  "spades": {
+    "tool": "spades",
+    "biotools_id": "spades",
+    "biotools_name": "SPAdes",
+    "description": "St. Petersburg genome assembler \u2013 is intended for both standard isolates and single-cell MDA bacteria assemblies. SPAdes 3.9 works with Illumina or IonTorrent reads and is capable of providing hybrid assemblies using PacBio, Oxford Nanopore and Sanger reads. Additional contigs can be provided and can be used as long reads.",
+    "match_type": "direct"
+  },
+  "sra-tools": {
+    "tool": "sra-tools",
+    "biotools_id": "sra-tools",
+    "biotools_name": "SRA Software Toolkit",
+    "description": "The SRA Toolkit and SDK from NCBI is a collection of tools and libraries for using data in the INSDC Sequence Read Archives.",
+    "match_type": "direct"
+  },
+  "sratoolkit": {
+    "tool": "sratoolkit",
+    "biotools_id": "sra-tools",
+    "biotools_name": "SRA Software Toolkit",
+    "description": "The SRA Toolkit and SDK from NCBI is a collection of tools and libraries for using data in the INSDC Sequence Read Archives.",
+    "match_type": "manual"
+  },
+  "star": {
+    "tool": "star",
+    "biotools_id": "star",
+    "biotools_name": "STAR",
+    "description": "Ultrafast universal RNA-seq data aligner",
+    "match_type": "direct"
+  },
+  "strainline": {
+    "tool": "strainline",
+    "biotools_id": "strainline",
+    "biotools_name": "Strainline",
+    "description": "Full-length de novo viral haplotype reconstruction from noisy long reads.",
+    "match_type": "direct"
+  },
+  "stringtie": {
+    "tool": "stringtie",
+    "biotools_id": "stringtie",
+    "biotools_name": "StringTie",
+    "description": "Fast and highly efficient assembler of RNA-Seq alignments into potential transcripts. It uses a novel network flow algorithm as well as an optional de novo assembly step to assemble and quantitate full-length transcripts representing multiple splice variants for each gene locus.",
+    "match_type": "direct"
+  },
+  "subread": {
+    "tool": "subread",
+    "biotools_id": "subread",
+    "biotools_name": "Subread",
+    "description": "Subread is a general-purpose read aligner which can be used to map both genomic DNA-seq reads and RNA-seq reads. It uses a new mapping paradigm called \"seed-and-vote\" to achieve fast, accurate and scalable read mapping. It automatically determines if a read should be globally or locally aligned, therefore particularly powerful in mapping RNA-seq reads. It supports indel detection and can map reads with both fixed and variable lengths.",
+    "match_type": "direct"
+  },
+  "table2itol": {
+    "tool": "table2itol",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "tcoffee": {
+    "tool": "tcoffee",
+    "biotools_id": "tcoffee",
+    "biotools_name": "T-Coffee",
+    "description": "A multiple sequence alignment package that can be used for DNA, RNA and protein sequences. It can be used to align sequences or to combine the output of other alignment methods (Clustal, Mafft, Probcons, Muscle...) into one unique alignment.",
+    "match_type": "direct"
+  },
+  "tqdist": {
+    "tool": "tqdist",
+    "biotools_id": "tqdist",
+    "biotools_name": "tqDist",
+    "description": "Computation of the triplet- and Quartet-distance between evolutionary trees.",
+    "match_type": "direct"
+  },
+  "treedater": {
+    "tool": "treedater",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "treemmer": {
+    "tool": "treemmer",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "treesimulator": {
+    "tool": "treesimulator",
+    "biotools_id": "treesimulator",
+    "biotools_name": "treesimulator",
+    "description": "Treesimulator is a python package for simulation of transmission trees under a given Multitype Birth\u2013Death (MTBD) model, with or without partner notification (PN).",
+    "match_type": "direct"
+  },
+  "treestructure": {
+    "tool": "treestructure",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found"
+  },
+  "treetime": {
+    "tool": "treetime",
+    "biotools_id": "",
+    "biotools_name": "",
+    "description": "",
+    "match_type": "not_found, manual"
+  },
+  "treewas": {
+    "tool": "treewas",
+    "biotools_id": "treewas",
+    "biotools_name": "treeWAS",
+    "description": "A Phylogenetic Tree-Based Tool for Genome-Wide Association Studies in Microbes",
+    "match_type": "direct"
+  },
+  "trimal": {
+    "tool": "trimal",
+    "biotools_id": "trimal",
+    "biotools_name": "trimAl",
+    "description": "Tool for the automated removal of spurious sequences or poorly aligned regions from a multiple sequence alignment.",
+    "match_type": "direct"
+  },
+  "trimgalore": {
+    "tool": "trimgalore",
+    "biotools_id": "trim_galore",
+    "biotools_name": "Trim Galore",
+    "description": "A wrapper tool around Cutadapt and FastQC to consistently apply quality and adapter trimming to FastQ files, with some extra functionality for MspI-digested RRBS-type (Reduced Representation Bisufite-Seq) libraries.",
+    "match_type": "single_result"
+  },
+  "vamb": {
+    "tool": "vamb",
+    "biotools_id": "vamb",
+    "biotools_name": "VAMB",
+    "description": "Improved metagenome binning and assembly using deep variational autoencoders.  Vamb is a metagenomic binner which feeds sequence composition information from a contig catalogue and co-abundance information from BAM files into a variational autoencoder and clusters the latent representation.",
+    "match_type": "direct"
+  },
+  "vcftools": {
+    "tool": "vcftools",
+    "biotools_id": "vcftools",
+    "biotools_name": "VCFtools",
+    "description": "Provide easily accessible methods for working with complex genetic variation data in the form of VCF files.",
+    "match_type": "direct"
+  },
+  "velvet": {
+    "tool": "velvet",
+    "biotools_id": "velvet",
+    "biotools_name": "Velvet",
+    "description": "A de novo genomic assembler specially designed for short read sequencing technologies, such as Solexa or 454 or SOLiD.",
+    "match_type": "direct"
+  },
+  "vivan": {
+    "tool": "vivan",
+    "biotools_id": "vivan",
+    "biotools_name": "ViVan",
+    "description": "Complete pipeline facilitating the identification, characterization and comparison of sequence variance in deep sequenced virus populations.",
+    "match_type": "direct"
+  }
+}
