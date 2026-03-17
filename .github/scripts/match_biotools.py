@@ -8,14 +8,14 @@ mapping of directory names to bio.tools identifiers and descriptions.
 
 Usage
 -----
-    python match_biotools.py [options]
+    python .github/scripts/match_biotools.py [options]
 
 Options
 -------
-    --repo-dir DIR      Path to the repository root (default: directory of this
-                        script).
+    --repo-dir DIR      Path to the repository root (default: three levels above
+                        this script, i.e. the repository root).
     --output FILE       Write results to FILE instead of stdout.
-    --format {csv,tsv,json}
+    --format {csv,tsv,json,markdown}
                         Output format (default: csv).
     --delay SECONDS     Seconds to wait between API requests (default: 0.5).
     --no-cache          Do not cache API responses on disk.
@@ -27,13 +27,16 @@ Options
 Examples
 --------
     # Print CSV results to stdout
-    python match_biotools.py
+    python .github/scripts/match_biotools.py
+
+    # Save Markdown output to BIOTOOLS.md
+    python .github/scripts/match_biotools.py --format markdown --output BIOTOOLS.md
 
     # Save JSON output to a file
-    python match_biotools.py --format json --output biotools_matches.json
+    python .github/scripts/match_biotools.py --format json --output biotools_matches.json
 
     # Just list the tools that would be processed
-    python match_biotools.py --list-tools
+    python .github/scripts/match_biotools.py --list-tools
 """
 
 import argparse
@@ -42,6 +45,7 @@ import json
 import os
 import sys
 import time
+from datetime import datetime, timezone
 from io import StringIO
 from pathlib import Path
 
@@ -60,6 +64,8 @@ except ImportError:
 # ---------------------------------------------------------------------------
 
 BIOTOOLS_API = "https://bio.tools/api"
+BIOTOOLS_BASE = "https://bio.tools"
+REPO_URL = "https://github.com/evolbioinfo/dockerfiles"
 
 # Directories that are *not* stand-alone bioinformatics tools (base images,
 # language environments, generic utilities) and that are unlikely to have a
@@ -313,6 +319,57 @@ def format_json(results: list[dict]) -> str:
     return json.dumps(results, indent=2)
 
 
+def _md_escape(text: str) -> str:
+    """Escape pipe characters so they don't break Markdown table cells."""
+    return text.replace("|", "\\|")
+
+
+def format_markdown(results: list[dict]) -> str:
+    """
+    Render results as a Markdown document suitable for committing as BIOTOOLS.md.
+
+    The document contains:
+      - A title and short description
+      - The generation timestamp
+      - A summary line (matched / total)
+      - A Markdown table with one row per tool
+    """
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    found = sum(1 for r in results if r["biotools_id"])
+    total = len(results)
+
+    lines: list[str] = [
+        "# bio.tools Mapping",
+        "",
+        "This table maps the bioinformatics tools available in the "
+        f"[evolbioinfo/dockerfiles]({REPO_URL}) repository to their entries in "
+        f"the [bio.tools](https://bio.tools) registry.",
+        "",
+        f"**Generated:** {now}  ",
+        f"**Matched:** {found} / {total} tools",
+        "",
+        "| Tool | bio.tools ID | Name | Description |",
+        "|------|-------------|------|-------------|",
+    ]
+
+    for r in results:
+        tool = r["tool"]
+        biotools_id = r["biotools_id"]
+        biotools_name = _md_escape(r["biotools_name"])
+        description = _md_escape(r["description"])
+
+        tool_cell = f"[{tool}]({REPO_URL}/tree/main/{tool})"
+        if biotools_id:
+            id_cell = f"[{biotools_id}]({BIOTOOLS_BASE}/{biotools_id})"
+        else:
+            id_cell = ""
+
+        lines.append(f"| {tool_cell} | {id_cell} | {biotools_name} | {description} |")
+
+    lines.append("")
+    return "\n".join(lines)
+
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -332,8 +389,9 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         metavar="DIR",
         help=(
-            "Path to the repository root. Defaults to the directory containing "
-            "this script."
+            "Path to the repository root. Defaults to three levels above this "
+            "script (i.e. the repository root when the script lives in "
+            ".github/scripts/)."
         ),
     )
     parser.add_argument(
@@ -344,7 +402,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--format",
-        choices=["csv", "tsv", "json"],
+        choices=["csv", "tsv", "json", "markdown"],
         default="csv",
         help="Output format (default: csv).",
     )
@@ -390,7 +448,11 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
 
     # Resolve repository directory
-    repo_dir = Path(args.repo_dir) if args.repo_dir else Path(__file__).parent
+    # Default: three levels up from this script (.github/scripts/ → repo root)
+    if args.repo_dir:
+        repo_dir = Path(args.repo_dir)
+    else:
+        repo_dir = Path(__file__).parent.parent.parent
     if not repo_dir.is_dir():
         print(f"Error: repository directory not found: {repo_dir}", file=sys.stderr)
         sys.exit(1)
@@ -435,6 +497,8 @@ def main(argv: list[str] | None = None) -> None:
         output = format_json(results)
     elif args.format == "tsv":
         output = format_csv(results, delimiter="\t")
+    elif args.format == "markdown":
+        output = format_markdown(results)
     else:
         output = format_csv(results)
 
