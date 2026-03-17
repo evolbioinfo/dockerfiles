@@ -110,13 +110,13 @@ The versions listed represent the latest containerized builds in this repository
 | [mrbayes](mrbayes/) | v3.2.7 | Bayesian inference of phylogenetic trees |
 | [newick_utilities](newick_utilities/) | v1.6 | Utilities for manipulating Newick format trees |
 | [ngphylogeny_multitools](ngphylogeny_multitools/) | seqtype_detect | Multi-tool image for phylogenetic workflows |
-| [phylodeep](phylodeep/) | v0.3.1 | Deep learning for phylodynamic parameter estimation |
-| [phyml](phyml/) | v3.3.20220408 | Maximum-likelihood phylogenetic tree estimation |
+| [phylodeep](phylodeep/) | v0.9 | Deep learning for phylodynamic parameter estimation |
+| [phyml](phyml/) | v3.3.20250515 | Maximum-likelihood phylogenetic tree estimation |
 | [phyml-sms](phyml-sms/) | v1.8.1.1 | PhyML with Smart Model Selection |
 | [ptp](ptp/) | v4bb2daf | Species delimitation from phylogenetic trees |
 | [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
 | [raxml](raxml/) | v8.2.8 | Randomized accelerated maximum likelihood phylogenetic inference |
-| [raxml-ng](raxml-ng/) | v1.2.2 | RAxML next-generation |
+| [raxml-ng](raxml-ng/) | v2.0.0 | RAxML next-generation |
 | [table2itol](table2itol/) | latest | Converts annotation tables to iTOL dataset files |
 | [tqdist](tqdist/) | v1.0.2 | Computing quartet and triplet distances between trees |
 | [treedater](treedater/) | 89a0df0 | Scalable relaxed clock phylogenetic dating |
@@ -166,7 +166,7 @@ The versions listed represent the latest containerized builds in this repository
 | [fastqutils](fastqutils/) | v0.1.7 | Utilities for manipulating FASTQ files |
 | [fastxtoolkit](fastxtoolkit/) | v0.0.14 | FASTX toolkit for preprocessing FASTQ/FASTA files |
 | [gofasta](gofasta/) | v1.2.3 | Command-line utilities for working with genomic alignments |
-| [picard](picard/) | v2.27.0 | Command-line tools for manipulating high-throughput sequencing data |
+| [picard](picard/) | v3.4.0 | Command-line tools for manipulating high-throughput sequencing data |
 | [samtools](samtools/) | v1.9 | Reading, writing, and manipulating SAM/BAM/CRAM files |
 | [seqkit](seqkit/) | v2.4.0 | Ultrafast toolkit for FASTA/Q file manipulation |
 | [seqtk](seqtk/) | v1.3 | Toolkit for processing sequences in FASTA/Q formats |
@@ -188,9 +188,9 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [catch](catch/) | v1.5.2 | Compact Aggregation of Targets for Comprehensive Hybridization |
 | [fastqc](fastqc/) | v0.12.1 | Quality control analysis of high-throughput sequencing data |
-| [minionqc](minionqc/) | v1.4.1 | Quality control for Oxford Nanopore sequencing data |
+| [minionqc](minionqc/) | v1.4.2 | Quality control for Oxford Nanopore sequencing data |
 | [multiqc](multiqc/) | v1.9 | Aggregate bioinformatics results across samples into a report |
-| [nanoplot](nanoplot/) | v1.29.1 | Plotting tools for long-read sequencing data |
+| [nanoplot](nanoplot/) | v1.46.2 | Plotting tools for long-read sequencing data |
 | [rna-seqc](rna-seqc/) | v1.1.9 | Quality control metrics for RNA-seq data |
 
 ### Read Trimming
@@ -219,7 +219,7 @@ The versions listed represent the latest containerized builds in this repository
 | [hyphy](hyphy/) | v2.5.96 | Hypothesis testing using phylogenies |
 | [paml](paml/) | v4.8a | Phylogenetic analysis by maximum likelihood |
 | [pcoc](pcoc/) | v898c138 | Detection of Convergent Amino-Acid Evolution |
-| [pastml](pastml/) | v1.9.43 | Ancestral state reconstruction and phylogeographic inference |
+| [pastml](pastml/) | v1.9.51 | Ancestral state reconstruction and phylogeographic inference |
 
 
 ### Population Genetics
@@ -267,7 +267,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [damageprofiler](damageprofiler/) | v1.1 | Profiling damage patterns in ancient DNA reads |
 | [mapdamage](mapdamage/) | v2.2.3 | Identifying and quantifying DNA damage in ancient DNA |
-| [pathphynder](pathphynder/) | v0.1 | Ancient DNA placement into reference phylogenies |
+| [pathphynder](pathphynder/) | v1.2.4 | Ancient DNA placement into reference phylogenies |
 | [schmutzi](schmutzi/) | v1.5.6 | Estimation of ancient DNA contamination |
 
 ### Sequence Analysis
@@ -296,7 +296,7 @@ The versions listed represent the latest containerized builds in this repository
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
 | [indelible](indelible/) | v1.03 | Flexible evolutionary sequence simulator |
-| [nanosim](nanosim/) | v3.1.0 | Nanopore sequence read simulator |
+| [nanosim](nanosim/) | v3.2.3 | Nanopore sequence read simulator |
 | [seq-gen](seq-gen/) | v1.3.4 | Simulation of molecular sequence data along phylogenetic trees |
 | [snag](snag/) | master | Sequence simulation along a tree |
 | [reseq](reseq/) | 053b8d1 | Realistic simulation of Illumina sequencing data |
