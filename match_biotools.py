@@ -4,7 +4,7 @@ with their identifiers in the bio.tools database.
 
 The script discovers all tool directories that contain at least one Dockerfile,
 queries the bio.tools REST API (https://bio.tools) for each tool, and writes a
-mapping of directory names to bio.tools identifiers.
+mapping of directory names to bio.tools identifiers and descriptions.
 
 Usage
 -----
@@ -157,11 +157,11 @@ def _name_variants(name: str) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
-def _pick_best(results: dict, candidates: list[str]) -> tuple[str, str, str] | None:
+def _pick_best(results: dict, candidates: list[str]) -> tuple[str, str, str, str] | None:
     """
     From a search result payload, pick the best matching entry.
 
-    Returns (biotoolsID, name, match_type) or None.
+    Returns (biotoolsID, name, description, match_type) or None.
     Priority:
       1. biotoolsID exactly matches one of *candidates*
       2. Tool name (case-insensitive) matches one of *candidates*
@@ -176,17 +176,17 @@ def _pick_best(results: dict, candidates: list[str]) -> tuple[str, str, str] | N
     # Priority 1 – biotoolsID exact match
     for t in tool_list:
         if t.get("biotoolsID", "").lower() in candidates_lower:
-            return t["biotoolsID"], t.get("name", ""), "exact_id"
+            return t["biotoolsID"], t.get("name", ""), t.get("description", ""), "exact_id"
 
     # Priority 2 – tool name exact match
     for t in tool_list:
         if t.get("name", "").lower() in candidates_lower:
-            return t["biotoolsID"], t.get("name", ""), "exact_name"
+            return t["biotoolsID"], t.get("name", ""), t.get("description", ""), "exact_name"
 
     # Priority 3 – single result (likely match)
     if results.get("count") == 1:
         t = tool_list[0]
-        return t["biotoolsID"], t.get("name", ""), "single_result"
+        return t["biotoolsID"], t.get("name", ""), t.get("description", ""), "single_result"
 
     return None
 
@@ -197,7 +197,8 @@ def find_match(
     cache: dict,
 ) -> dict:
     """
-    Return a result dict with keys: tool, biotools_id, biotools_name, match_type.
+    Return a result dict with keys: tool, biotools_id, biotools_name,
+    description, match_type.
 
     Matching strategy (stops at first success):
       1. Direct lookup  GET /api/tool/{tool_dir}/
@@ -209,6 +210,7 @@ def find_match(
         "tool": tool_dir,
         "biotools_id": "",
         "biotools_name": "",
+        "description": "",
         "match_type": "not_found",
     }
 
@@ -226,6 +228,7 @@ def find_match(
                 **result_template,
                 "biotools_id": data["biotoolsID"],
                 "biotools_name": data.get("name", ""),
+                "description": data.get("description", ""),
                 "match_type": "direct",
             }
             cache[tool_dir] = result
@@ -238,11 +241,12 @@ def find_match(
         if data:
             match = _pick_best(data, variants)
             if match:
-                biotools_id, biotools_name, match_type = match
+                biotools_id, biotools_name, description, match_type = match
                 result = {
                     **result_template,
                     "biotools_id": biotools_id,
                     "biotools_name": biotools_name,
+                    "description": description,
                     "match_type": match_type,
                 }
                 cache[tool_dir] = result
@@ -254,11 +258,12 @@ def find_match(
     if data:
         match = _pick_best(data, variants)
         if match:
-            biotools_id, biotools_name, match_type = match
+            biotools_id, biotools_name, description, match_type = match
             result = {
                 **result_template,
                 "biotools_id": biotools_id,
                 "biotools_name": biotools_name,
+                "description": description,
                 "match_type": "text_search",
             }
             cache[tool_dir] = result
@@ -293,7 +298,7 @@ def save_cache(cache_dir: Path, cache: dict) -> None:
 # Output formatters
 # ---------------------------------------------------------------------------
 
-FIELDNAMES = ["tool", "biotools_id", "biotools_name", "match_type"]
+FIELDNAMES = ["tool", "biotools_id", "biotools_name", "description", "match_type"]
 
 
 def format_csv(results: list[dict], delimiter: str = ",") -> str:
