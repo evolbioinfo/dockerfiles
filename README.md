@@ -146,7 +146,7 @@ The versions listed represent the latest containerized builds in this repository
 | [bowtie](bowtie/) | v1.3.1 | Aligning sequencing reads to references |
 | [bowtie2](bowtie2/) | v2.5.5 | Mapping DNA sequences against a large reference genome |
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
-| [hisat2](hisat2/) | v2.0.5 | Alignment program for mapping next-generation sequencing reads to a population of human genomes |
+| [hisat2](hisat2/) | v2.2.2 | Alignment program for mapping next-generation sequencing reads to a population of human genomes |
 | [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
 | [minimap2](minimap2/) | v2.26 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
 | [papara](papara/) | v2.5 | Phylogeny-aware short-read alignment |
@@ -178,7 +178,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [bcftools](bcftools/) | v1.23 | VCF/BCF variant manipulation and calling |
 | [freebayes](freebayes/) | v1.3.10 | Bayesian genetic variant detector |
-| [ivar](ivar/) | v1.3.1 | Tools for viral amplicon-based sequencing |
+| [ivar](ivar/) | v1.4.4 | Tools for viral amplicon-based sequencing |
 
 ### Quality Control
 
@@ -214,7 +214,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [bayestraits](bayestraits/) | v5.0.0 | Bayesian analysis of trait evolution on phylogenies |
 | [fastcodeml](fastcodeml/) | v1.1.0 | Accelerated codeml for detecting positive selection |
-| [hyphy](hyphy/) | v2.5.73 | Hypothesis testing using phylogenies |
+| [hyphy](hyphy/) | v2.5.96 | Hypothesis testing using phylogenies |
 | [paml](paml/) | v4.8a | Phylogenetic analysis by maximum likelihood |
 | [pcoc](pcoc/) | v898c138 | Detection of Convergent Amino-Acid Evolution |
 | [pastml](pastml/) | v1.9.43 | Ancestral state reconstruction and phylogeographic inference |
@@ -341,7 +341,7 @@ These images serve as base environments for building other images or running cus
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [jq](jq/) | v1.6 | Lightweight and flexible command-line JSON processor |
+| [jq](jq/) | v1.8.1 | Lightweight and flexible command-line JSON processor |
 | [s3cmd](s3cmd/) | v2.4.0 | Command Line S3 Client and Backup for Linux and Mac |
 | [s3utils](s3utils/) | v0.6.1 | Utilities for interacting with Amazon S3 |
 | [sphinx](sphinx/) | v1.8.5 | Python documentation generator |
