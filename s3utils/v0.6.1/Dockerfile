@@ -1,6 +1,5 @@
-# s3cmd
-# https://github.com/s3tools/s3cmd
-# v2.1.0
+# s3utils
+# v0.6.1
 
 # base image: miniconda3
 FROM continuumio/miniconda3
