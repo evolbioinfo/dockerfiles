@@ -115,7 +115,7 @@ The versions listed represent the latest containerized builds in this repository
 | [phyml-sms](phyml-sms/) | v1.8.1.1 | PhyML with Smart Model Selection |
 | [ptp](ptp/) | v4bb2daf | Species delimitation from phylogenetic trees |
 | [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
-| [raxml](raxml/) | v8.2.8 | Randomized accelerated maximum likelihood phylogenetic inference |
+| [raxml](raxml/) | v8.2.13 | Randomized accelerated maximum likelihood phylogenetic inference |
 | [raxml-ng](raxml-ng/) | v2.0.0 | RAxML next-generation |
 | [table2itol](table2itol/) | latest | Converts annotation tables to iTOL dataset files |
 | [tqdist](tqdist/) | v1.0.2 | Computing quartet and triplet distances between trees |
