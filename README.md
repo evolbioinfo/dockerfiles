@@ -172,7 +172,7 @@ The versions listed represent the latest containerized builds in this repository
 | [seqtk](seqtk/) | v1.5 | Toolkit for processing sequences in FASTA/Q formats |
 | [sra-tools](sra-tools/) | v3.0.1 | NCBI SRA toolkit for downloading and processing sequencing data |
 | [sratoolkit](sratoolkit/) | v3.0.1 | Alternate NCBI SRA toolkit image |
-| [vcftools](vcftools/) | v0.1.16 | Tools for working with VCF files |
+| [vcftools](vcftools/) | v0.1.17 | Tools for working with VCF files |
 
 ### Variant Calling
 
