@@ -178,7 +178,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [bcftools](bcftools/) | v1.23 | VCF/BCF variant manipulation and calling |
+| [bcftools](bcftools/) | v1.23.1 | VCF/BCF variant manipulation and calling |
 | [freebayes](freebayes/) | v1.3.10 | Bayesian genetic variant detector |
 | [ivar](ivar/) | v1.4.4 | Tools for viral amplicon-based sequencing |
 
