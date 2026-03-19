@@ -124,7 +124,7 @@ The versions listed represent the latest containerized builds in this repository
 | [treesimulator](treesimulator/) | v0.2.27 | Simulating rooted phylogenetic trees under various models |
 | [treestructure](treestructure/) | a831a66 | [Identification of hidden population structure in time-scaled phylogenies](https://academic.oup.com/sysbio/article/69/5/884/5734655) |
 | [treetime](treetime/) | v0.11.4 | Maximum-likelihood phylogenetic time-trees inference |
-| [treewas](treewas/) | v1.0 | Genome-wide association studies on phylogenetic trees |
+| [treewas](treewas/) | v1.1 | Genome-wide association studies on phylogenetic trees |
 
 ### Sequence Alignment
 
