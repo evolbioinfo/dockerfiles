@@ -297,7 +297,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [indelible](indelible/) | v1.03 | Flexible evolutionary sequence simulator |
 | [nanosim](nanosim/) | v3.2.3 | Nanopore sequence read simulator |
-| [seq-gen](seq-gen/) | v1.3.4 | Simulation of molecular sequence data along phylogenetic trees |
+| [seq-gen](seq-gen/) | v1.3.5 | Simulation of molecular sequence data along phylogenetic trees |
 | [snag](snag/) | master | Sequence simulation along a tree |
 | [reseq](reseq/) | 053b8d1 | Realistic simulation of Illumina sequencing data |
 
