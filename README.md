@@ -319,7 +319,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [snakemake](snakemake/) | v5.6.0 | Workflow management system for reproducible bioinformatics |
+| [snakemake](snakemake/) | v9.17.2 | Workflow management system for reproducible bioinformatics |
 
 ### Base Images
 
