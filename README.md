@@ -168,7 +168,7 @@ The versions listed represent the latest containerized builds in this repository
 | [gofasta](gofasta/) | v1.2.3 | Command-line utilities for working with genomic alignments |
 | [picard](picard/) | v3.4.0 | Command-line tools for manipulating high-throughput sequencing data |
 | [samtools](samtools/) | v1.23 | Reading, writing, and manipulating SAM/BAM/CRAM files |
-| [seqkit](seqkit/) | v2.4.0 | Ultrafast toolkit for FASTA/Q file manipulation |
+| [seqkit](seqkit/) | v2.13.0 | Ultrafast toolkit for FASTA/Q file manipulation |
 | [seqtk](seqtk/) | v1.5 | Toolkit for processing sequences in FASTA/Q formats |
 | [sra-tools](sra-tools/) | v3.0.1 | NCBI SRA toolkit for downloading and processing sequencing data |
 | [sratoolkit](sratoolkit/) | v3.0.1 | Alternate NCBI SRA toolkit image |
