@@ -137,7 +137,7 @@ The versions listed represent the latest containerized builds in this repository
 | [mafft](mafft/) | v7.526 | Multiple sequence alignment using fast Fourier transform |
 | [muscle](muscle/) | v3.8.31 | Multiple sequence alignment |
 | [noisy](noisy/) | v1.5.12 | Identify homoplastic characters in multiple sequence alignments |
-| [tcoffee](tcoffee/) | Version_11.00.18778a8 | Multiple sequence alignment using T-Coffee |
+| [tcoffee](tcoffee/) | Version_13.46.2.7c9e712d | Multiple sequence alignment using T-Coffee |
 | [trimal](trimal/) | v1.5.1 | Automated removal of spurious sequences or poorly aligned regions |
 
 ### Sequence Mapping
