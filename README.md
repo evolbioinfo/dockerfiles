@@ -121,7 +121,7 @@ The versions listed represent the latest containerized builds in this repository
 | [tqdist](tqdist/) | v1.0.2 | Computing quartet and triplet distances between trees |
 | [treedater](treedater/) | 89a0df0 | Scalable relaxed clock phylogenetic dating |
 | [treemmer](treemmer/) | v0.3 | Reduce tree size while preserving phylogenetic diversity |
-| [treesimulator](treesimulator/) | v0.1.9 | Simulating rooted phylogenetic trees under various models |
+| [treesimulator](treesimulator/) | v0.2.27 | Simulating rooted phylogenetic trees under various models |
 | [treestructure](treestructure/) | a831a66 | [Identification of hidden population structure in time-scaled phylogenies](https://academic.oup.com/sysbio/article/69/5/884/5734655) |
 | [treetime](treetime/) | v0.8.5 | Maximum-likelihood phylogenetic time-trees inference |
 | [treewas](treewas/) | v1.0 | Genome-wide association studies on phylogenetic trees |
