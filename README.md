@@ -138,7 +138,7 @@ The versions listed represent the latest containerized builds in this repository
 | [muscle](muscle/) | v3.8.31 | Multiple sequence alignment |
 | [noisy](noisy/) | v1.5.12 | Identify homoplastic characters in multiple sequence alignments |
 | [tcoffee](tcoffee/) | Version_11.00.18778a8 | Multiple sequence alignment using T-Coffee |
-| [trimal](trimal/) | v1.4.1 | Automated removal of spurious sequences or poorly aligned regions |
+| [trimal](trimal/) | v1.5.1 | Automated removal of spurious sequences or poorly aligned regions |
 
 ### Sequence Mapping
 
@@ -152,7 +152,7 @@ The versions listed represent the latest containerized builds in this repository
 | [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
 | [minimap2](minimap2/) | v2.30 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
 | [papara](papara/) | v2.5 | Phylogeny-aware short-read alignment |
-| [star](star/) | v2.7.6a | Spliced Transcripts Alignment to a Reference (RNA-seq) |
+| [star](star/) | v2.7.11b | Spliced Transcripts Alignment to a Reference (RNA-seq) |
 
 ### Genomic Tools
 
@@ -167,7 +167,7 @@ The versions listed represent the latest containerized builds in this repository
 | [fastxtoolkit](fastxtoolkit/) | v0.0.14 | FASTX toolkit for preprocessing FASTQ/FASTA files |
 | [gofasta](gofasta/) | v1.2.3 | Command-line utilities for working with genomic alignments |
 | [picard](picard/) | v3.4.0 | Command-line tools for manipulating high-throughput sequencing data |
-| [samtools](samtools/) | v1.9 | Reading, writing, and manipulating SAM/BAM/CRAM files |
+| [samtools](samtools/) | v1.23 | Reading, writing, and manipulating SAM/BAM/CRAM files |
 | [seqkit](seqkit/) | v2.4.0 | Ultrafast toolkit for FASTA/Q file manipulation |
 | [seqtk](seqtk/) | v1.3 | Toolkit for processing sequences in FASTA/Q formats |
 | [sra-tools](sra-tools/) | v3.0.1 | NCBI SRA toolkit for downloading and processing sequencing data |
