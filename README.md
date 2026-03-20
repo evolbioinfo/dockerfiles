@@ -135,7 +135,7 @@ The versions listed represent the latest containerized builds in this repository
 | [gblocks](gblocks/) | v0.91b | Alignment trimming by selecting conserved blocks |
 | [lastal](lastal/) | v980 | Local alignment of biological sequences |
 | [mafft](mafft/) | v7.526 | Multiple sequence alignment using fast Fourier transform |
-| [muscle](muscle/) | v3.8.31 | Multiple sequence alignment |
+| [muscle](muscle/) | v5.3 | Multiple sequence alignment |
 | [noisy](noisy/) | v1.5.12 | Identify homoplastic characters in multiple sequence alignments |
 | [tcoffee](tcoffee/) | Version_13.46.2.7c9e712d | Multiple sequence alignment using T-Coffee |
 | [trimal](trimal/) | v1.5.1 | Automated removal of spurious sequences or poorly aligned regions |
@@ -167,7 +167,7 @@ The versions listed represent the latest containerized builds in this repository
 | [fastxtoolkit](fastxtoolkit/) | v0.0.14 | FASTX toolkit for preprocessing FASTQ/FASTA files |
 | [gofasta](gofasta/) | v1.2.3 | Command-line utilities for working with genomic alignments |
 | [picard](picard/) | v3.4.0 | Command-line tools for manipulating high-throughput sequencing data |
-| [samtools](samtools/) | v1.23 | Reading, writing, and manipulating SAM/BAM/CRAM files |
+| [samtools](samtools/) | v1.23.1 | Reading, writing, and manipulating SAM/BAM/CRAM files |
 | [seqkit](seqkit/) | v2.13.0 | Ultrafast toolkit for FASTA/Q file manipulation |
 | [seqtk](seqtk/) | v1.5 | Toolkit for processing sequences in FASTA/Q formats |
 | [sra-tools](sra-tools/) | v3.0.1 | NCBI SRA toolkit for downloading and processing sequencing data |
@@ -198,7 +198,7 @@ The versions listed represent the latest containerized builds in this repository
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
 | [adapterremoval](adapterremoval/) | v2.3.3 | Trimming of adapters and low-quality bases from NGS reads |
-| [alien_trimmer](alien_trimmer/) | v2.1 | Adapter trimming for sequencing reads |
+| [alien_trimmer](alien_trimmer/) | v3.2 | Adapter trimming for sequencing reads |
 | [trimgalore](trimgalore/) | v0.6.11 | Wrapper for Cutadapt and FastQC for adapter trimming |
 
 ### Assembly
