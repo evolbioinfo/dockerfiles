@@ -254,7 +254,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [artic-ncov2019](artic-ncov2019/) | e814ed4 | ARTIC network bioinformatics tools for SARS-CoV-2 |
 | [civet](civet/) | v2.1.2 | Cluster investigation and virus epidemiology tool |
-| [irma](irma/) | v1.0.3 | Iterative refinement meta-assembler for viral genomics |
+| [irma](irma/) | v1.3.1 | Iterative refinement meta-assembler for viral genomics |
 | [label](label/) | v0.6.4 | Sequence labeling and annotation tool |
 | [nextstrain-base](nextstrain-base/) | build-20251119T000157Z | Nextstrain base environment for viral phylodynamics |
 | [pangolin](pangolin/) | v4.3.1 | Phylogenetic assignment of named global outbreak LINeages |
