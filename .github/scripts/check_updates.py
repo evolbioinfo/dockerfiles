@@ -183,20 +183,19 @@ def extract_github_url(dockerfile_path, tool_name=None):
     # No reliable match found
     return None
 
-
 def extract_gitlab_url(dockerfile_path, tool_name=None):
     """
     Extract a GitLab repository URL from a Dockerfile (gitlab.com hosted).
 
-    Returns 'namespace/project' suitable for the GitLab API, or None.
+    Returns 'host, namespace/project' suitable for the GitLab API, or None.
     """
     try:
         content = dockerfile_path.read_text(errors="replace")
     except OSError:
-        return None
+        return None,None
 
     pattern = re.compile(
-        r"https://gitlab\.com/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)"
+        r"https://((gitlab|gite)[A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)"
     )
 
     def clean_path(raw):
@@ -204,22 +203,26 @@ def extract_gitlab_url(dockerfile_path, tool_name=None):
         return f"{parts[0]}/{parts[1]}"
 
     candidates = []
+    hosts = []
     for line in content.splitlines():
         match = pattern.search(line)
         if match:
-            candidates.append(clean_path(match.group(1)))
+            hosts.append(match.group(1))
+            candidates.append(clean_path(match.group(3)))
 
     if not candidates:
-        return None
+        return None,None
 
     if tool_name:
         tool_key = tool_name.lower().replace("-", "").replace("_", "")
+        i=0
         for repo in candidates:
             repo_name = repo.split("/")[1].lower().replace("-", "").replace("_", "")
             if tool_key in repo_name or repo_name in tool_key:
-                return repo
+                return hosts[i],repo
+            i=i+1
 
-    return candidates[0]
+    return hosts[0],candidates[0]
 
 
 def extract_pypi_package(dockerfile_path, tool_name=None):
@@ -357,24 +360,23 @@ def get_conda_latest_version(package_name, channel="bioconda"):
     return None
 
 
-def get_gitlab_latest_version(namespace_project):
+def get_gitlab_latest_version(gitlabhost, namespace_project):
     """
     Return the latest tag for a gitlab.com project, or None.
 
     namespace_project is 'namespace/project' (e.g. 'sysimm/mafft').
     """
     encoded = namespace_project.replace("/", "%2F")
-    url = f"https://gitlab.com/api/v4/projects/{encoded}/releases?per_page=1"
+    url = f"https://{gitlabhost}/api/v4/projects/{encoded}/releases?per_page=1"
     data = http_get_json(url)
     if data and isinstance(data, list) and data:
         return data[0].get("tag_name")
     # Fall back to tags API
-    url = f"https://gitlab.com/api/v4/projects/{encoded}/repository/tags?per_page=1"
+    url = f"https://{gitlabhost}/api/v4/projects/{encoded}/repository/tags?per_page=1"
     data = http_get_json(url)
     if data and isinstance(data, list) and data:
         return data[0].get("name")
     return None
-
 
 def github_api_request(url, token=None):
     """Make a GitHub API request and return the parsed JSON."""
@@ -518,17 +520,17 @@ def check_tool(tool_name, token=None):
             "error": "Could not fetch upstream version from GitHub",
         }
 
-    # --- 2. GitLab ---
-    gitlab_repo = extract_gitlab_url(dockerfile, tool_name)
-    if gitlab_repo:
-        upstream_tag = get_gitlab_latest_version(gitlab_repo)
+    # --- 2. GitLab.com or Self Hosted---
+    gitlabhost = extract_gitlab_url(dockerfile, tool_name)
+    if gitlabhost[0]:
+        upstream_tag = get_gitlab_latest_version(gitlabhost[0], gitlabhost[1])
         if upstream_tag:
             return {
                 "tool": tool_name,
                 "current": current_version,
                 "upstream": upstream_tag,
                 "source": "gitlab",
-                "source_ref": gitlab_repo,
+                "source_ref": gitlabhost[1],
                 "outdated": is_newer(upstream_tag, current_version),
                 "error": None,
             }
@@ -537,11 +539,11 @@ def check_tool(tool_name, token=None):
             "current": current_version,
             "upstream": None,
             "source": "gitlab",
-            "source_ref": gitlab_repo,
+            "source_ref": gitlabhost[1],
             "outdated": False,
             "error": "Could not fetch upstream version from GitLab",
         }
-
+    
     # --- 3. PyPI ---
     pypi_pkg = extract_pypi_package(dockerfile, tool_name)
     if pypi_pkg:
