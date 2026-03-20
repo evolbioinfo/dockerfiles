@@ -198,7 +198,7 @@ The versions listed represent the latest containerized builds in this repository
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
 | [adapterremoval](adapterremoval/) | v2.3.3 | Trimming of adapters and low-quality bases from NGS reads |
-| [alien_trimmer](alien_trimmer/) | v2.1 | Adapter trimming for sequencing reads |
+| [alien_trimmer](alien_trimmer/) | v3.2 | Adapter trimming for sequencing reads |
 | [trimgalore](trimgalore/) | v0.6.11 | Wrapper for Cutadapt and FastQC for adapter trimming |
 
 ### Assembly
