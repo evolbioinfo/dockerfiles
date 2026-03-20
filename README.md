@@ -276,7 +276,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [cd-hit](cd-hit/) | v4.8.1 | Sequence clustering|
 | [gubbins](gubbins/) | v3.4 | Rapid detection of recombination in bacterial genomes |
-| [hmmer](hmmer/) | v3.3 | Biosequence analysis using profile hidden Markov models |
+| [hmmer](hmmer/) | v3.4 | Biosequence analysis using profile hidden Markov models |
 | [jphmm](jphmm/) | v03.2015 | Jumping profile hidden Markov model for HIV subtyping |
 | [jphmm_tools](jphmm_tools/) | v0.1.4 | Tools for working with jpHMM output |
 | [sdrmhunter](sdrmhunter/) | v0.2.1.6 | HIV surveillance drug resistance mutation identification |
