@@ -130,7 +130,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [bmge](bmge/) | v1.12 | Block Mapping and Gathering with Entropy for alignment trimming |
+| [bmge](bmge/) | v2.00 | Block Mapping and Gathering with Entropy for alignment trimming |
 | [clustal_omega](clustal_omega/) | v1.2.4 | Fast and scalable multiple sequence alignment |
 | [gblocks](gblocks/) | v0.91b | Alignment trimming by selecting conserved blocks |
 | [lastal](lastal/) | v980 | Local alignment of biological sequences |
