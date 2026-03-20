@@ -1,5 +1,6 @@
 # FastCodeML
 # https://www2.unil.ch/phylo/bioinformatics/fastcodeml.html
+# https://gitlab.sib.swiss/phylo/fastcodeml
 # v1.1.0
 
 # base image: Ubuntu
