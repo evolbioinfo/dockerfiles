@@ -214,7 +214,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [bayestraits](bayestraits/) | v5.0.0 | Bayesian analysis of trait evolution on phylogenies |
+| [bayestraits](bayestraits/) | v5.0.3 | Bayesian analysis of trait evolution on phylogenies |
 | [fastcodeml](fastcodeml/) | v1.1.0 | Accelerated codeml for detecting positive selection |
 | [hyphy](hyphy/) | v2.5.96 | Hypothesis testing using phylogenies |
 | [paml](paml/) | v4.8a | Phylogenetic analysis by maximum likelihood |
