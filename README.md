@@ -132,7 +132,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [bmge](bmge/) | v2.00 | Block Mapping and Gathering with Entropy for alignment trimming |
 | [clustal_omega](clustal_omega/) | v1.2.4 | Fast and scalable multiple sequence alignment |
-| [gblocks](gblocks/) | v0.91b | Alignment trimming by selecting conserved blocks |
+| [gblocks](gblocks/) | v1.0 | Alignment trimming by selecting conserved blocks |
 | [lastal](lastal/) | v980 | Local alignment of biological sequences |
 | [mafft](mafft/) | v7.526 | Multiple sequence alignment using fast Fourier transform |
 | [muscle](muscle/) | v5.3 | Multiple sequence alignment |
