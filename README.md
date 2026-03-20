@@ -207,7 +207,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [canu](canu/) | v2.3 | Long-read assembler |
 | [savage](savage/) | v0.4.1 | Sequence assembly for viral genomes |
-| [spades](spades/) | v3.15.4 | Assembly and analysis of sequencing data |
+| [spades](spades/) | v4.2.0 | Assembly and analysis of sequencing data |
 | [velvet](velvet/) | v1.2.10 | De novo genomic assembler |
 
 ### Molecular Evolution
