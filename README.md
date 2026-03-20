@@ -288,7 +288,7 @@ The versions listed represent the latest containerized builds in this repository
 | [haploconduct](haploconduct/) | v0.2.1 | Haplotype-aware genome assembly toolkit |
 | [haplogrep](haplogrep/) | v2.4.0 | Mitochondrial haplogroup classification |
 | [predicthaplo](predicthaplo/) | v1.0 | Predicting HIV haplotypes from next-generation sequencing |
-| [shorah](shorah/) | v1.99.2 | Short Reads Assembly into Haplotypes |
+| [shorah](shorah/) | v1.99.3 | Short Reads Assembly into Haplotypes |
 | [strainline](strainline/) | commit-8af032906e | Full-length de novo viral haplotype reconstruction |
 
 ### Simulation
