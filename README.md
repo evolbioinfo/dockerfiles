@@ -69,7 +69,7 @@ docker run evolbioinfo/raxml-ng:v1.2.2 --help
 Or to run FastTree:
 
 ```bash
-docker run evolbioinfo/fasttree:v2.1.9 -help
+docker run evolbioinfo/fasttree:v2.2.0 -help
 ```
 
 ### Mounting local data
@@ -98,7 +98,7 @@ The versions listed represent the latest containerized builds in this repository
 | [ebg](ebg/) | v0.13.3 | [Educated Bootstrap Guesser](https://github.com/wiegertj/EBG/wiki) |
 | [epa-ng](epa-ng/) | v0.3.8 | Evolutionary placement algorithm for short reads into reference trees |
 | [fastme](fastme/) | v2.1.6.4 | Fast and accurate distance-based phylogenetic tree construction |
-| [fasttree](fasttree/) | v2.1.9 | Approximate maximum-likelihood phylogenetic trees for large alignments |
+| [fasttree](fasttree/) | v2.2.0 | Approximate maximum-likelihood phylogenetic trees for large alignments |
 | [goalign](goalign/) | v0.4.0 | Multiple sequence alignment analysis toolkit |
 | [gotree](gotree/) | v0.5.1 | Phylogenetic tree manipulation toolkit |
 | [guppy](guppy/) | v3.1.5 | Tools for working with pplacer phylogenetic placement files |
