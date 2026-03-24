@@ -216,7 +216,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [bayestraits](bayestraits/) | v5.0.3 | Bayesian analysis of trait evolution on phylogenies |
 | [fastcodeml](fastcodeml/) | v1.1.0 | Accelerated codeml for detecting positive selection |
-| [hyphy](hyphy/) | v2.5.96 | Hypothesis testing using phylogenies |
+| [hyphy](hyphy/) | v2.5.97 | Hypothesis testing using phylogenies |
 | [paml](paml/) | v4.8a | Phylogenetic analysis by maximum likelihood |
 | [pcoc](pcoc/) | v898c138 | Detection of Convergent Amino-Acid Evolution |
 | [pastml](pastml/) | v1.9.51 | Ancestral state reconstruction and phylogeographic inference |
