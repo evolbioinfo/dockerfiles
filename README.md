@@ -257,7 +257,7 @@ The versions listed represent the latest containerized builds in this repository
 | [irma](irma/) | v1.3.1 | Iterative refinement meta-assembler for viral genomics |
 | [label](label/) | v0.6.4 | Sequence labeling and annotation tool |
 | [nextstrain-base](nextstrain-base/) | build-20251119T000157Z | Nextstrain base environment for viral phylodynamics |
-| [pangolin](pangolin/) | v4.3.1 | Phylogenetic assignment of named global outbreak LINeages |
+| [pangolin](pangolin/) | v4.4 | Phylogenetic assignment of named global outbreak LINeages |
 | [polecat](polecat/) | b4a36f3 | Phylogenetic Overview & Local Epidemiological Cluster Analysis Tool |
 | [vivan](vivan/) | v0.43 | Virus variation analyzer |
 
