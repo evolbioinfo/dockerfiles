@@ -15,6 +15,7 @@ import sys
 import json
 import urllib.request
 import urllib.error
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from packaging.version import Version, InvalidVersion
 
@@ -315,6 +316,117 @@ def extract_conda_package(dockerfile_path, tool_name=None):
     return candidates[0]
 
 
+def extract_sourceforge_project(dockerfile_path, tool_name=None):
+    """
+    Extract the SourceForge project name from a Dockerfile.
+
+    Looks for:
+    - Header comment: # https://sourceforge.net/projects/<project>/
+    - Header comment: # http://<project>.sourceforge.net/
+    - Download URL: https://sourceforge.net/projects/<project>/files/.../download
+    - Download URL: https://downloads.sourceforge.net/project/<project>/...
+    - SVN URL: https://svn.code.sf.net/p/<project>/...
+
+    If tool_name is provided, only returns a match whose project name contains
+    the tool name (to avoid picking up SourceForge URLs for bundled dependencies).
+
+    Returns the project name (str) or None.
+    """
+    try:
+        content = dockerfile_path.read_text(errors="replace")
+    except OSError:
+        return None
+
+    sf_patterns = [
+        re.compile(r"sourceforge\.net/projects/([A-Za-z0-9_.-]+)"),
+        re.compile(r"downloads\.sourceforge\.net/project/([A-Za-z0-9_.-]+)"),
+        re.compile(r"svn\.code\.sf\.net/p/([A-Za-z0-9_.-]+)"),
+        re.compile(r"(?:^|[/\s(\"'])([A-Za-z0-9_.-]+)\.sourceforge\.net"),
+    ]
+
+    header_projects = []
+    body_projects = []
+
+    for line in content.splitlines():
+        is_comment = line.strip().startswith("#")
+        for pat in sf_patterns:
+            for match in pat.finditer(line):
+                project = match.group(1).rstrip("/")
+                if is_comment:
+                    header_projects.append(project)
+                else:
+                    body_projects.append(project)
+
+    all_candidates = header_projects + body_projects
+    if not all_candidates:
+        return None
+
+    if tool_name:
+        tool_key = tool_name.lower().replace("-", "").replace("_", "")
+        for project in all_candidates:
+            proj_key = project.lower().replace("-", "").replace("_", "")
+            if tool_key == proj_key or tool_key in proj_key or proj_key in tool_key:
+                return project
+        # No candidate matches this tool – don't guess
+        return None
+
+    return all_candidates[0]
+
+
+def get_sourceforge_latest_version(project_name):
+    """
+    Return the latest version of a SourceForge project, or None.
+
+    Fetches the project's file-release RSS feed and extracts the highest
+    version number found in the published filenames.
+    """
+    url = f"https://sourceforge.net/projects/{project_name}/rss?limit=100"
+    req = urllib.request.Request(url)
+    req.add_header("User-Agent", "evolbioinfo-dockerfiles-checker")
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            raw = resp.read().decode(errors="replace")
+    except urllib.error.HTTPError as e:
+        print(f"Warning: HTTP {e.code} for {url}", file=sys.stderr)
+        return None
+    except (urllib.error.URLError, OSError) as e:
+        print(f"Warning: Network error for {url}: {e}", file=sys.stderr)
+        return None
+
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError as e:
+        print(f"Warning: XML parse error for {url}: {e}", file=sys.stderr)
+        return None
+
+    # Match version numbers embedded in filenames, e.g.:
+    #   BBMap_39.06.tar.gz  → 39.06
+    #   musket-1.1.tar.gz   → 1.1
+    #   subread-2.0.4-source.tar.gz → 2.0.4
+    version_re = re.compile(r"[-_v](\d+(?:\.\d+)+)", re.IGNORECASE)
+
+    versions = []
+    for item in root.iter("item"):
+        title_el = item.find("title")
+        if title_el is None or not title_el.text:
+            continue
+        # RSS titles are paths like "/subdir/BBMap_39.06.tar.gz"; take basename
+        filename = title_el.text.strip().rstrip("/").rsplit("/", 1)[-1]
+        if not filename or "." not in filename:
+            continue  # Skip directories
+        match = version_re.search(filename)
+        if match:
+            try:
+                versions.append(Version(match.group(1)))
+            except InvalidVersion:
+                pass
+
+    if not versions:
+        return None
+
+    return str(max(versions))
+
+
 def http_get_json(url, headers=None):
     """Make an HTTP GET request and return the parsed JSON body, or None."""
     req = urllib.request.Request(url)
@@ -469,12 +581,13 @@ def check_tool(tool_name, token=None):
     2. GitLab (gitlab.com, releases → tags)
     3. PyPI (pip install <pkg>==<version>)
     4. Conda / Bioconda (conda/mamba install <pkg>=<version>)
+    5. SourceForge (RSS feed)
 
     Returns a dict with:
       - tool: tool name
       - current: current version directory name
       - upstream: latest upstream version string
-      - source: where the upstream version was found ('github', 'gitlab', 'pypi', 'conda')
+      - source: where the upstream version was found ('github', 'gitlab', 'pypi', 'conda', 'sourceforge')
       - source_ref: human-readable reference (repo path, package name, etc.)
       - outdated: True if upstream > current
       - error: error message if something went wrong (or None)
@@ -593,6 +706,30 @@ def check_tool(tool_name, token=None):
             "error": f"Could not fetch upstream version from conda ({channel})",
         }
 
+    # --- 5. SourceForge ---
+    sf_project = extract_sourceforge_project(dockerfile, tool_name)
+    if sf_project:
+        upstream_version = get_sourceforge_latest_version(sf_project)
+        if upstream_version:
+            return {
+                "tool": tool_name,
+                "current": current_version,
+                "upstream": upstream_version,
+                "source": "sourceforge",
+                "source_ref": sf_project,
+                "outdated": is_newer(upstream_version, current_version),
+                "error": None,
+            }
+        return {
+            "tool": tool_name,
+            "current": current_version,
+            "upstream": None,
+            "source": "sourceforge",
+            "source_ref": sf_project,
+            "outdated": False,
+            "error": "Could not fetch upstream version from SourceForge",
+        }
+
     # No upstream source found
     return {
         "tool": tool_name,
@@ -618,6 +755,8 @@ def _source_link(result):
     if source == "conda":
         channel, pkg = ref.split("/", 1) if "/" in ref else ("", ref)
         return f"[{ref}](https://anaconda.org/{channel}/{pkg}) (Conda)"
+    if source == "sourceforge":
+        return f"[{ref}](https://sourceforge.net/projects/{ref}/) (SourceForge)"
     return "N/A"
 
 
