@@ -144,7 +144,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [bbmap](bbmap/) | v39.01 | Short read aligner for DNA and RNA-seq data |
+| [bbmap](bbmap/) | v39.80 | Short read aligner for DNA and RNA-seq data |
 | [bowtie](bowtie/) | v1.3.1 | Aligning sequencing reads to references |
 | [bowtie2](bowtie2/) | v2.5.5 | Mapping DNA sequences against a large reference genome |
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
@@ -275,7 +275,7 @@ The versions listed represent the latest containerized builds in this repository
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
 | [cd-hit](cd-hit/) | v4.8.1 | Sequence clustering|
-| [gubbins](gubbins/) | v3.4 | Rapid detection of recombination in bacterial genomes |
+| [gubbins](gubbins/) | v3.4.3 | Rapid detection of recombination in bacterial genomes |
 | [hmmer](hmmer/) | v3.4 | Biosequence analysis using profile hidden Markov models |
 | [jphmm](jphmm/) | v03.2015 | Jumping profile hidden Markov model for HIV subtyping |
 | [jphmm_tools](jphmm_tools/) | v0.1.4 | Tools for working with jpHMM output |
