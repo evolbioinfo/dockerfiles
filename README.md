@@ -235,7 +235,7 @@ The versions listed represent the latest containerized builds in this repository
 |------|---------------|-------------|
 | [deseq](deseq/) | v1.39.0 | Differential expression analysis from RNA-seq count data |
 | [stringtie](stringtie/) | v2.2.1 | Transcript assembly and quantification for RNA-seq |
-| [subread](subread/) | v2.0.3 | Subread/featureCounts read summarization for RNA-seq |
+| [subread](subread/) | v2.1.1 | Subread/featureCounts read summarization for RNA-seq |
 
 ### Taxonomy & Metagenomics
 
