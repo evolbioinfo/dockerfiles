@@ -246,7 +246,7 @@ The versions listed represent the latest containerized builds in this repository
 | [khmer](khmer/) | v2.1.2 | Probabilistic k-mer counting data structure |
 | [kraken](kraken/) | v2.17.1 | Taxonomic classification of metagenomic sequences |
 | [krakenuniq](krakenuniq/) | v1.0.4 | Metagenomics classification using unique k-mer counts |
-| [vamb](vamb/) | v3.0.2 | Variational autoencoders for metagenomic binning |
+| [vamb](vamb/) | v5.0.4 | Variational autoencoders for metagenomic binning |
 
 ### Viral & Pandemic Analysis
 
