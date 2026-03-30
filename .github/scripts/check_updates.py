@@ -239,7 +239,7 @@ def extract_pypi_package(dockerfile_path, tool_name=None):
         return None
 
     # Match: pip[3] install [opts] pkg==version [more pkgs...]
-    pkg_pattern = re.compile(r"([A-Za-z0-9_.-]+)==([0-9][A-Za-z0-9._-]*)")
+    pkg_pattern = re.compile(r"([A-Za-z0-9_.-]+)==(([0-9]|\$)[A-Za-z0-9._-\{\}]*)")
     pip_line_pattern = re.compile(r"pip3?\s+install\b")
 
     packages = []
