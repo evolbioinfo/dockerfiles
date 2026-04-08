@@ -102,7 +102,7 @@ The versions listed represent the latest containerized builds in this repository
 | [goalign](goalign/) | v0.4.0 | Multiple sequence alignment analysis toolkit |
 | [gotree](gotree/) | v0.5.1 | Phylogenetic tree manipulation toolkit |
 | [guppy](guppy/) | v3.1.5 | Tools for working with pplacer phylogenetic placement files |
-| [iqtree](iqtree/) | v3.1.0 | Fast and accurate maximum-likelihood phylogenetic tree inference |
+| [iqtree](iqtree/) | v3.1.1 | Fast and accurate maximum-likelihood phylogenetic tree inference |
 | [lsd](lsd/) | v0.3.3 | Least-squares dating of phylogenetic trees |
 | [lsd2](lsd2/) | v2.4.1 | Least-squares dating of phylogenetic trees (version 2) |
 | [maple](maple/) | v0.7.5 | Maximum likelihood phylogenetic estimation with reduced memory |
@@ -144,7 +144,7 @@ The versions listed represent the latest containerized builds in this repository
 
 | Tool | Latest Version | Description |
 |------|---------------|-------------|
-| [bbmap](bbmap/) | v39.80 | Short read aligner for DNA and RNA-seq data |
+| [bbmap](bbmap/) | v39.81 | Short read aligner for DNA and RNA-seq data |
 | [bowtie](bowtie/) | v1.3.1 | Aligning sequencing reads to references |
 | [bowtie2](bowtie2/) | v2.5.5 | Mapping DNA sequences against a large reference genome |
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
