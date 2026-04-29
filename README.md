@@ -117,6 +117,7 @@ The versions listed represent the latest containerized builds in this repository
 | [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
 | [raxml](raxml/) | v8.2.13 | Randomized accelerated maximum likelihood phylogenetic inference |
 | [raxml-ng](raxml-ng/) | v2.0.0 | RAxML next-generation |
+| [RogueNaRok](roguenarok/) | v1.0.1 | Algorithm for the identification of rogue taxa in a tree set |
 | [table2itol](table2itol/) | latest | Converts annotation tables to iTOL dataset files |
 | [tqdist](tqdist/) | v1.0.2 | Computing quartet and triplet distances between trees |
 | [treedater](treedater/) | 89a0df0 | Scalable relaxed clock phylogenetic dating |
