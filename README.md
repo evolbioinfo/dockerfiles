@@ -149,6 +149,7 @@ The versions listed represent the latest containerized builds in this repository
 | [bowtie](bowtie/) | v1.3.1 | Aligning sequencing reads to references |
 | [bowtie2](bowtie2/) | v2.5.5 | Mapping DNA sequences against a large reference genome |
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
+| [bwa-mem2](bwa-mem2/) | v2.2.1 |  The next version of bwa-mem |
 | [hisat2](hisat2/) | v2.2.2 | Alignment program for mapping next-generation sequencing reads to a population of human genomes |
 | [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
 | [minimap2](minimap2/) | v2.30 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
