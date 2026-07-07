@@ -111,7 +111,7 @@ The versions listed represent the latest containerized builds in this repository
 | [newick_utilities](newick_utilities/) | v1.6 | Utilities for manipulating Newick format trees |
 | [ngphylogeny_multitools](ngphylogeny_multitools/) | seqtype_detect | Multi-tool image for phylogenetic workflows |
 | [phylodeep](phylodeep/) | v0.9 | Deep learning for phylodynamic parameter estimation |
-| [phyml](phyml/) | v3.3.20250515 | Maximum-likelihood phylogenetic tree estimation |
+| [phyml](phyml/) | v3.3.20260528 | Maximum-likelihood phylogenetic tree estimation |
 | [phyml-sms](phyml-sms/) | v1.8.1.1 | PhyML with Smart Model Selection |
 | [ptp](ptp/) | v4bb2daf | Species delimitation from phylogenetic trees |
 | [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
