@@ -192,7 +192,7 @@ The versions listed represent the latest containerized builds in this repository
 | [fastqc](fastqc/) | v0.12.1 | Quality control analysis of high-throughput sequencing data |
 | [minionqc](minionqc/) | v1.4.2 | Quality control for Oxford Nanopore sequencing data |
 | [multiqc](multiqc/) | v1.9 | Aggregate bioinformatics results across samples into a report |
-| [nanoplot](nanoplot/) | v1.46.2 | Plotting tools for long-read sequencing data |
+| [nanoplot](nanoplot/) | v1.47.1 | Plotting tools for long-read sequencing data |
 | [rna-seqc](rna-seqc/) | v1.1.9 | Quality control metrics for RNA-seq data |
 
 ### Read Trimming
