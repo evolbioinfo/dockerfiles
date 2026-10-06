@@ -1,0 +1,12 @@
+diff --git a/pangolin/scripts/usher.smk b/pangolin/scripts/usher.smk
+index 3adffc7..3ba0938 100644
+--- a/pangolin/scripts/usher.smk
++++ b/pangolin/scripts/usher.smk
+@@ -106,6 +106,7 @@ rule usher_inference:
+                 echo ""
+             fi
+             cat {input.fasta:q} >> {params.ref_fa:q}
++            sed -i 's/^ *//' {params.ref_fa:q}
+             faToVcf -includeNoAltN {params.ref_fa:q} {params.vcf:q}
+             $usher -n -D -i {input.usher_protobuf:q} -v {params.vcf:q} -T $threads -d '{config[tempdir]}' &> {log}
+         else

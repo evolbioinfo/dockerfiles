@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for REPO in pangolin pangoLEARN scorpio constellations pango-designation
+for REPO in pangolin pangolin-data pangoLEARN scorpio constellations pango-designation
 do
     RELEASE=$(curl -s -H "Accept: application/vnd.github.v3+json"   https://api.github.com/repos/cov-lineages/$REPO/releases | jq '.[0].tag_name')
     echo $REPO ":" $RELEASE
