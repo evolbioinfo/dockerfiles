@@ -111,12 +111,12 @@ The versions listed represent the latest containerized builds in this repository
 | [newick_utilities](newick_utilities/) | v1.6 | Utilities for manipulating Newick format trees |
 | [ngphylogeny_multitools](ngphylogeny_multitools/) | seqtype_detect | Multi-tool image for phylogenetic workflows |
 | [phylodeep](phylodeep/) | v0.9 | Deep learning for phylodynamic parameter estimation |
-| [phyml](phyml/) | v3.3.20250515 | Maximum-likelihood phylogenetic tree estimation |
+| [phyml](phyml/) | v3.3.20260528 | Maximum-likelihood phylogenetic tree estimation |
 | [phyml-sms](phyml-sms/) | v1.8.1.1 | PhyML with Smart Model Selection |
 | [ptp](ptp/) | v4bb2daf | Species delimitation from phylogenetic trees |
 | [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
 | [raxml](raxml/) | v8.2.13 | Randomized accelerated maximum likelihood phylogenetic inference |
-| [raxml-ng](raxml-ng/) | v2.0.0 | RAxML next-generation |
+| [raxml-ng](raxml-ng/) | v2.0.2 | RAxML next-generation |
 | [RogueNaRok](roguenarok/) | v1.0.1 | Algorithm for the identification of rogue taxa in a tree set |
 | [table2itol](table2itol/) | latest | Converts annotation tables to iTOL dataset files |
 | [tqdist](tqdist/) | v1.0.2 | Computing quartet and triplet distances between trees |
@@ -192,7 +192,7 @@ The versions listed represent the latest containerized builds in this repository
 | [fastqc](fastqc/) | v0.12.1 | Quality control analysis of high-throughput sequencing data |
 | [minionqc](minionqc/) | v1.4.2 | Quality control for Oxford Nanopore sequencing data |
 | [multiqc](multiqc/) | v1.9 | Aggregate bioinformatics results across samples into a report |
-| [nanoplot](nanoplot/) | v1.46.2 | Plotting tools for long-read sequencing data |
+| [nanoplot](nanoplot/) | v1.47.1 | Plotting tools for long-read sequencing data |
 | [rna-seqc](rna-seqc/) | v1.1.9 | Quality control metrics for RNA-seq data |
 
 ### Read Trimming
