@@ -112,7 +112,7 @@ The versions listed represent the latest containerized builds in this repository
 | [ngphylogeny_multitools](ngphylogeny_multitools/) | seqtype_detect | Multi-tool image for phylogenetic workflows |
 | [phylodeep](phylodeep/) | v0.9 | Deep learning for phylodynamic parameter estimation |
 | [phyml](phyml/) | v3.3.20260528 | Maximum-likelihood phylogenetic tree estimation |
-| [phyml-sms](phyml-sms/) | v1.8.1.1 | PhyML with Smart Model Selection |
+| [phyml-sms](phyml-sms/) | v1.8.3 | PhyML with Smart Model Selection |
 | [ptp](ptp/) | v4bb2daf | Species delimitation from phylogenetic trees |
 | [rappas](rappas/) | v1.21 | Rapid alignment-free phylogenetic identification via statistical hypothesis testing |
 | [raxml](raxml/) | v8.2.13 | Randomized accelerated maximum likelihood phylogenetic inference |
@@ -257,7 +257,7 @@ The versions listed represent the latest containerized builds in this repository
 | [artic-ncov2019](artic-ncov2019/) | e814ed4 | ARTIC network bioinformatics tools for SARS-CoV-2 |
 | [civet](civet/) | v2.1.2 | Cluster investigation and virus epidemiology tool |
 | [irma](irma/) | v1.4.0 | Iterative refinement meta-assembler for viral genomics |
-| [label](label/) | v0.6.4 | Sequence labeling and annotation tool |
+| [label](label/) | v0.7.3 | Sequence labeling and annotation tool |
 | [nextstrain-base](nextstrain-base/) | build-20251119T000157Z | Nextstrain base environment for viral phylodynamics |
 | [pangolin](pangolin/) | v4.4 | Phylogenetic assignment of named global outbreak LINeages |
 | [polecat](polecat/) | b4a36f3 | Phylogenetic Overview & Local Epidemiological Cluster Analysis Tool |
@@ -349,7 +349,7 @@ These images serve as base environments for building other images or running cus
 | [s3cmd](s3cmd/) | v2.4.0 | Command Line S3 Client and Backup for Linux and Mac |
 | [s3utils](s3utils/) | v0.6.1 | Utilities for interacting with Amazon S3 |
 | [sphinx](sphinx/) | v9.2.0 | Python documentation generator |
-| [wget](wget/) | v1.17.1 | Network utility to retrieve files from the Web |
+| [wget](wget/) | v1.25.0 | Network utility to retrieve files from the Web |
 
 ## Building Images Locally
 

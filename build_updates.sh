@@ -33,6 +33,7 @@ IMAGES=(
     irma/v1.4.0
     jq/v1.8.2
     kraken/v2.17.2
+    label/v0.7.3
     lastal/v1654
     minimap2/v2.31
     mrbayes/v3.2.9
@@ -40,6 +41,7 @@ IMAGES=(
     nanoplot/v1.48.0
     paml/v4.10.10
     pathphynder/v1.3.1
+    phyml-sms/v1.8.3
     picard/v3.5.0
     predicthaplo/v2.1.4
     raxml-ng/v2.0.4
@@ -55,6 +57,7 @@ IMAGES=(
     treesimulator/v0.2.30
     treetime/v0.12.1
     trimgalore/v2.5.0
+    wget/v1.25.0
 )
 
 PUSH=1
