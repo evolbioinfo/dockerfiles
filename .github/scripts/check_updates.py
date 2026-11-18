@@ -5,7 +5,9 @@ Check for newer versions of tools in the evolbioinfo/dockerfiles repository.
 For each tool, this script:
 1. Finds the latest version directory in the tool's folder
 2. Determines the upstream source: UPSTREAM_OVERRIDES first, otherwise it is
-   detected from the Dockerfile (GitHub, GitLab, PyPI, Conda, SourceForge)
+   detected from the Dockerfile (GitHub, GitLab, PyPI, Conda, SourceForge).
+   Overrides can also read the version from a file of a GitHub repository
+   ('github_file'), for projects without releases or tags
 3. Queries the upstream for its latest *stable* version (pre-releases ignored)
 4. Compares it to the current version and reports outdated tools
 
@@ -75,6 +77,20 @@ SKIP_VERSION_CHECK = {
 # precedence over detection from the Dockerfile.
 UPSTREAM_OVERRIDES = {
     "admixture": {"source": "conda", "ref": "admixture", "channels": ["bioconda"]},
+    # No releases nor tags: the version is read from a source file
+    # ('github_file': first regex group of 'pattern' in 'path', default branch)
+    "bayestraits": {
+        "source": "github_file", "ref": "AndrewPMeade/BayesTraits-Release",
+        "path": "src/TypeDef.h", "pattern": r"BayesTraits V(\d+(?:\.\d+)+)",
+    },
+    "newick_utilities": {
+        "source": "github_file", "ref": "tjunier/newick_utils",
+        "path": "configure.ac", "pattern": r"AC_INIT\(\[[^]]*\],\s*\[([^]]+)\]",
+    },
+    "papara": {
+        "source": "github_file", "ref": "sim82/papara_nt",
+        "path": "papara.cpp", "pattern": r'get_version_string\(\)\s*\{\s*return\s+std::string\(\s*"([^"]+)"',
+    },
     "clustal_omega": {"source": "conda", "ref": "clustalo", "channels": ["bioconda"]},
     "deseq": {"source": "conda", "ref": "bioconductor-deseq", "channels": ["bioconda"]},
     "finestructure": {"source": "conda", "ref": "finestructure", "channels": ["bioconda"]},
@@ -120,6 +136,7 @@ SOURCE_LABELS = {
     "pypi": "PyPI",
     "conda": "Conda",
     "sourceforge": "SourceForge",
+    "github_file": "GitHub (version in source file)",
 }
 
 USER_AGENT = "evolbioinfo-dockerfiles-checker"
@@ -612,6 +629,21 @@ def sourceforge_latest(project):
     return latest_stable(versions)
 
 
+def github_file_version(repo, path, pattern):
+    """
+    Version read from a file on the default branch of a GitHub repository, for
+    projects that publish neither releases nor tags. 'pattern' is a regex
+    whose first group is the version.
+    """
+    content = http_get(f"https://raw.githubusercontent.com/{repo}/HEAD/{path}")
+    if content is None:
+        raise UpstreamError(f"{path} not found in {repo}")
+    m = re.search(pattern, content)
+    if not m:
+        raise UpstreamError(f"no version matching {pattern!r} in {path}")
+    return m.group(1)
+
+
 def fetch_latest(src, token=None):
     """Return the latest stable upstream version for a source dict, or None."""
     kind = src["source"]
@@ -627,6 +659,8 @@ def fetch_latest(src, token=None):
         return version
     if kind == "sourceforge":
         return sourceforge_latest(src["ref"])
+    if kind == "github_file":
+        return github_file_version(src["ref"], src["path"], src["pattern"])
     raise ValueError(f"unknown source {kind!r}")
 
 
@@ -648,6 +682,8 @@ def source_url(src):
         return f"https://anaconda.org/{source_ref(src)}"
     if kind == "sourceforge":
         return f"https://sourceforge.net/projects/{ref}/"
+    if kind == "github_file":
+        return f"https://github.com/{ref}/blob/HEAD/{src['path']}"
     return None
 
 
