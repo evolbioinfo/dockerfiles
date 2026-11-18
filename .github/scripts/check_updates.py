@@ -50,6 +50,12 @@ SKIP_VERSION_CHECK = {
     "treestructure",  # commit hash
     "inkscape",  # 'latest' tag
     "sdrmhunter",  # custom script; pip deps are not the tool itself
+    # No upstream source that can be queried (no repository, package or API)
+    "guppy",  # Oxford Nanopore, closed source and discontinued (replaced by dorado)
+    "jphmm",  # tarball on jphmm.gobics.de, custom version (03.2015)
+    "nextstrain-base",  # Docker Hub build tags (build-<timestamp>)
+    "noisy",  # tarball on bioinf.uni-leipzig.de
+    "vivan",  # zip on vivan.tau.ac.il
     # Base / environment images that bundle many packages – no single tool version
     "perl",
     "python",
@@ -68,15 +74,24 @@ SKIP_VERSION_CHECK = {
 # source (e.g. the tool is downloaded from its own website). These take
 # precedence over detection from the Dockerfile.
 UPSTREAM_OVERRIDES = {
+    "admixture": {"source": "conda", "ref": "admixture", "channels": ["bioconda"]},
+    "clustal_omega": {"source": "conda", "ref": "clustalo", "channels": ["bioconda"]},
+    "deseq": {"source": "conda", "ref": "bioconductor-deseq", "channels": ["bioconda"]},
+    "finestructure": {"source": "conda", "ref": "finestructure", "channels": ["bioconda"]},
+    "gblocks": {"source": "conda", "ref": "gblocks", "channels": ["bioconda"]},
     "hmmer": {"source": "github", "ref": "EddyRivasLab/hmmer"},
     "igv": {"source": "github", "ref": "igvteam/igv"},
+    "label": {"source": "github", "ref": "CDCgov/label"},
     "lastal": {"source": "gitlab", "host": "gitlab.com", "ref": "mcfrith/last"},
     "multiqc": {"source": "pypi", "ref": "multiqc"},
     "paml": {"source": "github", "ref": "abacus-gene/paml"},
+    "phyml-sms": {"source": "gitlab", "host": "gite.lirmm.fr", "ref": "atgc/sms"},
     "predicthaplo": {"source": "github", "ref": "cbg-ethz/PredictHaplo"},
     "sratoolkit": {"source": "github", "ref": "ncbi/sra-tools"},
     "stringtie": {"source": "github", "ref": "gpertea/stringtie"},
+    "tqdist": {"source": "conda", "ref": "tqdist", "channels": ["bioconda"]},
     "velvet": {"source": "github", "ref": "dzerbino/velvet"},
+    "wget": {"source": "conda", "ref": "wget", "channels": ["conda-forge"]},
 }
 
 # Generic utility/dependency packages that are commonly installed alongside
