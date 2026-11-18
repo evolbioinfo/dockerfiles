@@ -123,7 +123,7 @@ The versions listed represent the latest containerized builds in this repository
 | [treedater](treedater/) | 89a0df0 | Scalable relaxed clock phylogenetic dating |
 | [treemmer](treemmer/) | v0.3 | Reduce tree size while preserving phylogenetic diversity |
 | [treesimulator](treesimulator/) | v0.2.30 | Simulating rooted phylogenetic trees under various models |
-| [treestructure](treestructure/) | a831a66 | [Identification of hidden population structure in time-scaled phylogenies](https://academic.oup.com/sysbio/article/69/5/884/5734655) |
+| [treestructure](treestructure/) | v1.0.1 | [Identification of hidden population structure in time-scaled phylogenies](https://academic.oup.com/sysbio/article/69/5/884/5734655) |
 | [treetime](treetime/) | v0.12.1 | Maximum-likelihood phylogenetic time-trees inference |
 | [treewas](treewas/) | v1.1 | Genome-wide association studies on phylogenetic trees |
 
@@ -149,7 +149,7 @@ The versions listed represent the latest containerized builds in this repository
 | [bowtie](bowtie/) | v1.3.1 | Aligning sequencing reads to references |
 | [bowtie2](bowtie2/) | v2.5.5 | Mapping DNA sequences against a large reference genome |
 | [bwa](bwa/) | v0.7.19 | Burrows-Wheeler aligner for short DNA sequences |
-| [bwa-mem2](bwa-mem2/) | v2.2.1 |  The next version of bwa-mem |
+| [bwa-mem2](bwa-mem/) | v2.3 |  The next version of bwa-mem |
 | [hisat2](hisat2/) | v2.2.3 | Alignment program for mapping next-generation sequencing reads to a population of human genomes |
 | [mash](mash/) | v2.3 | Fast genome and metagenome distance estimation using MinHash |
 | [minimap2](minimap2/) | v2.31 | Versatile pairwise aligner for genomic and spliced nucleotide sequences |
@@ -259,7 +259,7 @@ The versions listed represent the latest containerized builds in this repository
 | [irma](irma/) | v1.4.0 | Iterative refinement meta-assembler for viral genomics |
 | [label](label/) | v0.7.3 | Sequence labeling and annotation tool |
 | [nextstrain-base](nextstrain-base/) | build-20251119T000157Z | Nextstrain base environment for viral phylodynamics |
-| [pangolin](pangolin/) | v4.4 | Phylogenetic assignment of named global outbreak LINeages |
+| [pangolin](pangolin/) | v4.4-v1.41-v0.3.19-v0.1.12 | Phylogenetic assignment of named global outbreak LINeages |
 | [polecat](polecat/) | b4a36f3 | Phylogenetic Overview & Local Epidemiological Cluster Analysis Tool |
 | [vivan](vivan/) | v0.43 | Virus variation analyzer |
 
@@ -291,7 +291,7 @@ The versions listed represent the latest containerized builds in this repository
 | [haplogrep](haplogrep/) | v2.4.0 | Mitochondrial haplogroup classification |
 | [predicthaplo](predicthaplo/) | v2.1.4 | Predicting HIV haplotypes from next-generation sequencing |
 | [shorah](shorah/) | v1.99.3 | Short Reads Assembly into Haplotypes |
-| [strainline](strainline/) | commit-8af032906e | Full-length de novo viral haplotype reconstruction |
+| [strainline](strainline/) | 8af032906e | Full-length de novo viral haplotype reconstruction |
 
 ### Simulation
 
@@ -333,7 +333,7 @@ These images serve as base environments for building other images or running cus
 | [python](python/) | v3.8.2 | Python base image |
 | [python-dl](python-dl/) | v3.13 | Python with deep learning packages (TensorFlow, PyTorch) |
 | [python-evol](python-evol/) | v3.8.2 | Python with evolutionary biology packages |
-| [python-ml](python-ml/) | v3.8.2 | Python with machine learning packages |
+| [python-ml](python-ml/) | v.3.11.2 | Python with machine learning packages |
 | [r-base](r-base/) | v4.0.2 | R statistical computing base image |
 | [r-evol](r-evol/) | v4.2.2 | R with evolutionary biology packages |
 | [r-extended](r-extended/) | v4.3.3 | R with extended bioinformatics packages |
