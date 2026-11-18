@@ -4,26 +4,35 @@ Check for newer versions of tools in the evolbioinfo/dockerfiles repository.
 
 For each tool, this script:
 1. Finds the latest version directory in the tool's folder
-2. Reads the Dockerfile to detect the upstream source (GitHub, GitLab, PyPI, Conda)
-3. Queries the upstream API for the latest version
-4. Compares to the current version and reports outdated tools
+2. Determines the upstream source: UPSTREAM_OVERRIDES first, otherwise it is
+   detected from the Dockerfile (GitHub, GitLab, PyPI, Conda, SourceForge)
+3. Queries the upstream for its latest *stable* version (pre-releases ignored)
+4. Compares it to the current version and reports outdated tools
+
+The Markdown report is written to stdout and warnings to stderr.
+Exit status: 0 when the check ran (whether or not tools are outdated),
+non-zero if the script itself crashed.
 """
 
+import json
 import os
 import re
 import sys
-import json
-import urllib.request
+import traceback
 import urllib.error
+import urllib.parse
+import urllib.request
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from packaging.version import Version, InvalidVersion
+
+from packaging.version import InvalidVersion, Version
 
 
 REPO_ROOT = Path(__file__).parent.parent.parent
 
-# Directories to skip (not real tools, or version-based directories)
-SKIP_DIRS = {".git", ".github", "README.md"}
+# Directories to skip (not real tools)
+SKIP_DIRS = {".git", ".github"}
 
 # Directories that use non-release versioning (commits, custom schemes)
 SKIP_VERSION_CHECK = {
@@ -32,6 +41,7 @@ SKIP_VERSION_CHECK = {
     "ngphylogeny_multitools",  # branch name
     "pcoc",  # commit hash
     "polecat",  # commit hash
+    "ptp",  # commit hash
     "reseq",  # commit hash
     "snag",  # 'master'
     "strainline",  # commit hash
@@ -54,6 +64,21 @@ SKIP_VERSION_CHECK = {
     "ubuntu",
 }
 
+# Upstream sources for tools whose Dockerfile does not reference a supported
+# source (e.g. the tool is downloaded from its own website). These take
+# precedence over detection from the Dockerfile.
+UPSTREAM_OVERRIDES = {
+    "hmmer": {"source": "github", "ref": "EddyRivasLab/hmmer"},
+    "igv": {"source": "github", "ref": "igvteam/igv"},
+    "lastal": {"source": "gitlab", "host": "gitlab.com", "ref": "mcfrith/last"},
+    "multiqc": {"source": "pypi", "ref": "multiqc"},
+    "paml": {"source": "github", "ref": "abacus-gene/paml"},
+    "predicthaplo": {"source": "github", "ref": "cbg-ethz/PredictHaplo"},
+    "sratoolkit": {"source": "github", "ref": "ncbi/sra-tools"},
+    "stringtie": {"source": "github", "ref": "gpertea/stringtie"},
+    "velvet": {"source": "github", "ref": "dzerbino/velvet"},
+}
+
 # Generic utility/dependency packages that are commonly installed alongside
 # the main tool but are not the tool itself.  Excluded from pip & conda
 # package detection so we pick the right primary package.
@@ -68,752 +93,686 @@ COMMON_UTILITY_PACKAGES = {
     "prodigal", "hmmer", "pplacer",
 }
 
-# Preferred order of conda channels for version resolution.
-# Earlier entries are preferred over later ones.
-CONDA_CHANNEL_PRIORITY = ["bioconda", "conda-forge", "anaconda", "defaults"]
+# Conda channels tried, in order, after any channel given explicitly in the
+# Dockerfile. Names are anaconda.org owners.
+CONDA_CHANNEL_PRIORITY = ["bioconda", "conda-forge", "anaconda"]
+# The 'defaults' channel is published on anaconda.org as 'anaconda'.
+CONDA_CHANNEL_ALIASES = {"defaults": "anaconda", "main": "anaconda"}
+
+SOURCE_LABELS = {
+    "github": "GitHub",
+    "gitlab": "GitLab",
+    "pypi": "PyPI",
+    "conda": "Conda",
+    "sourceforge": "SourceForge",
+}
+
+USER_AGENT = "evolbioinfo-dockerfiles-checker"
+HTTP_TIMEOUT = 15
+MAX_WORKERS = 8
+GITHUB_MAX_TAG_PAGES = 5  # 100 tags per page
 
 
-def get_tool_dirs():
-    """Return a sorted list of tool directory names."""
-    dirs = []
-    for entry in REPO_ROOT.iterdir():
-        if entry.is_dir() and entry.name not in SKIP_DIRS and not entry.name.startswith("."):
-            dirs.append(entry.name)
-    return sorted(dirs)
+# ---------------------------------------------------------------------------
+# Version parsing
+# ---------------------------------------------------------------------------
+
+# Git commit hashes, optionally prefixed with 'v' or 'dev' (e.g. v4bb2daf,
+# dev6b7572, 581c23199). Must contain both a digit and a hex letter.
+_COMMIT_RE = re.compile(
+    r"(?:v|dev)?(?=[0-9a-f]*[a-f])(?=[0-9a-f]*[0-9])[0-9a-f]{6,40}", re.IGNORECASE
+)
+# A dotted version after an optional non-numeric prefix: v1.2, v.2.4.1,
+# MAPLEv0.7.5, jq-1.8.2, Version_13.46.2.7c9e712d, v4.4-v1.41-v0.3.19
+_DOTTED_RE = re.compile(r"^[A-Za-z_.-]*(\d+(?:\.\d+)+)(.*)$")
+# A single number (v980, 1654, r1613), only with at most a v/r prefix and
+# nothing numeric after it, so that tags such as 'test9' or 'VDB-4760-2.9.7'
+# are not read as versions 9 or 4760.
+_PLAIN_RE = re.compile(r"^(?:[vVrR][-_.]?)?(\d+)(\D*)$")
+# Pre-release suffix right after the number: -alpha2, -RC2, b3, -beta.8, .dev
+_PRE_RE = re.compile(
+    r"^[-_.]?(alpha|beta|preview|pre|rc|dev|a|b|c)[-_.]?(\d*)(?![A-Za-z0-9])",
+    re.IGNORECASE,
+)
+_PRE_TAGS = {
+    "alpha": "a", "a": "a",
+    "beta": "b", "b": "b",
+    "rc": "rc", "c": "rc", "pre": "rc", "preview": "rc",
+    "dev": ".dev",
+}
 
 
-def _version_sort_key(version_str):
+def is_commit_hash(name):
+    return bool(_COMMIT_RE.fullmatch(name))
+
+
+def parse_version(text):
     """
-    Return a sort key for a version string, handling non-semver suffixes.
+    Parse a version from a directory name or upstream tag.
 
-    Strips architecture/build suffixes (e.g. -sse3, -avx2) and then
-    parses via packaging.version.Version. Falls back to the original string.
-    Commit hashes (pure hex strings) are sorted before real versions.
+    Returns a packaging Version, or None if no version can be found.
+    A single trailing letter (v0.3.6a, 4.8a) is a revision of that version and
+    is ordered after it; alpha/beta/rc suffixes are pre-releases.
     """
-    # Identify pure git commit hashes (7-40 hex characters)
-    if re.fullmatch(r"[0-9a-f]{7,40}", version_str, re.IGNORECASE):
-        return (0, version_str)
-    # Strip leading v/V
-    v = version_str.lstrip("vV")
-    # Remove known build suffixes that are not part of the semantic version
-    v = re.sub(r"[-_](sse\d*|avx\d*|pthreads?|mpi|gcc|clang|linux|osx|win).*$", "", v, flags=re.IGNORECASE)
+    if not text or is_commit_hash(text):
+        return None
+    m = _DOTTED_RE.match(text) or _PLAIN_RE.match(text)
+    if not m:
+        return None
+    number, rest = m.group(1), m.group(2)
+    suffix = ""
+    if re.fullmatch(r"[A-Za-z]", rest):
+        suffix = f".post{ord(rest.lower()) - ord('a') + 1}"
+    else:
+        pre = _PRE_RE.match(rest)
+        if pre:
+            suffix = f"{_PRE_TAGS[pre.group(1).lower()]}{pre.group(2) or '0'}"
     try:
-        return (1, Version(v))
+        return Version(number + suffix)
     except InvalidVersion:
-        return (0, version_str)
+        return None
+
+
+def is_stable(text):
+    v = parse_version(text)
+    return v is not None and not v.is_prerelease
+
+
+def latest_stable(names):
+    """Return the name with the highest stable version, or None."""
+    best, best_v = None, None
+    for name in names:
+        if not name:
+            continue
+        v = parse_version(name)
+        if v is None or v.is_prerelease:
+            continue
+        if best_v is None or v > best_v:
+            best, best_v = name, v
+    return best
+
+
+def _version_dir_sort_key(name):
+    """
+    Sort key for version directories: parseable versions sort above commit
+    hashes and unparseable names. Ties (e.g. pangolin's
+    v4.4-v1.38-... vs v4.4-v1.41-...) are broken on all numbers in the name.
+    """
+    v = parse_version(name)
+    if v is None:
+        return (0, Version("0"), (), name)
+    numbers = tuple(int(n) for n in re.findall(r"\d+", name))
+    return (1, v, numbers, name)
 
 
 def get_latest_version_dir(tool_dir):
     """
     Return the latest versioned subdirectory for a tool.
-    Skips 'dev' and 'latest' symlinks/directories.
+    Skips 'dev' and 'latest' directories.
     """
-    version_dirs = []
-    for entry in tool_dir.iterdir():
-        if entry.is_dir() and entry.name not in ("dev", "latest"):
-            version_dirs.append(entry.name)
+    version_dirs = [
+        e.name for e in tool_dir.iterdir()
+        if e.is_dir() and e.name not in ("dev", "latest")
+    ]
     if not version_dirs:
         return None
-    version_dirs.sort(key=_version_sort_key)
-    return version_dirs[-1]
+    return max(version_dirs, key=_version_dir_sort_key)
 
 
-def extract_github_url(dockerfile_path, tool_name=None):
+def is_newer(upstream, current):
     """
-    Extract the first GitHub repository URL from a Dockerfile.
-
-    Looks for:
-    - Header comment: # https://github.com/owner/repo
-    - git clone https://github.com/owner/repo
-    - wget .../github.com/owner/repo/...
-
-    If tool_name is provided, prefers a match where the repo name contains
-    the tool name (useful when multiple GitHub URLs appear in one Dockerfile).
+    Return True if upstream is newer than current, False if not, and None if
+    either version cannot be parsed.
     """
-    try:
-        content = dockerfile_path.read_text(errors="replace")
-    except OSError:
+    upstream_v = parse_version(upstream)
+    current_v = parse_version(current)
+    if upstream_v is None or current_v is None:
         return None
+    return upstream_v > current_v
 
-    # Pattern to extract owner/repo from any github.com URL
-    # Matches https://github.com/owner/repo (with optional trailing path)
-    pattern = re.compile(
-        r"https://github\.com/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)"
-    )
 
-    def clean_repo_path(raw):
-        """Return 'owner/repo' stripping any trailing .git or extra path."""
-        parts = raw.rstrip("/").split("/")
-        owner = parts[0]
-        repo = parts[1].removesuffix(".git")
-        return f"{owner}/{repo}"
+# ---------------------------------------------------------------------------
+# Dockerfile parsing
+# ---------------------------------------------------------------------------
 
-    # First pass: collect all GitHub repos from header comments
-    header_repos = []
-    for line in content.splitlines():
-        if line.startswith("#"):
-            match = pattern.search(line)
-            if match:
-                header_repos.append(clean_repo_path(match.group(1)))
+def _name_key(name):
+    return name.lower().replace("-", "").replace("_", "")
 
-    if header_repos:
-        # If there's a tool name hint, prefer repos whose name matches
-        if tool_name:
-            tool_key = tool_name.lower().replace("-", "").replace("_", "")
-            for repo in header_repos:
-                repo_name = repo.split("/")[1].lower().replace("-", "").replace("_", "")
-                if tool_key in repo_name or repo_name in tool_key:
-                    return repo
-        return header_repos[0]
 
-    # Second pass: collect all GitHub repos from the full file body
-    # Only return a match if we can confidently link it to the tool
-    body_repos = []
-    for line in content.splitlines():
-        match = pattern.search(line)
-        if match:
-            body_repos.append(clean_repo_path(match.group(1)))
+def _matches_tool(name, tool_name):
+    if not tool_name:
+        return False
+    a, b = _name_key(name), _name_key(tool_name)
+    return a in b or b in a
 
-    if body_repos and tool_name:
-        tool_key = tool_name.lower().replace("-", "").replace("_", "")
-        for repo in body_repos:
-            repo_name = repo.split("/")[1].lower().replace("-", "").replace("_", "")
-            if tool_key in repo_name or repo_name in tool_key:
-                return repo
 
-    # No reliable match found
+def _pick_for_tool(candidates, tool_name, name_of=lambda c: c):
+    """Return the first candidate whose name matches the tool, or None."""
+    for candidate in candidates:
+        if _matches_tool(name_of(candidate), tool_name):
+            return candidate
     return None
 
-def extract_gitlab_url(dockerfile_path, tool_name=None):
+
+def _comment_lines(content):
+    return [line for line in content.splitlines() if line.startswith("#")]
+
+
+def _shell_commands(content):
     """
-    Extract a GitLab repository URL from a Dockerfile (gitlab.com hosted).
-
-    Returns 'host, namespace/project' suitable for the GitLab API, or None.
+    Yield the individual shell commands of a Dockerfile, with line
+    continuations joined so that multi-line installs are seen as one command.
     """
-    try:
-        content = dockerfile_path.read_text(errors="replace")
-    except OSError:
-        return None,None
-
-    pattern = re.compile(
-        r"https://((gitlab|gite)[A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)"
-    )
-
-    def clean_path(raw):
-        parts = raw.rstrip("/").split("/")
-        return f"{parts[0]}/{parts[1]}"
-
-    candidates = []
-    hosts = []
-    for line in content.splitlines():
-        match = pattern.search(line)
-        if match:
-            hosts.append(match.group(1))
-            candidates.append(clean_path(match.group(3)))
-
-    if not candidates:
-        return None,None
-
-    if tool_name:
-        tool_key = tool_name.lower().replace("-", "").replace("_", "")
-        i=0
-        for repo in candidates:
-            repo_name = repo.split("/")[1].lower().replace("-", "").replace("_", "")
-            if tool_key in repo_name or repo_name in tool_key:
-                return hosts[i],repo
-            i=i+1
-
-    return hosts[0],candidates[0]
+    joined = re.sub(r"\\[ \t]*\r?\n", " ", content)
+    for line in joined.splitlines():
+        if line.lstrip().startswith("#"):
+            continue
+        for command in re.split(r"&&|\|\||;|\|", line):
+            yield command
 
 
-def extract_pypi_package(dockerfile_path, tool_name=None):
+_GITHUB_URL_RE = re.compile(r"https://github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)")
+
+
+def extract_github_repo(content, tool_name=None):
     """
-    Extract the PyPI package name from a `pip install <pkg>==<version>` line.
+    Return 'owner/repo' for the tool's GitHub repository, or None.
 
-    Returns the package name (str) that most closely matches tool_name,
-    or None if no versioned pip install is found.
+    Header comments are trusted (preferring a repo named like the tool);
+    URLs in the body are only used if the repo name matches the tool, to
+    avoid picking up bundled dependencies.
     """
-    try:
-        content = dockerfile_path.read_text(errors="replace")
-    except OSError:
+    def repos(lines):
+        found = []
+        for line in lines:
+            for m in _GITHUB_URL_RE.finditer(line):
+                found.append(f"{m.group(1)}/{m.group(2).removesuffix('.git')}")
+        return found
+
+    def repo_name(repo):
+        return repo.split("/")[1]
+
+    header = repos(_comment_lines(content))
+    if header:
+        return _pick_for_tool(header, tool_name, repo_name) or header[0]
+    return _pick_for_tool(repos(content.splitlines()), tool_name, repo_name)
+
+
+_GITLAB_URL_RE = re.compile(r"https?://((?:gitlab|gite)[A-Za-z0-9.-]*)/([A-Za-z0-9_.~/-]+)")
+# Path segments that end the project path in a GitLab URL
+_GITLAB_PATH_STOP = {
+    "-", "raw", "blob", "tree", "repository", "uploads", "archive",
+    "tags", "releases", "commits", "commit", "wikis",
+}
+
+
+def _clean_gitlab_path(raw):
+    """Return the 'group[/subgroup]/project' part of a GitLab URL path."""
+    parts = []
+    for segment in raw.split("/"):
+        if not segment or segment in _GITLAB_PATH_STOP:
+            break
+        parts.append(segment)
+    if len(parts) < 2:
         return None
+    parts[-1] = parts[-1].removesuffix(".git")
+    return "/".join(parts)
 
-    # Match: pip[3] install [opts] pkg==version [more pkgs...]
-    pkg_pattern = re.compile(r"([A-Za-z0-9_.-]+)==(([0-9]|\$)[A-Za-z0-9._-\{\}]*)")
-    pip_line_pattern = re.compile(r"pip3?\s+install\b")
 
+def extract_gitlab_project(content, tool_name=None):
+    """
+    Return (host, 'namespace/project') for a gitlab.com or self-hosted GitLab
+    project, or None. Same trust rules as extract_github_repo.
+    """
+    def projects(lines):
+        found = []
+        for line in lines:
+            for m in _GITLAB_URL_RE.finditer(line):
+                path = _clean_gitlab_path(m.group(2))
+                if path:
+                    found.append((m.group(1), path))
+        return found
+
+    def project_name(candidate):
+        return candidate[1].rsplit("/", 1)[-1]
+
+    header = projects(_comment_lines(content))
+    if header:
+        return _pick_for_tool(header, tool_name, project_name) or header[0]
+    return _pick_for_tool(projects(content.splitlines()), tool_name, project_name)
+
+
+_PIP_INSTALL_RE = re.compile(r"\bpip(?:3(?:\.\d+)?)?\s+install\b(.*)")
+_PIP_PKG_RE = re.compile(
+    r"(?<![\w.-])([A-Za-z0-9][A-Za-z0-9_.-]*)(?:\[[^\]]*\])?=="
+    r"(\$\{?[A-Za-z_]\w*\}?|\d[\w.+!-]*)"
+)
+
+
+def extract_pypi_package(content, tool_name=None):
+    """
+    Return the PyPI package from a `pip install <pkg>==<version>` command
+    that best matches tool_name, or None.
+    """
     packages = []
-    for line in content.splitlines():
-        if pip_line_pattern.search(line):
-            for m in pkg_pattern.finditer(line):
-                pkg = m.group(1)
-                if pkg.lower() not in COMMON_UTILITY_PACKAGES:
-                    packages.append(pkg)
-
+    for command in _shell_commands(content):
+        m = _PIP_INSTALL_RE.search(command)
+        if not m:
+            continue
+        for pm in _PIP_PKG_RE.finditer(m.group(1)):
+            if pm.group(1).lower() not in COMMON_UTILITY_PACKAGES:
+                packages.append(pm.group(1))
     if not packages:
         return None
-
-    if tool_name:
-        tool_key = tool_name.lower().replace("-", "").replace("_", "")
-        # Exact or substring match first
-        for pkg in packages:
-            pkg_key = pkg.lower().replace("-", "").replace("_", "")
-            if tool_key == pkg_key or tool_key in pkg_key or pkg_key in tool_key:
-                return pkg
-    # Fallback: return the first (and often only) package
-    return packages[0]
+    return _pick_for_tool(packages, tool_name) or packages[0]
 
 
-def extract_conda_package(dockerfile_path, tool_name=None):
+_CONDA_INSTALL_RE = re.compile(
+    r"\b(?:micromamba|mamba|conda)\s+(?:install|create)\b(.*)", re.IGNORECASE
+)
+_CONDA_CHANNEL_RE = re.compile(r"(?:^|\s)(?:-c|--channel)(?:\s+|=)(\S+)")
+_CONDA_PKG_RE = re.compile(
+    r"(?<![\w.:-])(?:([A-Za-z0-9][\w.-]*)::)?([A-Za-z0-9][\w.-]*)==?"
+    r"(\$\{?[A-Za-z_]\w*\}?|\d[\w.*+-]*)"
+)
+
+
+def _normalize_channel(channel):
+    name = channel.strip("'\"").rstrip("/").rsplit("/", 1)[-1]
+    return CONDA_CHANNEL_ALIASES.get(name, name)
+
+
+def _channel_order(channels):
+    """Explicit channels first (in priority order), then the defaults."""
+    def rank(ch):
+        return CONDA_CHANNEL_PRIORITY.index(ch) if ch in CONDA_CHANNEL_PRIORITY else len(CONDA_CHANNEL_PRIORITY)
+    ordered = sorted(dict.fromkeys(channels), key=rank)
+    return ordered + [ch for ch in CONDA_CHANNEL_PRIORITY if ch not in ordered]
+
+
+def extract_conda_package(content, tool_name=None):
     """
-    Extract the conda/bioconda package name from a conda/mamba install line.
-
-    Returns (package_name, channel) or None.
-    Channels are resolved using CONDA_CHANNEL_PRIORITY.
+    Return (package, [channels to try]) from a conda/mamba install command,
+    or None.
     """
-    try:
-        content = dockerfile_path.read_text(errors="replace")
-    except OSError:
-        return None
-
-    # Match: mamba/conda install [-c channel] pkg=version [more...]
-    install_pattern = re.compile(
-        r"(?:mamba|conda)\s+install\b(.*?)(?=\\|$)", re.IGNORECASE
-    )
-    pkg_pattern = re.compile(r"([A-Za-z0-9_.-]+)=([0-9][A-Za-z0-9._-]*)")
-    channel_pattern = re.compile(r"-c\s+(\S+)")
-
-    candidates = []  # list of (pkg, channel)
-    for line in content.splitlines():
-        m = install_pattern.search(line)
+    candidates = []
+    for command in _shell_commands(content):
+        m = _CONDA_INSTALL_RE.search(command)
         if not m:
             continue
         args = m.group(1)
-        channels = channel_pattern.findall(args)
-        channel = "defaults"
-        for preferred in CONDA_CHANNEL_PRIORITY:
-            if preferred in channels:
-                channel = preferred
-                break
-        else:
-            if channels:
-                channel = channels[0]
-        for pm in pkg_pattern.finditer(args):
-            pkg = pm.group(1)
-            if pkg.lower() not in COMMON_UTILITY_PACKAGES:
-                candidates.append((pkg, channel))
-
+        channels = [_normalize_channel(c) for c in _CONDA_CHANNEL_RE.findall(args)]
+        for pm in _CONDA_PKG_RE.finditer(args):
+            pkg = pm.group(2)
+            if pkg.lower() in COMMON_UTILITY_PACKAGES:
+                continue
+            pkg_channels = [_normalize_channel(pm.group(1))] if pm.group(1) else []
+            candidates.append((pkg, list(dict.fromkeys(pkg_channels + _channel_order(channels)))))
     if not candidates:
         return None
+    return _pick_for_tool(candidates, tool_name, lambda c: c[0]) or candidates[0]
 
+
+_SOURCEFORGE_RES = [
+    re.compile(r"sourceforge\.net/projects/([A-Za-z0-9_.-]+)"),
+    re.compile(r"downloads\.sourceforge\.net/project/([A-Za-z0-9_.-]+)"),
+    re.compile(r"svn\.code\.sf\.net/p/([A-Za-z0-9_.-]+)"),
+    re.compile(r"(?:^|[/\s(\"'])([A-Za-z0-9_.-]+)\.sourceforge\.net"),
+]
+
+
+def extract_sourceforge_project(content, tool_name=None):
+    """
+    Return the SourceForge project name, or None.
+
+    Only returns a project whose name matches the tool, to avoid picking up
+    SourceForge URLs of bundled dependencies.
+    """
+    header, body = [], []
+    for line in content.splitlines():
+        target = header if line.strip().startswith("#") else body
+        for pattern in _SOURCEFORGE_RES:
+            for m in pattern.finditer(line):
+                target.append(m.group(1).rstrip("/"))
+    candidates = header + body
+    if not candidates:
+        return None
     if tool_name:
-        tool_key = tool_name.lower().replace("-", "").replace("_", "")
-        for pkg, channel in candidates:
-            pkg_key = pkg.lower().replace("-", "").replace("_", "")
-            if tool_key == pkg_key or tool_key in pkg_key or pkg_key in tool_key:
-                return (pkg, channel)
-
+        return _pick_for_tool(candidates, tool_name)
     return candidates[0]
 
 
-def extract_sourceforge_project(dockerfile_path, tool_name=None):
-    """
-    Extract the SourceForge project name from a Dockerfile.
-
-    Looks for:
-    - Header comment: # https://sourceforge.net/projects/<project>/
-    - Header comment: # http://<project>.sourceforge.net/
-    - Download URL: https://sourceforge.net/projects/<project>/files/.../download
-    - Download URL: https://downloads.sourceforge.net/project/<project>/...
-    - SVN URL: https://svn.code.sf.net/p/<project>/...
-
-    If tool_name is provided, only returns a match whose project name contains
-    the tool name (to avoid picking up SourceForge URLs for bundled dependencies).
-
-    Returns the project name (str) or None.
-    """
-    try:
-        content = dockerfile_path.read_text(errors="replace")
-    except OSError:
-        return None
-
-    sf_patterns = [
-        re.compile(r"sourceforge\.net/projects/([A-Za-z0-9_.-]+)"),
-        re.compile(r"downloads\.sourceforge\.net/project/([A-Za-z0-9_.-]+)"),
-        re.compile(r"svn\.code\.sf\.net/p/([A-Za-z0-9_.-]+)"),
-        re.compile(r"(?:^|[/\s(\"'])([A-Za-z0-9_.-]+)\.sourceforge\.net"),
-    ]
-
-    header_projects = []
-    body_projects = []
-
-    for line in content.splitlines():
-        is_comment = line.strip().startswith("#")
-        for pat in sf_patterns:
-            for match in pat.finditer(line):
-                project = match.group(1).rstrip("/")
-                if is_comment:
-                    header_projects.append(project)
-                else:
-                    body_projects.append(project)
-
-    all_candidates = header_projects + body_projects
-    if not all_candidates:
-        return None
-
-    if tool_name:
-        tool_key = tool_name.lower().replace("-", "").replace("_", "")
-        for project in all_candidates:
-            proj_key = project.lower().replace("-", "").replace("_", "")
-            if tool_key == proj_key or tool_key in proj_key or proj_key in tool_key:
-                return project
-        # No candidate matches this tool – don't guess
-        return None
-
-    return all_candidates[0]
+def detect_source(tool_name, content):
+    """Return a source dict ({'source': ..., 'ref': ..., ...}) or None."""
+    if tool_name in UPSTREAM_OVERRIDES:
+        return dict(UPSTREAM_OVERRIDES[tool_name])
+    repo = extract_github_repo(content, tool_name)
+    if repo:
+        return {"source": "github", "ref": repo}
+    gitlab = extract_gitlab_project(content, tool_name)
+    if gitlab:
+        return {"source": "gitlab", "host": gitlab[0], "ref": gitlab[1]}
+    pkg = extract_pypi_package(content, tool_name)
+    if pkg:
+        return {"source": "pypi", "ref": pkg}
+    conda = extract_conda_package(content, tool_name)
+    if conda:
+        return {"source": "conda", "ref": conda[0], "channels": conda[1]}
+    project = extract_sourceforge_project(content, tool_name)
+    if project:
+        return {"source": "sourceforge", "ref": project}
+    return None
 
 
-def get_sourceforge_latest_version(project_name):
-    """
-    Return the latest version of a SourceForge project, or None.
+# ---------------------------------------------------------------------------
+# Upstream queries
+# ---------------------------------------------------------------------------
 
-    Fetches the project's file-release RSS feed and extracts the highest
-    version number found in the published filenames.
-    """
-    url = f"https://sourceforge.net/projects/{project_name}/rss?limit=100"
+class UpstreamError(Exception):
+    """The upstream could not be queried (network error, HTTP error, ...)."""
+
+
+def http_get(url, headers=None):
+    """Return the response body as text, None on HTTP 404, or raise UpstreamError."""
     req = urllib.request.Request(url)
-    req.add_header("User-Agent", "evolbioinfo-dockerfiles-checker")
+    req.add_header("User-Agent", USER_AGENT)
+    for key, value in (headers or {}).items():
+        req.add_header(key, value)
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            raw = resp.read().decode(errors="replace")
+        with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as resp:
+            return resp.read().decode(errors="replace")
     except urllib.error.HTTPError as e:
-        print(f"Warning: HTTP {e.code} for {url}", file=sys.stderr)
-        return None
+        if e.code == 404:
+            return None
+        hint = " (rate limited? set GITHUB_TOKEN)" if e.code in (403, 429) and "api.github.com" in url else ""
+        raise UpstreamError(f"HTTP {e.code}{hint}") from e
     except (urllib.error.URLError, OSError) as e:
-        print(f"Warning: Network error for {url}: {e}", file=sys.stderr)
-        return None
-
-    try:
-        root = ET.fromstring(raw)
-    except ET.ParseError as e:
-        print(f"Warning: XML parse error for {url}: {e}", file=sys.stderr)
-        return None
-
-    # Match version numbers embedded in filenames, e.g.:
-    #   BBMap_39.06.tar.gz  → 39.06
-    #   musket-1.1.tar.gz   → 1.1
-    #   subread-2.0.4-source.tar.gz → 2.0.4
-    version_re = re.compile(r"[-_v](\d+(?:\.\d+)+)", re.IGNORECASE)
-
-    versions = []
-    for item in root.iter("item"):
-        title_el = item.find("title")
-        if title_el is None or not title_el.text:
-            continue
-        # RSS titles are paths like "/subdir/BBMap_39.06.tar.gz"; take basename
-        filename = title_el.text.strip().rstrip("/").rsplit("/", 1)[-1]
-        if not filename or "." not in filename:
-            continue  # Skip directories
-        match = version_re.search(filename)
-        if match:
-            try:
-                versions.append(Version(match.group(1)))
-            except InvalidVersion:
-                pass
-
-    if not versions:
-        return None
-
-    return str(max(versions))
+        raise UpstreamError(f"network error: {e}") from e
 
 
 def http_get_json(url, headers=None):
-    """Make an HTTP GET request and return the parsed JSON body, or None."""
-    req = urllib.request.Request(url)
-    req.add_header("User-Agent", "evolbioinfo-dockerfiles-checker")
-    if headers:
-        for k, v in headers.items():
-            req.add_header(k, v)
+    body = http_get(url, headers)
+    if body is None:
+        return None
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            return None
-        if e.code in (403, 429):
-            print(f"Warning: rate limit or auth error for {url} (HTTP {e.code})", file=sys.stderr)
-            return None
-        print(f"Warning: HTTP {e.code} for {url}", file=sys.stderr)
-        return None
-    except (urllib.error.URLError, OSError) as e:
-        print(f"Warning: Network error for {url}: {e}", file=sys.stderr)
-        return None
+        return json.loads(body)
+    except json.JSONDecodeError as e:
+        raise UpstreamError(f"invalid JSON from {url}") from e
 
 
-def get_pypi_latest_version(package_name):
-    """Return the latest version of a PyPI package, or None."""
-    url = f"https://pypi.org/pypi/{package_name}/json"
-    data = http_get_json(url)
-    if data and "info" in data:
-        return data["info"]["version"]
-    return None
-
-
-def get_conda_latest_version(package_name, channel="bioconda"):
-    """
-    Return the latest version of a package in a conda channel, or None.
-
-    Queries the Anaconda.org API.
-    """
-    url = f"https://api.anaconda.org/package/{channel}/{package_name}"
-    data = http_get_json(url)
-    if data and "latest_version" in data:
-        return data["latest_version"]
-    return None
-
-
-def get_gitlab_latest_version(gitlabhost, namespace_project):
-    """
-    Return the latest tag for a gitlab.com project, or None.
-
-    namespace_project is 'namespace/project' (e.g. 'sysimm/mafft').
-    """
-    encoded = namespace_project.replace("/", "%2F")
-    url = f"https://{gitlabhost}/api/v4/projects/{encoded}/releases?per_page=1"
-    data = http_get_json(url)
-    if data and isinstance(data, list) and data:
-        return data[0].get("tag_name")
-    # Fall back to tags API
-    url = f"https://{gitlabhost}/api/v4/projects/{encoded}/repository/tags?per_page=1"
-    data = http_get_json(url)
-    if data and isinstance(data, list) and data:
-        return data[0].get("name")
-    return None
-
-def github_api_request(url, token=None):
-    """Make a GitHub API request and return the parsed JSON."""
-    req = urllib.request.Request(url)
-    req.add_header("Accept", "application/vnd.github+json")
-    req.add_header("X-GitHub-Api-Version", "2022-11-28")
-    req.add_header("User-Agent", "evolbioinfo-dockerfiles-checker")
+def _github_headers(token):
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
     if token:
-        req.add_header("Authorization", f"Bearer {token}")
+        headers["Authorization"] = f"Bearer {token}"
+    return headers
+
+
+def github_latest(repo, token=None):
+    """
+    Latest stable version of a GitHub repo: the latest release if it is a
+    stable version, otherwise the highest stable tag. The tags API is not
+    sorted by version, so several pages are scanned.
+    """
+    headers = _github_headers(token)
+    release = http_get_json(f"https://api.github.com/repos/{repo}/releases/latest", headers)
+    if release and not release.get("prerelease") and is_stable(release.get("tag_name")):
+        return release["tag_name"]
+    names = []
+    for page in range(1, GITHUB_MAX_TAG_PAGES + 1):
+        tags = http_get_json(
+            f"https://api.github.com/repos/{repo}/tags?per_page=100&page={page}", headers
+        )
+        if not tags:
+            break
+        names.extend(t["name"] for t in tags)
+        if len(tags) < 100:
+            break
+    return latest_stable(names)
+
+
+def gitlab_latest(host, project):
+    """Latest stable version of a GitLab project (releases, then tags)."""
+    base = f"https://{host}/api/v4/projects/{urllib.parse.quote(project, safe='')}"
+    releases = http_get_json(f"{base}/releases?per_page=20") or []
+    tag = latest_stable(
+        r.get("tag_name") for r in releases if not r.get("upcoming_release")
+    )
+    if tag:
+        return tag
+    tags = http_get_json(f"{base}/repository/tags?per_page=100") or []
+    return latest_stable(t.get("name") for t in tags)
+
+
+def pypi_latest(package):
+    """Latest stable version of a PyPI package."""
+    data = http_get_json(f"https://pypi.org/pypi/{package}/json")
+    if not data:
+        return None
+    releases = data.get("releases") or {}
+    available = [v for v, files in releases.items() if not files or not all(f.get("yanked") for f in files)]
+    return latest_stable(available) or latest_stable([data.get("info", {}).get("version")])
+
+
+def conda_latest(package, channels):
+    """Return (latest stable version, channel) from the first channel that has the package."""
+    for channel in channels:
+        data = http_get_json(f"https://api.anaconda.org/package/{channel}/{package}")
+        if data:
+            version = latest_stable(data.get("versions") or []) or latest_stable([data.get("latest_version")])
+            return version, channel
+    return None, None
+
+
+def sourceforge_latest(project):
+    """
+    Latest stable version of a SourceForge project, from the version numbers
+    embedded in the file names of its release RSS feed.
+    """
+    raw = http_get(f"https://sourceforge.net/projects/{project}/rss?limit=100")
+    if raw is None:
+        return None
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        if e.code in (403, 429):
-            # Rate limited or forbidden without a token
-            print(
-                f"Warning: GitHub API rate limit or auth error for {url} "
-                f"(HTTP {e.code}). Set GITHUB_TOKEN to avoid rate limiting.",
-                file=sys.stderr,
-            )
-            return None
-        if e.code == 404:
-            return None
-        print(f"Warning: GitHub API error {e.code} for {url}", file=sys.stderr)
-        return None
-    except (urllib.error.URLError, OSError) as e:
-        print(f"Warning: Network error for {url}: {e}", file=sys.stderr)
-        return None
+        root = ET.fromstring(raw)
+    except ET.ParseError as e:
+        raise UpstreamError(f"invalid RSS feed: {e}") from e
+
+    # BBMap_39.06.tar.gz → 39.06, musket-1.1.tar.gz → 1.1,
+    # subread-2.0.4-source.tar.gz → 2.0.4
+    version_re = re.compile(r"[-_v](\d+(?:\.\d+)+)", re.IGNORECASE)
+    versions = []
+    for item in root.iter("item"):
+        title = item.find("title")
+        if title is None or not title.text:
+            continue
+        # RSS titles are paths like "/subdir/BBMap_39.06.tar.gz"; take basename
+        filename = title.text.strip().rstrip("/").rsplit("/", 1)[-1]
+        if "." not in filename:
+            continue  # directory
+        m = version_re.search(filename)
+        if m:
+            versions.append(m.group(1))
+    return latest_stable(versions)
 
 
-def get_latest_release(repo, token=None):
-    """Return the tag name of the latest GitHub release, or None."""
-    url = f"https://api.github.com/repos/{repo}/releases/latest"
-    data = github_api_request(url, token)
-    if data and "tag_name" in data:
-        return data["tag_name"]
+def fetch_latest(src, token=None):
+    """Return the latest stable upstream version for a source dict, or None."""
+    kind = src["source"]
+    if kind == "github":
+        return github_latest(src["ref"], token)
+    if kind == "gitlab":
+        return gitlab_latest(src["host"], src["ref"])
+    if kind == "pypi":
+        return pypi_latest(src["ref"])
+    if kind == "conda":
+        version, channel = conda_latest(src["ref"], src["channels"])
+        src["channel"] = channel or src["channels"][0]
+        return version
+    if kind == "sourceforge":
+        return sourceforge_latest(src["ref"])
+    raise ValueError(f"unknown source {kind!r}")
+
+
+def source_ref(src):
+    if src["source"] == "conda":
+        return f"{src.get('channel') or src['channels'][0]}/{src['ref']}"
+    return src["ref"]
+
+
+def source_url(src):
+    kind, ref = src["source"], src["ref"]
+    if kind == "github":
+        return f"https://github.com/{ref}"
+    if kind == "gitlab":
+        return f"https://{src['host']}/{ref}"
+    if kind == "pypi":
+        return f"https://pypi.org/project/{ref}/"
+    if kind == "conda":
+        return f"https://anaconda.org/{source_ref(src)}"
+    if kind == "sourceforge":
+        return f"https://sourceforge.net/projects/{ref}/"
     return None
 
 
-def get_latest_tag(repo, token=None):
-    """Return the name of the latest git tag, or None."""
-    url = f"https://api.github.com/repos/{repo}/tags?per_page=1"
-    data = github_api_request(url, token)
-    if data and isinstance(data, list) and data:
-        return data[0]["name"]
-    return None
-
-
-def normalize_version(version_str):
-    """
-    Normalize a version string for comparison.
-    Returns a Version object, or None if it cannot be parsed.
-    """
-    if not version_str:
-        return None
-    # Strip common prefixes
-    v = version_str.lstrip("vV")
-    # Remove build metadata or commit suffixes (e.g. v2.3.3-1-gabcdef)
-    v = re.sub(r"-\d+-g[0-9a-f]+$", "", v)
-    try:
-        return Version(v)
-    except InvalidVersion:
-        return None
-
-
-def is_newer(upstream_tag, current_dir_name):
-    """
-    Return True if the upstream_tag is newer than current_dir_name.
-    Falls back to string comparison if version parsing fails.
-    """
-    upstream_v = normalize_version(upstream_tag)
-    # The current version is encoded in the directory name
-    current_v = normalize_version(current_dir_name)
-
-    if upstream_v is not None and current_v is not None:
-        return upstream_v > current_v
-
-    # Cannot parse versions – do a plain string comparison
-    upstream_clean = upstream_tag.lstrip("vV")
-    current_clean = current_dir_name.lstrip("vV")
-    return upstream_clean != current_clean
-
+# ---------------------------------------------------------------------------
+# Checking and reporting
+# ---------------------------------------------------------------------------
 
 def check_tool(tool_name, token=None):
     """
     Check a single tool for available updates.
 
-    Tries upstream sources in order:
-    1. GitHub (releases → tags)
-    2. GitLab (gitlab.com, releases → tags)
-    3. PyPI (pip install <pkg>==<version>)
-    4. Conda / Bioconda (conda/mamba install <pkg>=<version>)
-    5. SourceForge (RSS feed)
-
-    Returns a dict with:
-      - tool: tool name
-      - current: current version directory name
-      - upstream: latest upstream version string
-      - source: where the upstream version was found ('github', 'gitlab', 'pypi', 'conda', 'sourceforge')
-      - source_ref: human-readable reference (repo path, package name, etc.)
+    Returns None if the tool is not checked, otherwise a dict with:
+      - tool, current: tool name and current version directory
+      - upstream: latest stable upstream version (or None)
+      - source, source_ref, source_url: where the upstream version comes from
       - outdated: True if upstream > current
-      - error: error message if something went wrong (or None)
+      - error: why the tool could not be checked (or None)
     """
     if tool_name in SKIP_VERSION_CHECK:
         return None
-
     tool_dir = REPO_ROOT / tool_name
     if not tool_dir.is_dir():
         return None
-
-    current_version = get_latest_version_dir(tool_dir)
-    if not current_version:
+    current = get_latest_version_dir(tool_dir)
+    if not current:
+        return None
+    dockerfile = tool_dir / current / "Dockerfile"
+    try:
+        content = dockerfile.read_text(errors="replace")
+    except OSError:
         return None
 
-    dockerfile = tool_dir / current_version / "Dockerfile"
-    if not dockerfile.exists():
-        return None
-
-    # --- 1. GitHub ---
-    github_repo = extract_github_url(dockerfile, tool_name)
-    if github_repo:
-        upstream_tag = get_latest_release(github_repo, token)
-        if not upstream_tag:
-            upstream_tag = get_latest_tag(github_repo, token)
-        if upstream_tag:
-            return {
-                "tool": tool_name,
-                "current": current_version,
-                "upstream": upstream_tag,
-                "source": "github",
-                "source_ref": github_repo,
-                "outdated": is_newer(upstream_tag, current_version),
-                "error": None,
-            }
-        return {
-            "tool": tool_name,
-            "current": current_version,
-            "upstream": None,
-            "source": "github",
-            "source_ref": github_repo,
-            "outdated": False,
-            "error": "Could not fetch upstream version from GitHub",
-        }
-
-    # --- 2. GitLab.com or Self Hosted---
-    gitlabhost = extract_gitlab_url(dockerfile, tool_name)
-    if gitlabhost[0]:
-        upstream_tag = get_gitlab_latest_version(gitlabhost[0], gitlabhost[1])
-        if upstream_tag:
-            return {
-                "tool": tool_name,
-                "current": current_version,
-                "upstream": upstream_tag,
-                "source": "gitlab",
-                "source_ref": gitlabhost[1],
-                "outdated": is_newer(upstream_tag, current_version),
-                "error": None,
-            }
-        return {
-            "tool": tool_name,
-            "current": current_version,
-            "upstream": None,
-            "source": "gitlab",
-            "source_ref": gitlabhost[1],
-            "outdated": False,
-            "error": "Could not fetch upstream version from GitLab",
-        }
-    
-    # --- 3. PyPI ---
-    pypi_pkg = extract_pypi_package(dockerfile, tool_name)
-    if pypi_pkg:
-        upstream_version = get_pypi_latest_version(pypi_pkg)
-        if upstream_version:
-            return {
-                "tool": tool_name,
-                "current": current_version,
-                "upstream": upstream_version,
-                "source": "pypi",
-                "source_ref": pypi_pkg,
-                "outdated": is_newer(upstream_version, current_version),
-                "error": None,
-            }
-        return {
-            "tool": tool_name,
-            "current": current_version,
-            "upstream": None,
-            "source": "pypi",
-            "source_ref": pypi_pkg,
-            "outdated": False,
-            "error": "Could not fetch upstream version from PyPI",
-        }
-
-    # --- 4. Conda / Bioconda ---
-    conda_info = extract_conda_package(dockerfile, tool_name)
-    if conda_info:
-        pkg_name, channel = conda_info
-        upstream_version = get_conda_latest_version(pkg_name, channel)
-        if upstream_version:
-            return {
-                "tool": tool_name,
-                "current": current_version,
-                "upstream": upstream_version,
-                "source": "conda",
-                "source_ref": f"{channel}/{pkg_name}",
-                "outdated": is_newer(upstream_version, current_version),
-                "error": None,
-            }
-        return {
-            "tool": tool_name,
-            "current": current_version,
-            "upstream": None,
-            "source": "conda",
-            "source_ref": f"{channel}/{pkg_name}",
-            "outdated": False,
-            "error": f"Could not fetch upstream version from conda ({channel})",
-        }
-
-    # --- 5. SourceForge ---
-    sf_project = extract_sourceforge_project(dockerfile, tool_name)
-    if sf_project:
-        upstream_version = get_sourceforge_latest_version(sf_project)
-        if upstream_version:
-            return {
-                "tool": tool_name,
-                "current": current_version,
-                "upstream": upstream_version,
-                "source": "sourceforge",
-                "source_ref": sf_project,
-                "outdated": is_newer(upstream_version, current_version),
-                "error": None,
-            }
-        return {
-            "tool": tool_name,
-            "current": current_version,
-            "upstream": None,
-            "source": "sourceforge",
-            "source_ref": sf_project,
-            "outdated": False,
-            "error": "Could not fetch upstream version from SourceForge",
-        }
-
-    # No upstream source found
-    return {
+    result = {
         "tool": tool_name,
-        "current": current_version,
+        "current": current,
         "upstream": None,
         "source": None,
         "source_ref": None,
+        "source_url": None,
         "outdated": False,
-        "error": "No upstream source found in Dockerfile",
+        "error": None,
     }
+
+    src = detect_source(tool_name, content)
+    if src is None:
+        result["error"] = "No upstream source found in Dockerfile (see UPSTREAM_OVERRIDES)"
+        return result
+
+    label = SOURCE_LABELS[src["source"]]
+    result["source"] = src["source"]
+    try:
+        upstream = fetch_latest(src, token)
+    except UpstreamError as e:
+        upstream = None
+        result["error"] = f"Could not query {label}: {e}"
+    result["source_ref"] = source_ref(src)
+    result["source_url"] = source_url(src)
+    if result["error"]:
+        return result
+    if not upstream:
+        result["error"] = f"No stable release or tag found on {label}"
+        return result
+
+    result["upstream"] = upstream
+    newer = is_newer(upstream, current)
+    if newer is None:
+        result["error"] = f"Cannot compare versions `{current}` and `{upstream}`"
+    else:
+        result["outdated"] = newer
+    return result
+
+
+def safe_check_tool(tool_name, token=None):
+    """check_tool, turning unexpected exceptions into an error row."""
+    try:
+        return check_tool(tool_name, token)
+    except Exception as e:  # keep checking the other tools
+        traceback.print_exc(file=sys.stderr)
+        return {
+            "tool": tool_name, "current": "?", "upstream": None,
+            "source": None, "source_ref": None, "source_url": None,
+            "outdated": False, "error": f"Unexpected error: {type(e).__name__}: {e}",
+        }
+
+
+def get_tool_dirs():
+    """Return a sorted list of tool directory names."""
+    return sorted(
+        e.name for e in REPO_ROOT.iterdir()
+        if e.is_dir() and e.name not in SKIP_DIRS and not e.name.startswith(".")
+    )
+
+
+def _md_cell(text):
+    return str(text).replace("|", "\\|")
 
 
 def _source_link(result):
     """Return a Markdown link for the upstream source of a result dict."""
-    source = result.get("source")
-    ref = result.get("source_ref") or ""
-    if source == "github":
-        return f"[{ref}](https://github.com/{ref}) (GitHub)"
-    if source == "gitlab":
-        return f"[{ref}](https://gitlab.com/{ref}) (GitLab)"
-    if source == "pypi":
-        return f"[{ref}](https://pypi.org/project/{ref}/) (PyPI)"
-    if source == "conda":
-        channel, pkg = ref.split("/", 1) if "/" in ref else ("", ref)
-        return f"[{ref}](https://anaconda.org/{channel}/{pkg}) (Conda)"
-    if source == "sourceforge":
-        return f"[{ref}](https://sourceforge.net/projects/{ref}/) (SourceForge)"
-    return "N/A"
+    if not result.get("source"):
+        return "N/A"
+    label = SOURCE_LABELS[result["source"]]
+    return f"[{result['source_ref']}]({result['source_url']}) ({label})"
 
 
 def main():
     token = os.environ.get("GITHUB_TOKEN")
-    # Use GITHUB_REPOSITORY env var (set in GitHub Actions) for absolute URLs
-    gh_repo_slug = os.environ.get("GITHUB_REPOSITORY", "evolbioinfo/dockerfiles")
-    repo_base_url = f"https://github.com/{gh_repo_slug}/tree/main"
+    if not token:
+        print("Warning: GITHUB_TOKEN is not set; GitHub API calls may be rate limited.", file=sys.stderr)
+    # Set by GitHub Actions; defaults for local runs
+    repo_slug = os.environ.get("GITHUB_REPOSITORY", "evolbioinfo/dockerfiles")
+    branch = os.environ.get("GITHUB_REF_NAME") or "master"
+    repo_base_url = f"https://github.com/{repo_slug}/tree/{branch}"
 
-    tools = get_tool_dirs()
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+        checked = list(pool.map(lambda t: safe_check_tool(t, token), get_tool_dirs()))
+    checked = [r for r in checked if r is not None]
+    outdated = [r for r in checked if r["outdated"]]
+    errors = [r for r in checked if r["error"]]
 
-    results = []
-    errors = []
+    def tool_link(r):
+        return f"[{r['tool']}]({repo_base_url}/{r['tool']})"
 
-    for tool in tools:
-        result = check_tool(tool, token)
-        if result is None:
-            continue
-        if result["error"]:
-            errors.append(result)
-        elif result["outdated"]:
-            results.append(result)
-
-    # Print Markdown summary
-    if results:
-        print("## Tools that could be updated\n")
+    print("## Tools that could be updated\n")
+    if outdated:
         print("| Tool | Current Version | Latest Upstream | Source |")
         print("|------|----------------|-----------------|--------|")
-        for r in sorted(results, key=lambda x: x["tool"]):
-            tool_link = f"[{r['tool']}]({repo_base_url}/{r['tool']})"
-            print(
-                f"| {tool_link} "
-                f"| `{r['current']}` "
-                f"| `{r['upstream']}` "
-                f"| {_source_link(r)} |"
-            )
-        print()
+        for r in outdated:
+            print(f"| {tool_link(r)} | `{r['current']}` | `{r['upstream']}` | {_source_link(r)} |")
     else:
-        print("## Tools that could be updated\n")
-        print("All tools are up to date! 🎉\n")
+        print("All tools are up to date! 🎉")
+    print()
 
     if errors:
         print("## Tools where the version could not be determined\n")
-        print("| Tool | Current Version | Reason |")
-        print("|------|----------------|--------|")
-        for r in sorted(errors, key=lambda x: x["tool"]):
-            tool_link = f"[{r['tool']}]({repo_base_url}/{r['tool']})"
-            print(
-                f"| {tool_link} "
-                f"| `{r['current']}` "
-                f"| {r['error']} |"
-            )
+        print("| Tool | Current Version | Source | Reason |")
+        print("|------|----------------|--------|--------|")
+        for r in errors:
+            print(f"| {tool_link(r)} | `{r['current']}` | {_source_link(r)} | {_md_cell(r['error'])} |")
         print()
-
-    # Exit with non-zero status if there are outdated tools (useful in CI)
-    if results:
-        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -30,9 +30,15 @@ jobs:
         id: check
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # The script exits 0 whether or not tools are outdated; a non-zero exit
+        # means it crashed, which fails the job instead of posting a traceback.
         run: |
-          python .github/scripts/check_updates.py > /tmp/update_report.md 2>&1 || true
+          python .github/scripts/check_updates.py > /tmp/update_report.md 2> /tmp/update_warnings.log
           cat /tmp/update_report.md
+          if [ -s /tmp/update_warnings.log ]; then
+            echo "::warning::check_updates.py printed warnings (see below)"
+            cat /tmp/update_warnings.log
+          fi
 
       - name: Find existing update issue
         id: find_issue
@@ -51,6 +57,16 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           BODY="$(cat /tmp/update_report.md)"
+          if [ -s /tmp/update_warnings.log ]; then
+            BODY="${BODY}
+
+          <details><summary>Warnings</summary>
+
+          \`\`\`
+          $(cat /tmp/update_warnings.log)
+          \`\`\`
+          </details>"
+          fi
           BODY="${BODY}
 
           ---
